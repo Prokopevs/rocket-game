@@ -6,4 +6,6 @@ export const Constants = {
     ADD_ASTEROID_SECOND_INTERVAL: 5,
 
     ADD_FUEL_SECOND_INTERVAL: 10,
+
+    ROCKET_START_INCREACE_COEFF: 0.1
 }

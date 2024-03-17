@@ -22,7 +22,7 @@ export const isMobileNavigator = () => {
 }
 
 export function getCoords(element: any) {
-  const matrix = window.getComputedStyle(element.current).transform
+  const matrix = window.getComputedStyle(element).transform
   const array = matrix.split(',')
   const y = array[array.length -1]
   const x = array[array.length -2]

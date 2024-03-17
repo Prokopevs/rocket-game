@@ -9,18 +9,26 @@ const Game = () => {
     const coinsWidth = Constants.MAX_WIDTH / 13
     const asteroidWidth = Constants.MAX_WIDTH / 5
     const fuelWidth = Constants.MAX_WIDTH / 8
+    const rocketStartIncreaseCoeff = Constants.ROCKET_START_INCREACE_COEFF
 
     const rocket = React.useRef()
     const requestRef = React.useRef()
     const [play, setPlay] = React.useState(false)
     
+    const rocketCoords = React.useRef()
+    const rocketExpStart = React.useRef(-1)
+    React.useEffect(() => {
+        rocketCoords.current = getCoords(rocket.current)
+    }, []);
 
     function rocketAnimation() {
-        const newCoords = getCoords(rocket)
-        newCoords.y = newCoords.y - 1
-        rocket.current.style.transform = `translateY(${newCoords.y}px)`
-    }
+        console.log(rocketExpStart.current)
+        const speed = Math.exp(rocketExpStart.current)
+        rocketCoords.current.y = rocketCoords.current.y - speed
 
+        rocket.current.style.transform = `translateY(${rocketCoords.current.y}px)`
+        rocketExpStart.current = rocketExpStart.current + rocketStartIncreaseCoeff
+    }
 
     const animate = () => {
         rocketAnimation()
@@ -28,15 +36,17 @@ const Game = () => {
     }
 
     React.useEffect(() => {
-        requestRef.current = requestAnimationFrame(animate)
+        if (play) {
+            requestRef.current = requestAnimationFrame(animate)
         
-        return () => {
-            if (requestRef.current) {
-                cancelAnimationFrame(requestRef.current)
-                console.log("here")
+            return () => {
+                if (requestRef.current) {
+                    cancelAnimationFrame(requestRef.current)
+                    console.log("stop")
+                }
             }
         }
-    }, []);
+    }, [play]);
 
 
     return (
@@ -51,7 +61,7 @@ const Game = () => {
                 <img className="game__asteroid" src={String(AsteroidImg)} alt="" style={{width: `${asteroidWidth}px`}}/>
                 <img className="game__fuel" src={String(FuelImg)} alt="" style={{width: `${fuelWidth}px`}}/>
 
-                <button className="game__button_start" onClick={() => setPlay(true)}>
+                <button className="game__button_start" onClick={() => setPlay(!play)}>
                     start game
                 </button>
             </div>
