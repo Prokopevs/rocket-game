@@ -1,0 +1,59 @@
+
+.game {
+    background-image: url("../../assets/space.jpg");
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    background-repeat: no-repeat;
+}
+
+.game__road {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.game__rocket {
+    position: absolute;
+    bottom: 0;
+    transform: translate(0, -15vh);
+}
+
+.game__coin {
+    position: absolute;
+}
+
+.bronzecoin {
+    transform: translate(100px, -15vh);
+}
+
+.silvercoin {
+    transform: translate(-100px, -30vh);
+}
+
+.goldcoin {
+    transform: translate(50px, 9vh);
+}
+
+.game__asteroid {
+    position: absolute;
+    transform: translate(120px, -30vh);
+
+}
+
+.game__fuel{
+    position: absolute;
+    transform: translate(-100px, 20vh);
+
+}
+
+
+.game__button_start {
+    /* background: transparent;
+    border: none;
+    padding: 0; */
+
+
+}

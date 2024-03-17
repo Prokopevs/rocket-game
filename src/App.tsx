@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './style/App.css';
+import AppRouter from "./router/AppRouter";
+import {isMobile} from 'react-device-detect';
+import { isMobileNavigator } from './lib/helpers';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  
+  // if (isMobile && (width < 1000) && isMobileNavigator()) {
+    return (
+      <>
+        <AppRouter />
+      </>
+    )
+  // }  
+
+  return <>please use mobile</>
 }
 
 export default App;
