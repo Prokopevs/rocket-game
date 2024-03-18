@@ -18,7 +18,7 @@
 .game__rocket {
     position: absolute;
     bottom: 0;
-    transform: translate(0, -15vh);
+    transform: translate(0, 6vh);
 }
 
 .game__coin {
@@ -46,7 +46,6 @@
 .game__fuel{
     position: absolute;
     transform: translate(-100px, 20vh);
-
 }
 
 

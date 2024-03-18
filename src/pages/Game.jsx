@@ -16,18 +16,27 @@ const Game = () => {
     const [play, setPlay] = React.useState(false)
     
     const rocketCoords = React.useRef()
-    const rocketExpStart = React.useRef(-1)
+    const rocketExponentLaunch = React.useRef(-1)
+    const newYCoordsToVh = React.useRef(0)
     React.useEffect(() => {
         rocketCoords.current = getCoords(rocket.current)
     }, []);
 
     function rocketAnimation() {
-        console.log(rocketExpStart.current)
-        const speed = Math.exp(rocketExpStart.current)
-        rocketCoords.current.y = rocketCoords.current.y - speed
+        if (newYCoordsToVh.current > -11) { // ракета долетает максимум до -11vh высоты экрана
 
-        rocket.current.style.transform = `translateY(${rocketCoords.current.y}px)`
-        rocketExpStart.current = rocketExpStart.current + rocketStartIncreaseCoeff
+            const speed = Math.exp(rocketExponentLaunch.current)
+            const newYCoords = rocketCoords.current.y - speed
+            newYCoordsToVh.current = (newYCoords / Constants.MAX_HEIGHT) * 100
+
+            rocket.current.style.transform = `translateY(${newYCoordsToVh.current}vh)`
+            rocketCoords.current.y = newYCoords
+            
+            if (rocketExponentLaunch.current < 1.4) {  // максимальная скорость вылета ракета со старта
+                rocketExponentLaunch.current = rocketExponentLaunch.current + rocketStartIncreaseCoeff
+                console.log(rocketExponentLaunch.current)
+            }
+        }
     }
 
     const animate = () => {
