@@ -30,5 +30,18 @@ export function getCoords(element: any) {
   const numericY = parseFloat(y)
   const numericX = parseFloat(x)
 
+  // если понадобится в будующем
+  // const computedStyle = window.getComputedStyle(element, null)
+  // const val = computedStyle.getPropertyValue('transform')
+  // || computedStyle.getPropertyValue('-moz-transform')
+  // || computedStyle.getPropertyValue('-webkit-transform')
+  // || computedStyle.getPropertyValue('-ms-transform')
+  // || computedStyle.getPropertyValue('-o-transform');
+  // console.log(val)
+
   return {x: numericX, y: numericY}
+}
+
+export function mapValue(value: number, min1: number, max1: number, min2: number, max2: number) {
+    return min2 + (max2 - min2) * ((value - min1) / (max1 - min1))
 }
