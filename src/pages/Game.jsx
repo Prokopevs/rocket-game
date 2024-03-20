@@ -11,14 +11,16 @@ const Game = () => {
     const fuelWidth = Constants.MAX_WIDTH / 8
 
     const maxRocketLaunchYHeightPx = (Constants.MAX_HEIGHT * 28) / 100
-    const maxRocketRightMovePx = (Constants.MAX_WIDTH / 2) - (rocketWidth / 2) // ракета стоит по середине с координатам 0 по x 
-    const minRocketLeftMovePx = -maxRocketRightMovePx
-    console.log(maxRocketRightMovePx)
-    console.log(minRocketLeftMovePx)
+    const maxRocketRightMovePx = (Constants.MAX_WIDTH / 2) - (rocketWidth / 2) // для ракеты максимальное направо это 300
+    const minRocketLeftMovePx = -maxRocketRightMovePx // мин налево -300 так как общая ширина 600
 
-    const gameTouchAreaWigth = Constants.MAX_WIDTH * 45 / 100 // ширина области для управления ракетой обязательно менять в css тоже
-    const minGameTouchAreaMovePx = (Constants.MAX_WIDTH - gameTouchAreaWigth) / 2
-    const maxGameTouchAreaMovePx = gameTouchAreaWigth + minGameTouchAreaMovePx
+    const gameTouchAreaWigth = Constants.MAX_WIDTH * 45 / 100 // 45% ширина области для управления ракетой
+    const minTouchAreaWigthMovePx = (Constants.MAX_WIDTH - gameTouchAreaWigth) / 2
+    const maxTouchAreaWigthMovePx = gameTouchAreaWigth + minTouchAreaWigthMovePx
+    const gameTouchAreaHeight = Constants.MAX_HEIGHT * 40 / 100 // 40% высота области для управления ракетой нужно менять в css
+    const minTouchAreaHeightMovePx = Constants.MAX_HEIGHT - gameTouchAreaHeight
+    const maxTouchAreaHeightMovePx = Constants.MAX_HEIGHT
+
 
     const rocket = React.useRef()
     const requestRef = React.useRef()
@@ -37,11 +39,12 @@ const Game = () => {
         const handleTouchMove = (e) => {
             const touchX = e.touches[0].clientX
             const touchY = e.touches[0].clientY;
-            const rect = myArea.getBoundingClientRect()
-
-            if (touchX >= rect.left && touchX <= rect.right && touchY >= rect.top && touchY <= rect.bottom) {
+            
+            if (touchX >= minTouchAreaWigthMovePx && touchX <= maxTouchAreaWigthMovePx 
+                && touchY >= minTouchAreaHeightMovePx && touchY <= maxTouchAreaHeightMovePx) 
+            {
                 touchPositionRef.current = { x: touchX }
-                // console.log(touchX)
+                console.log(touchPositionRef.current)
             }
         }
         
@@ -75,20 +78,20 @@ const Game = () => {
             }
         }
 
-        if (touchPositionRef.current.x - mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minGameTouchAreaMovePx, maxGameTouchAreaMovePx) > 3) {
+        if (touchPositionRef.current.x - mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx) > 3) {
             const newXCoord = rocketCoords.current.x + 3
             rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px)`
             rocketCoords.current.x = newXCoord
         }
 
-        if (mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minGameTouchAreaMovePx, maxGameTouchAreaMovePx) - touchPositionRef.current.x > 3 ) {
+        if (mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx) - touchPositionRef.current.x > 3 ) {
             const newXCoord = rocketCoords.current.x - 3
             rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px)`
             rocketCoords.current.x = newXCoord
         }
 
         // console.log(touchPositionRef.current)
-        // console.log(mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minGameTouchAreaMovePx, maxGameTouchAreaMovePx))
+        // console.log(mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx))
     }
 
 
