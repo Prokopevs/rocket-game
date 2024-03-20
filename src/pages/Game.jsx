@@ -34,33 +34,34 @@ const Game = () => {
     }, [])
 
     const touchareaRef = React.useRef(null)
-    const touchPositionRef = React.useRef({ x: Constants.MAX_WIDTH / 2 })
+    const touchPositionRef = React.useRef({ x: Constants.MAX_WIDTH / 2 }) // начинаем с координаты по середине так как ракета по середине
+    const isTouch = React.useRef(false)
     React.useEffect(() => {
         const handleTouchMove = (e) => {
             const touchX = e.touches[0].clientX
             const touchY = e.touches[0].clientY;
             
             if (touchX >= minTouchAreaWigthMovePx && touchX <= maxTouchAreaWigthMovePx 
-                && touchY >= minTouchAreaHeightMovePx && touchY <= maxTouchAreaHeightMovePx) 
+                && touchY >= minTouchAreaHeightMovePx && touchY <= maxTouchAreaHeightMovePx && play) 
             {
                 touchPositionRef.current = { x: touchX }
-                console.log(touchPositionRef.current)
+                // console.log(touchPositionRef.current)
             }
         }
-        
         const myArea = touchareaRef.current
         myArea?.addEventListener('touchmove', handleTouchMove)
         return () => {
+            console.log("here")
             myArea?.removeEventListener('touchmove', handleTouchMove)
         }
-    }, [])
+    }, [play, isTouch])
 
     const onTouchStartFunc = (event) => {
-        // console.log("Touch Start!")
+        isTouch.current = true
     }
     
     const onTouchEndFunc = (event) => {
-        // console.log("Touch End!")
+        isTouch.current = false
     }
 
 
@@ -80,18 +81,26 @@ const Game = () => {
 
         if (touchPositionRef.current.x - mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx) > 3) {
             const newXCoord = rocketCoords.current.x + 3
-            rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px)`
-            rocketCoords.current.x = newXCoord
+            if (isTouch.current === true) {
+                rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px)`
+                rocketCoords.current.x = newXCoord
+            } else {
+                const lastMovePosition = mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx)
+                touchPositionRef.current = lastMovePosition
+            }
+            
         }
 
         if (mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx) - touchPositionRef.current.x > 3 ) {
             const newXCoord = rocketCoords.current.x - 3
-            rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px)`
-            rocketCoords.current.x = newXCoord
+            if (isTouch.current === true) {
+                rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px)`
+                rocketCoords.current.x = newXCoord
+            } else {
+                const lastMovePosition = mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx)
+                touchPositionRef.current = lastMovePosition
+            }
         }
-
-        // console.log(touchPositionRef.current)
-        // console.log(mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx))
     }
 
 
