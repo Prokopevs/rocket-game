@@ -64,7 +64,7 @@ const Game = () => {
 
 
     function rocketAnimation() {
-        if (rocketCoords.current.y > maxRocketLaunchYHeightPx) { // ракета долетает максимум до 28vh высоты экрана
+        if (rocketCoords.current.y > maxRocketLaunchYHeightPx) { //ракета долетает максимум до 28vh высоты экрана
 
             const speed = Math.exp(rocketExponentLaunch.current)
             const newYCoord = rocketCoords.current.y - speed
