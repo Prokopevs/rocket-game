@@ -45,16 +45,14 @@ const Game = () => {
                 && touchY >= minTouchAreaHeightMovePx && touchY <= maxTouchAreaHeightMovePx && play) 
             {
                 touchPositionRef.current = { x: touchX }
-                // console.log(touchPositionRef.current)
             }
         }
         const myArea = touchareaRef.current
         myArea?.addEventListener('touchmove', handleTouchMove)
         return () => {
-            console.log("here")
             myArea?.removeEventListener('touchmove', handleTouchMove)
         }
-    }, [play, isTouch])
+    }, [play])
 
     const onTouchStartFunc = (event) => {
         isTouch.current = true
