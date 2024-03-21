@@ -76,7 +76,7 @@ const Game = () => {
                 rocketExponentLaunch.current = rocketExponentLaunch.current + Constants.ROCKET_START_INCREACE_COEFF
             }
         }
-
+        console.log(touchPositionRef.current.x, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx)
         if (touchPositionRef.current.x - mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx) > 3) {
             const newXCoord = rocketCoords.current.x + 3
             if (isTouch.current === true) {
