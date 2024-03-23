@@ -3,6 +3,7 @@ import { RocketImg, BronzecoinImg, SilvercoinImg, GoldcoinImg, AsteroidImg, Fuel
 import { Constants } from '../Constants';
 import React from "react";
 import { getCoords, mapValue } from '../lib/helpers';
+import Player from '../components/fire/player';
 
 const Game = () => {
     const rocketWidth = Constants.MAX_WIDTH / 7
@@ -27,7 +28,7 @@ const Game = () => {
     const [play, setPlay] = React.useState(false)
     
     // ------------rocket animation--------------//
-    const rocketCoords = React.useRef({x: 0, y: 0})
+    const rocketCoords = React.useRef({x: 0, y: 0, z: 0})
     const rocketExponentLaunch = React.useRef(-1)
     React.useEffect(() => {
         rocketCoords.current = getCoords(rocket.current)
@@ -40,7 +41,6 @@ const Game = () => {
         const handleTouchMove = (e) => {
             const touchX = e.touches[0].clientX
             const touchY = e.touches[0].clientY
-            console.log(e.touches)
             
             if (touchX >= minTouchAreaWigthMovePx && touchX <= maxTouchAreaWigthMovePx 
                 && touchY >= minTouchAreaHeightMovePx && touchY <= maxTouchAreaHeightMovePx && play) 
@@ -65,7 +65,7 @@ const Game = () => {
 
 
     function rocketAnimation() {
-        if (rocketCoords.current.y > maxRocketLaunchYHeightPx) { //ракета долетает максимум до 28vh высоты экрана
+        if (rocketCoords.current.y > maxRocketLaunchYHeightPx) { //ракета долетает максимум до 45vh высоты экрана
 
             const speed = Math.exp(rocketExponentLaunch.current)
             const newYCoord = rocketCoords.current.y - speed
@@ -77,19 +77,23 @@ const Game = () => {
                 rocketExponentLaunch.current = rocketExponentLaunch.current + Constants.ROCKET_START_INCREACE_COEFF
             }
         }
-        console.log(touchPositionRef.current.x, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx)
+
+        // движение направо
         if (touchPositionRef.current.x - mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx) > 3) {
             const newXCoord = rocketCoords.current.x + 3
+            const newZCoord = rocketCoords.current.z + 1
             if (isTouch.current === true) {
-                rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px)`
+                console.log("here")
+                rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px) rotate(${newZCoord}deg)`
                 rocketCoords.current.x = newXCoord
+                rocketCoords.current.z= newZCoord
             } else {
                 const lastMovePosition = mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx)
                 touchPositionRef.current = lastMovePosition
-            }
-            
+            }   
         }
 
+        // движение налево
         if (mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx) - touchPositionRef.current.x > 3 ) {
             const newXCoord = rocketCoords.current.x - 3
             if (isTouch.current === true) {
@@ -105,7 +109,7 @@ const Game = () => {
 
     const animate = () => {
         rocketAnimation()
-        requestRef.current = requestAnimationFrame(animate);
+        requestRef.current = requestAnimationFrame(animate)
     }
 
     React.useEffect(() => {
@@ -127,7 +131,11 @@ const Game = () => {
             <div className="game__road">
                 <div className="game__toucharea" ref={touchareaRef} onTouchStart={onTouchStartFunc} onTouchEnd={onTouchEndFunc}></div>
 
-                <img className="game__rocket" src={String(RocketImg)} alt="" style={{width: `${rocketWidth}px`}} ref={rocket}/>
+                <div className="game__rocket" ref={rocket}>
+                    <img  src={String(RocketImg)} alt="" style={{width: `${rocketWidth}px`}} />
+                    {/* <Player/> */}
+                </div>
+                
 
                 <img className="game__coin bronzecoin" src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
                 <img className="game__coin silvercoin" src={String(SilvercoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>

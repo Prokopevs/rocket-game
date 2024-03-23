@@ -5,8 +5,8 @@ const GoldcoinImg = require('../assets/goldcoin.png')
 const RocketImg = require('../assets/rocket.png')
 const SilvercoinImg = require('../assets/silvercoin.png')
 const SpaceImg = require('../assets/space.jpg')
+const FireImg = require('../assets/fire.png')
 const ArrowImg = require('../assets/arrow.png')
 const CoinImg = require('../assets/coin.png')
 
-
-export{ AsteroidImg, BronzecoinImg, FuelImg, GoldcoinImg, RocketImg, SilvercoinImg, SpaceImg, ArrowImg, CoinImg }
+export{ AsteroidImg, BronzecoinImg, FuelImg, GoldcoinImg, RocketImg, SilvercoinImg, SpaceImg, ArrowImg, CoinImg, FireImg }
