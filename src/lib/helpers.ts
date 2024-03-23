@@ -24,8 +24,9 @@ export const isMobileNavigator = () => {
 export function getCoords(element: any) {
   const matrix = window.getComputedStyle(element).transform
   const array = matrix.split(',')
-  const y = array[array.length -1]
-  const x = array[array.length -2]
+  const y = array[array.length - 1]
+  const x = array[array.length - 2]
+
 
   const numericY = parseFloat(y)
   const numericX = parseFloat(x)
@@ -39,7 +40,7 @@ export function getCoords(element: any) {
   // || computedStyle.getPropertyValue('-o-transform');
   // console.log(val)
 
-  return {x: numericX, y: numericY}
+  return {x: numericX, y: numericY, z: 0}
 }
 
 export function mapValue(value: number, min1: number, max1: number, min2: number, max2: number) {

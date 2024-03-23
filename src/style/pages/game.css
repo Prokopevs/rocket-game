@@ -5,12 +5,13 @@
     height: 100vh;
     width: 100vw;
     background-repeat: no-repeat;
+    margin: 0;
 }
 
 .game__road {
     display: flex;
     justify-content: center;
-    align-items: center;
+    margin: 0;
     height: 100%;
     width: 100%;
 }
@@ -25,7 +26,7 @@
 
 .game__rocket {
     position: absolute;
-    transform: rotate(0deg) translate(0, 45vh);
+    transform: rotate(0deg) translate(0, 87vh);
 }
 
 .game__coin {
@@ -33,33 +34,34 @@
 }
 
 .bronzecoin {
-    transform: translate(100px, -15vh);
+    transform: translate(0, -60px);
 }
 
 .silvercoin {
-    transform: translate(-100px, -30vh);
+    transform: translate(0, -60px);
 }
 
 .goldcoin {
-    transform: translate(50px, 9vh);
+    transform: translate(0, -60px);
 }
 
 .game__asteroid {
     position: absolute;
-    transform: translate(120px, -30vh);
-
+    transform: translate(120px, 0);
 }
 
 .game__fuel{
     position: absolute;
-    transform: translate(-100px, 20vh);
+    transform: translate(-100px, 0);
 }
-
 
 .game__button_start {
     /* background: transparent;
     border: none;
     padding: 0; */
     z-index: 1000;
-
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
