@@ -14,7 +14,7 @@ const Game = () => {
     const maxRocketRightMovePx = (Constants.MAX_WIDTH / 2) - (rocketWidth / 2) // для ракеты максимальное направо это 300
     const minRocketLeftMovePx = -maxRocketRightMovePx // мин налево -300 так как общая ширина 600
 
-    const gameTouchAreaWigth = Constants.MAX_WIDTH * 45 / 100 // 45% ширина области для управления ракетой
+    const gameTouchAreaWigth = Constants.MAX_WIDTH * 55 / 100 // 45% ширина области для управления ракетой
     const minTouchAreaWigthMovePx = (Constants.MAX_WIDTH - gameTouchAreaWigth) / 2
     const maxTouchAreaWigthMovePx = gameTouchAreaWigth + minTouchAreaWigthMovePx
     const gameTouchAreaHeight = Constants.MAX_HEIGHT * 40 / 100 // 40% высота области для управления ракетой нужно менять в css
@@ -39,7 +39,8 @@ const Game = () => {
     React.useEffect(() => {
         const handleTouchMove = (e) => {
             const touchX = e.touches[0].clientX
-            const touchY = e.touches[0].clientY;
+            const touchY = e.touches[0].clientY
+            console.log(e.touches)
             
             if (touchX >= minTouchAreaWigthMovePx && touchX <= maxTouchAreaWigthMovePx 
                 && touchY >= minTouchAreaHeightMovePx && touchY <= maxTouchAreaHeightMovePx && play) 
