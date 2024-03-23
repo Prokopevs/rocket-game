@@ -1,5 +1,3 @@
-import React from "react";
-import PropTypes from "prop-types";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -15,7 +13,6 @@ const Image = styled.img`
 `;
 
 const Tile = ({ src, tile, scale, state }) => { 
-
     const left = tile.width * state;
 
     return (

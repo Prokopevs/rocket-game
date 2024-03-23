@@ -1,16 +1,15 @@
 
-import React from "react" 
 import Sprite from "./sprite" 
-import rezult  from "../assets/rezult.png" 
+import { FireImg } from "../../pictures";
  
-const Player = () => { 
+const Player: React.FC<{}> = () => {
   return ( 
       <Sprite 
-        src={rezult} 
+        src={String(FireImg)}
         states={9} 
         tile={{ width: 140, height: 110 }} 
-        scale={3} 
-        framesPerStep={9} 
+        scale={0.7} 
+        framesPerStep={8} 
       /> 
   ) 
 } 
