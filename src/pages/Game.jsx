@@ -2,7 +2,7 @@ import '../style/pages/game.css';
 import { RocketImg, BronzecoinImg, SilvercoinImg, GoldcoinImg, AsteroidImg, FuelImg } from "../pictures"
 import { Constants } from '../Constants';
 import React from "react";
-import { MapValue, RandomlyDefineCoin, RandomlyDefineElement, getCoords } from '../lib/helpers';
+import { MapValue, RandomlyDefineCoin, RandomlyDefineElement, consoleRef, getCoords } from '../lib/helpers';
 import Player from '../components/fire/player';
 
 const Game = () => {
@@ -124,8 +124,8 @@ const Game = () => {
             let newZCoord = rocketCoords.current.z
 
             if (isTouch.current === true) {
-                if (newZCoord < 2) {
-                    newZCoord = rocketCoords.current.z + 0.5
+                if (newZCoord < 1) {
+                    newZCoord = rocketCoords.current.z + 0.25
                     rocketCoords.current.z = newZCoord
                 }
                 rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px) rotate(${newZCoord}deg)`
@@ -142,8 +142,8 @@ const Game = () => {
             let newZCoord = rocketCoords.current.z
 
             if (isTouch.current === true) {
-                if (newZCoord > -2) {
-                    newZCoord = rocketCoords.current.z - 0.5
+                if (newZCoord > -1) {
+                    newZCoord = rocketCoords.current.z - 0.25
                     rocketCoords.current.z = newZCoord
                 }
                 rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px) rotate(${newZCoord}deg)`
@@ -158,12 +158,12 @@ const Game = () => {
             let newZCoord = rocketCoords.current.z
 
             if (newZCoord > 0) {
-                newZCoord = newZCoord - 0.5
+                newZCoord = newZCoord - 0.25
                 rocketCoords.current.z = newZCoord
                 rocket.current.style.transform = `translate(${rocketCoords.current.x}px, ${rocketCoords.current.y}px) rotate(${newZCoord}deg)`
             }
             if(newZCoord < 0) {
-                newZCoord = newZCoord + 0.5
+                newZCoord = newZCoord + 0.25
                 rocketCoords.current.z = newZCoord
                 rocket.current.style.transform = `translate(${rocketCoords.current.x}px, ${rocketCoords.current.y}px) rotate(${newZCoord}deg)`
             }
@@ -175,25 +175,65 @@ const Game = () => {
     const allCoins = ["bronzeCoin1", "bronzeCoin2", "bronzeCoin3", "bronzeCoin4", "bronzeCoin5", "bronzeCoin6", "bronzeCoin7", "bronzeCoin8", 
     "bronzeCoin9", "bronzeCoin10"]
 
-    function elementAnimation(element, elementCoords, elementInitialYCoord) { 
+    function elementAnimation(element, elementCoords, startPosition, elementInitialYCoord) { 
         let newYelementCoord = elementCoords.current.y + 5 
-        let newXelementCoord = elementCoords.current.x
 
         if (newYelementCoord > Constants.MAX_HEIGHT) {
             newYelementCoord = elementInitialYCoord // высота сверху
-
-            // const direction = parseInt(Math.random() * 2)
-            // const randomXCoord = parseInt(Math.random() * (WidthDiveided2 - (element.current.clientWidth / 2)))
-            // newXelementCoord = direction === 0 ? -randomXCoord : randomXCoord
+            return true
         }
 
         elementCoords.current.y = newYelementCoord
-        elementCoords.current.x = newXelementCoord
-        element.current.style.transform = `translate(${newXelementCoord}px, ${newYelementCoord}px)`
+        elementCoords.current.x = startPosition
+        element.current.style.transform = `translate(${startPosition}px, ${newYelementCoord}px)`
+        return false
+    }
+
+    function startAnimateElem() {
+        const elemsToRemove = []
+        for (let i = 0; i < animateArr.current.length; i++) { 
+            if (animateArr.current[i].elem === "bronzeCoin1") {
+                const remove = elementAnimation(bronzeCoin1, bronzeCoin1Coords, animateArr.current[i].startPosition, -60)// todo -60
+                if (remove) elemsToRemove.push("bronzeCoin1")
+            }
+            // if (animateArr.current[i].elem === "bronzeCoin2") {
+            //     const remove = elementAnimation(bronzeCoin2, bronzeCoin2Coords, animateArr.current[i].startPosition, -60)// todo -60
+            //     if (remove) elemsToRemove.push("bronzeCoin2")
+            // }
+            // if (animateArr.current[i].elem === "bronzeCoin3") {
+            //     const remove = elementAnimation(bronzeCoin3, bronzeCoin3Coords, animateArr.current[i].startPosition, -60)// todo -60
+            //     if (remove) elemsToRemove.push("bronzeCoin3")
+            // }
+        }
+        console.log(elemsToRemove)
+        console.log(animateArr.current)
+
+        if (elemsToRemove[0] === "bronzeCoin1") {
+            console.log("------------------")
+            animateArr.current.splice(0, 1)
+            elemsToRemove.splice(0, 1)
+            console.log(elemsToRemove)
+            console.log(animateArr.current)
+            console.log("------------------")
+        }
+        
+
+        // for (let i = 0; i < elemsToRemove.length; i++) {
+        //     for (let j = 0; j < animateArr.current.length; j++) {
+        //         if (elemsToRemove[i] === animateArr.current[j].elem) {
+        //             animateArr.current.splice(j, 1)
+        //             elemsToRemove.splice(i, 1)
+        //             i--
+        //             console.log(animateArr.current)
+        //             console.log("here")
+        //             break
+        //         }
+        //     }
+        // }
     }
 
     
-    function startAnimateElem() {
+    function addAnimateElem() {
         if (frames.current.currentFrames > frames.current.expectFrames) {
             const direction = parseInt(Math.random() * 2)
             const randomXCoord = parseInt(Math.random() * (WidthDiveided2 - (bronzeCoin1.current.clientWidth / 2))) // todo clientWidth
@@ -202,29 +242,31 @@ const Game = () => {
 
             if (animateArr.current.length === 0) {
                 animateArr.current.push({elem: allCoins[0], startPosition: newXelementCoord})
+                // consoleRef(animateArr)
                 pass = true
             }
-            if (!pass) {
+            
+            if (pass === false) {
                 for (let i = 0; i < allCoins.length; i++) {
-                    if (pass) {
+                    if (pass === true) {
                         break
                     }
                     for (let j = 0; j < animateArr.current.length; j++) {
                         if (allCoins[i] === animateArr.current[j].elem) {
                             break
                         }
-                        if (j === animateArr.current.length - 1) {
+                        if (j === animateArr.current.length - 1) { // последняя итерация
                             animateArr.current.push({elem: allCoins[i], startPosition: newXelementCoord})
                             pass = true
+                            // consoleRef(animateArr)
                         }
                     }
                 }
             }
             
-
             frames.current.currentFrames = -1
-            frames.current.expectFrames = 100
-            console.log(animateArr.current)
+            frames.current.expectFrames = 50
+            consoleRef(animateArr)
         }
         frames.current.currentFrames++
     }
@@ -232,10 +274,8 @@ const Game = () => {
 
     const animate = () => {
         rocketAnimation()
-        startAnimateElem()
-
-        //цикл
-        // elementAnimation()
+        addAnimateElem()
+        // startAnimateElem()
 
         requestRef.current = requestAnimationFrame(animate)
     }

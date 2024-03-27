@@ -210,3 +210,41 @@
 //     z-index: 1000;
 
 // }
+
+
+
+// function addAnimateElem() {
+//     if (frames.current.currentFrames > frames.current.expectFrames) {
+//         const direction = parseInt(Math.random() * 2)
+//         const randomXCoord = parseInt(Math.random() * (WidthDiveided2 - (bronzeCoin1.current.clientWidth / 2))) // todo clientWidth
+//         const newXelementCoord = direction === 0 ? -randomXCoord : randomXCoord
+
+//         if (animateArr.current.length === 0) {
+//             animateArr.current.push({elem: allCoins[0], startPosition: newXelementCoord})
+//             frames.current.currentFrames = -1
+//             frames.current.expectFrames = 50
+//             console.log(animateArr.current)
+//             return
+//         }
+        
+//         for (let i = 0; i < allCoins.length; i++) {
+//             for (let j = 0; j < animateArr.current.length; j++) {
+//                 if (allCoins[i] === animateArr.current[j].elem) {
+//                     break
+//                 }
+//                 if (j === animateArr.current.length - 1) {
+//                     animateArr.current.push({elem: allCoins[i], startPosition: newXelementCoord})
+//                     frames.current.currentFrames = -1
+//                     frames.current.expectFrames = 50
+//                     console.log(animateArr.current)
+//                     return
+//                 }
+//             }
+//         }
+        
+//         frames.current.currentFrames = -1
+//         frames.current.expectFrames = 50
+//         console.log(animateArr.current)
+//     }
+//     frames.current.currentFrames++
+// }

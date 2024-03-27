@@ -80,3 +80,11 @@ export function RandomlyDefineCoin() {
   // gas 15%
   return "silver"
 }
+
+export function consoleRef(ref: any) {
+  const arr = []
+  for (let i = 0; i < ref.current.length; i++) {
+    arr.push(ref.current[i])
+  }
+  console.log(arr)
+}
