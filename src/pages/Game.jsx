@@ -2,7 +2,7 @@ import '../style/pages/game.css';
 import { RocketImg, BronzecoinImg, SilvercoinImg, GoldcoinImg, AsteroidImg, FuelImg } from "../pictures"
 import { Constants } from '../Constants';
 import React from "react";
-import { getCoords, mapValue } from '../lib/helpers';
+import { MapValue, RandomlyDefineCoin, RandomlyDefineElement, getCoords } from '../lib/helpers';
 import Player from '../components/fire/player';
 
 const Game = () => {
@@ -24,9 +24,16 @@ const Game = () => {
     const maxTouchAreaHeightMovePx = Constants.MAX_HEIGHT
 
     const rocket = React.useRef()
-    const bronzeCoin = React.useRef()
-    const silverCoin = React.useRef()
-    const goldCoin = React.useRef()
+    const bronzeCoin1 = React.useRef()
+    const bronzeCoin2 = React.useRef()
+    const bronzeCoin3 = React.useRef()
+    const bronzeCoin4 = React.useRef()
+    const bronzeCoin5 = React.useRef()
+    const bronzeCoin6 = React.useRef()
+    const bronzeCoin7 = React.useRef()
+    const bronzeCoin8 = React.useRef()
+    const bronzeCoin9 = React.useRef()
+    const bronzeCoin10 = React.useRef()
     const asteroid = React.useRef()
     const fuel = React.useRef()
 
@@ -35,17 +42,33 @@ const Game = () => {
     const [play, setPlay] = React.useState(false)
 
     const rocketCoords = React.useRef({x: 0, y: 0, z: 0})
-    const bronzeCoinCoords = React.useRef({x: 0, y: 0, z: 0})
-    const silverCoinCoords = React.useRef({x: 0, y: 0, z: 0})
-    const goldCoinCoords = React.useRef({x: 0, y: 0, z: 0})
+    const bronzeCoin1Coords = React.useRef({x: 0, y: 0, z: 0})
+    const bronzeCoin2Coords = React.useRef({x: 0, y: 0, z: 0})
+    const bronzeCoin3Coords = React.useRef({x: 0, y: 0, z: 0})
+    const bronzeCoin4Coords = React.useRef({x: 0, y: 0, z: 0})
+    const bronzeCoin5Coords = React.useRef({x: 0, y: 0, z: 0})
+    const bronzeCoin6Coords = React.useRef({x: 0, y: 0, z: 0})
+    const bronzeCoin7Coords = React.useRef({x: 0, y: 0, z: 0})
+    const bronzeCoin8Coords = React.useRef({x: 0, y: 0, z: 0})
+    const bronzeCoin9Coords = React.useRef({x: 0, y: 0, z: 0})
+    const bronzeCoin10Coords = React.useRef({x: 0, y: 0, z: 0})
     const asteroidCoords = React.useRef({x: 0, y: 0, z: 0})
     const fuelCoords = React.useRef({x: 0, y: 0, z: 0})
 
+    const frames = React.useRef({currentFrames: 0, expectFrames: 80})
+
     React.useEffect(() => {
         rocketCoords.current = getCoords(rocket.current)
-        bronzeCoinCoords.current = getCoords(bronzeCoin.current)
-        silverCoinCoords.current = getCoords(silverCoin.current)
-        goldCoinCoords.current = getCoords(goldCoin.current)
+        bronzeCoin1Coords.current = getCoords(bronzeCoin1.current)
+        bronzeCoin2Coords.current = getCoords(bronzeCoin2.current)
+        bronzeCoin3Coords.current = getCoords(bronzeCoin3.current)
+        bronzeCoin4Coords.current = getCoords(bronzeCoin4.current)
+        bronzeCoin5Coords.current = getCoords(bronzeCoin5.current)
+        bronzeCoin6Coords.current = getCoords(bronzeCoin6.current)
+        bronzeCoin7Coords.current = getCoords(bronzeCoin7.current)
+        bronzeCoin8Coords.current = getCoords(bronzeCoin8.current)
+        bronzeCoin9Coords.current = getCoords(bronzeCoin9.current)
+        bronzeCoin10Coords.current = getCoords(bronzeCoin10.current)
         asteroidCoords.current = getCoords(asteroid.current)
         fuelCoords.current = getCoords(fuel.current)
     }, [])
@@ -96,7 +119,7 @@ const Game = () => {
         }
 
         // движение направо
-        if (touchPositionRef.current.x - mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx) > 3) {
+        if (touchPositionRef.current.x - MapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx) > 3) {
             const newXCoord = rocketCoords.current.x + 3
             let newZCoord = rocketCoords.current.z
 
@@ -108,13 +131,13 @@ const Game = () => {
                 rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px) rotate(${newZCoord}deg)`
                 rocketCoords.current.x = newXCoord
             } else {
-                const lastMovePosition = mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx)
+                const lastMovePosition = MapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx)
                 touchPositionRef.current = lastMovePosition
             }   
         }
 
         // движение налево
-        if (mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx) - touchPositionRef.current.x > 3 ) {
+        if (MapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx) - touchPositionRef.current.x > 3 ) {
             const newXCoord = rocketCoords.current.x - 3
             let newZCoord = rocketCoords.current.z
 
@@ -126,7 +149,7 @@ const Game = () => {
                 rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px) rotate(${newZCoord}deg)`
                 rocketCoords.current.x = newXCoord
             } else {
-                const lastMovePosition = mapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx)
+                const lastMovePosition = MapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx)
                 touchPositionRef.current = lastMovePosition
             }
         }
@@ -147,7 +170,11 @@ const Game = () => {
         }
     }
 
-    //----------------coin animation----------------//
+    //----------------element animation----------------//
+    const animateArr = React.useRef([]) // {elem: bronzeCoin1, startPosition: 13}
+    const allCoins = ["bronzeCoin1", "bronzeCoin2", "bronzeCoin3", "bronzeCoin4", "bronzeCoin5", "bronzeCoin6", "bronzeCoin7", "bronzeCoin8", 
+    "bronzeCoin9", "bronzeCoin10"]
+
     function elementAnimation(element, elementCoords, elementInitialYCoord) { 
         let newYelementCoord = elementCoords.current.y + 5 
         let newXelementCoord = elementCoords.current.x
@@ -155,9 +182,9 @@ const Game = () => {
         if (newYelementCoord > Constants.MAX_HEIGHT) {
             newYelementCoord = elementInitialYCoord // высота сверху
 
-            const direction = parseInt(Math.random() * 2)
-            const randomXCoord = parseInt(Math.random() * (WidthDiveided2 - (element.current.clientWidth / 2)))
-            newXelementCoord = direction === 0 ? -randomXCoord : randomXCoord
+            // const direction = parseInt(Math.random() * 2)
+            // const randomXCoord = parseInt(Math.random() * (WidthDiveided2 - (element.current.clientWidth / 2)))
+            // newXelementCoord = direction === 0 ? -randomXCoord : randomXCoord
         }
 
         elementCoords.current.y = newYelementCoord
@@ -165,12 +192,50 @@ const Game = () => {
         element.current.style.transform = `translate(${newXelementCoord}px, ${newYelementCoord}px)`
     }
 
+    
+    function startAnimateElem() {
+        if (frames.current.currentFrames > frames.current.expectFrames) {
+            const direction = parseInt(Math.random() * 2)
+            const randomXCoord = parseInt(Math.random() * (WidthDiveided2 - (bronzeCoin1.current.clientWidth / 2))) // todo clientWidth
+            const newXelementCoord = direction === 0 ? -randomXCoord : randomXCoord
+            let pass = false
+
+            if (animateArr.current.length === 0) {
+                animateArr.current.push({elem: allCoins[0], startPosition: newXelementCoord})
+                pass = true
+            }
+            if (!pass) {
+                for (let i = 0; i < allCoins.length; i++) {
+                    if (pass) {
+                        break
+                    }
+                    for (let j = 0; j < animateArr.current.length; j++) {
+                        if (allCoins[i] === animateArr.current[j].elem) {
+                            break
+                        }
+                        if (j === animateArr.current.length - 1) {
+                            animateArr.current.push({elem: allCoins[i], startPosition: newXelementCoord})
+                            pass = true
+                        }
+                    }
+                }
+            }
+            
+
+            frames.current.currentFrames = -1
+            frames.current.expectFrames = 100
+            console.log(animateArr.current)
+        }
+        frames.current.currentFrames++
+    }
+
 
     const animate = () => {
         rocketAnimation()
-        elementAnimation(bronzeCoin, bronzeCoinCoords, -60) // -60 менять также в css
-        elementAnimation(silverCoin, silverCoinCoords, -60) // -60 менять также в css
-        elementAnimation(goldCoin, goldCoinCoords, -60) // -60 менять также в css
+        startAnimateElem()
+
+        //цикл
+        // elementAnimation()
 
         requestRef.current = requestAnimationFrame(animate)
     }
@@ -200,9 +265,19 @@ const Game = () => {
                 </div>
                 
 
-                <img className="game__coin bronzecoin" ref={bronzeCoin} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
-                <img className="game__coin silvercoin" ref={silverCoin} src={String(SilvercoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
-                <img className="game__coin goldcoin" ref={goldCoin} src={String(GoldcoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
+                <img className="game__coin bronzecoin" ref={bronzeCoin1} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
+                <img className="game__coin bronzecoin" ref={bronzeCoin2} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
+                <img className="game__coin bronzecoin" ref={bronzeCoin3} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
+                <img className="game__coin bronzecoin" ref={bronzeCoin4} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
+                <img className="game__coin bronzecoin" ref={bronzeCoin5} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
+                <img className="game__coin bronzecoin" ref={bronzeCoin6} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
+                <img className="game__coin bronzecoin" ref={bronzeCoin7} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
+                <img className="game__coin bronzecoin" ref={bronzeCoin8} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
+                <img className="game__coin bronzecoin" ref={bronzeCoin9} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
+                <img className="game__coin bronzecoin" ref={bronzeCoin10} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
+
+                {/* <img className="game__coin silvercoin" ref={silverCoin} src={String(SilvercoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
+                <img className="game__coin goldcoin" ref={goldCoin} src={String(GoldcoinImg)} alt="" style={{width: `${coinsWidth}px`}}/> */}
 
                 <img className="game__asteroid" ref={asteroid} src={String(AsteroidImg)} alt="" style={{width: `${asteroidWidth}px`}}/>
                 <img className="game__fuel" ref={fuel} src={String(FuelImg)} alt="" style={{width: `${fuelWidth}px`}}/>

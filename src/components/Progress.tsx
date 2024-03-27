@@ -45,7 +45,7 @@ const Progress: React.FC<IProgress> = ({ completed }) => {
     const oilImageFirst = completed < 33 ? Oil_em : Oil
     const oilImageSecond = completed < 66 ? Oil_em : Oil
     const oilImageThird = completed < 100 ? Oil_em : Oil
-    console.log(completed)
+    // console.log(completed)
 
     return (
         <div style={containerStyles}>

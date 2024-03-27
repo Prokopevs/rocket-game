@@ -43,6 +43,40 @@ export function getCoords(element: any) {
   return {x: numericX, y: numericY, z: 0}
 }
 
-export function mapValue(value: number, min1: number, max1: number, min2: number, max2: number) {
+export function MapValue(value: number, min1: number, max1: number, min2: number, max2: number) {
     return min2 + (max2 - min2) * ((value - min1) / (max1 - min1))
+}
+
+
+const normalElemProbability = 80;
+const epicElemProbability = 5;
+
+export function RandomlyDefineElement() {
+  const calculated = Math.random() * 100
+  if (calculated <= normalElemProbability && calculated > epicElemProbability) {
+    // normal 80%
+    return "coin"
+  } else if (calculated <= epicElemProbability) {
+    // epic 5%  
+    return "asteroid"
+  }
+  // gas 15%
+  return "fuel"
+}
+
+
+const normalCoinProbability = 80;
+const epicCoinProbability = 5;
+
+export function RandomlyDefineCoin() {
+  const calculated = Math.random() * 100
+  if (calculated <= normalCoinProbability && calculated > epicCoinProbability) {
+    // normal 80%
+    return "bronze"
+  } else if (calculated <= epicCoinProbability) {
+    // epic 5%  
+    return "gold"
+  }
+  // gas 15%
+  return "silver"
 }
