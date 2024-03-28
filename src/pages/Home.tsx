@@ -26,9 +26,7 @@ const Home: React.FC<{}> = () => {
                     </div>
                     <img className="home_arrow" src={String(ArrowImg)} alt=""></img>
                 </div>
-            </div>
 
-            <div className="home_center">
                 <div className="home_balance">
                     <p className="home_balance_name">Balance:</p>
                     <div className="home_balance_center">
@@ -36,26 +34,18 @@ const Home: React.FC<{}> = () => {
                         <p className="home_balance_score">24423</p>
                     </div>
                 </div>
-            </div>
 
-            <div className="home_center">
                 <div className="home_play">
-                    <div className="home_play_center">
-                        <div className="home_play_btn">
-                            <p className="home_play_btn_text">Play</p>
-                            <img className="home_play_img" src={String(RocketImg)} alt=""></img>
-                        </div>
+                    <div className="home_play_btn">
+                        <p className="home_play_btn_text">Play</p>
+                        <img className="home_play_img" src={String(RocketImg)} alt=""></img>
                     </div>
                 </div>
-            </div>
-            <div className="home_center">
-                <p className="home_gas_text">Gas:</p>
-            </div>
-            <div className="home_center">
-                <Progress completed={completed} />
-            </div>
 
-            <div className="home_center_footer">
+                <p className="home_gas_text">Gas:</p>
+
+                <Progress completed={completed} />
+
                 <div className="home_footer">
                     <div className="home_footer_items">
                         <img

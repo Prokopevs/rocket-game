@@ -14,6 +14,7 @@ const Missions = require('../assets/missions.png')
 const Result = require('../assets/result.png')
 const Oil = require('../assets/oil.png')
 const Oil_em = require('../assets/oil_em.png')
+const Friendship = require('../assets/friendship.png')
 
 
-export{ AsteroidImg, BronzecoinImg, FuelImg, GoldcoinImg, RocketImg, SilvercoinImg, SpaceImg, ArrowImg, CoinImg, FireImg, Result, Missions, Friend, Boost, Oil, Oil_em }
+export{ AsteroidImg, BronzecoinImg, FuelImg, GoldcoinImg, RocketImg, SilvercoinImg, SpaceImg, ArrowImg, CoinImg, FireImg, Result, Missions, Friend, Boost, Oil, Oil_em, Friendship }
