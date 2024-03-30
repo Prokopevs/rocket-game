@@ -81,6 +81,23 @@ export function RandomlyDefineCoin() {
   return "silver"
 }
 
+export function RandomlyDefineXCoord(
+  WidthDiveided2: number, elemType: string, bronzeCoin1: any, fuel1: any, asteroid1: any) 
+{
+  const direction = parseInt("" + Math.random() * 2)
+  let randomXCoord = 0 // по умолчанию
+  if (elemType === "coin") {
+    randomXCoord = parseInt("" + Math.random() * (WidthDiveided2 - (bronzeCoin1.current.clientWidth / 2)))
+  } else if (elemType === "asteroid") {
+    randomXCoord = parseInt("" + Math.random() * (WidthDiveided2 - (asteroid1.current.clientWidth / 2)))
+  } else if (elemType === "fuel") {
+    randomXCoord = parseInt("" + Math.random() * (WidthDiveided2 - (fuel1.current.clientWidth / 2)))
+  }
+  const newXElementCoord = direction === 0 ? -randomXCoord : randomXCoord
+
+  return newXElementCoord
+}
+
 export function consoleRef(ref: any) {
   const arr = []
   for (let i = 0; i < ref.current.length; i++) {
