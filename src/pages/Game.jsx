@@ -2,8 +2,9 @@ import '../style/pages/game.css';
 import { RocketImg, BronzecoinImg, SilvercoinImg, GoldcoinImg, AsteroidImg, FuelImg } from "../pictures"
 import { Constants } from '../Constants';
 import React from "react";
-import { MapValue, RandomlyDefineCoin, RandomlyDefineElement, RandomlyDefineXCoord, consoleRef, getCoords } from '../lib/helpers';
+import { MapValue, RandomlyDefineElement, RandomlyDefineXCoord, RandomlyExpectFrames, consoleRef, getCoords } from '../lib/helpers';
 import Player from '../components/fire/player';
+import { elementAnimation, handleAnimateArrElement } from '../lib/gameHelp';
 
 const Game = () => {
     const rocketWidth = Constants.MAX_WIDTH / 7
@@ -174,25 +175,10 @@ const Game = () => {
     const animateArr = React.useRef([]) // {elem: bronzeCoin1, startPosition: 13}
     const allCoins = ["bronzeCoin1", "bronzeCoin2", "bronzeCoin3", "bronzeCoin4", "bronzeCoin5", "bronzeCoin6", "bronzeCoin7", "bronzeCoin8", 
     "bronzeCoin9", "bronzeCoin10"]
-    const allFuel = ["fuel1"]
     const allAsteroid = ["asteroid1"]
+    const allFuel = ["fuel1"]
 
-    function elementAnimation(element, elementCoords, startPosition, elementInitialYCoord) { 
-        let newYElementCoord = elementCoords.current.y + Constants.ELEMENT_DOWN_SPEED 
-
-        if (newYElementCoord > Constants.MAX_HEIGHT) { // если спустился вниз
-            elementCoords.current.y = elementInitialYCoord
-            element.current.style.transform = `translate(${startPosition}px, 
-            ${elementInitialYCoord}px)`
-            return true
-        }
-
-        elementCoords.current.y = newYElementCoord
-        elementCoords.current.x = startPosition
-        element.current.style.transform = `translate(${startPosition}px, ${newYElementCoord}px)`
-        return false
-    }
-
+    
     function startAnimateElem() {
         const elemsToRemove = []
         for (let i = 0; i < animateArr.current.length; i++) { 
@@ -224,6 +210,14 @@ const Game = () => {
                 const remove = elementAnimation(bronzeCoin7, bronzeCoin7Coords, animateArr.current[i].startPosition, Constants.ELEMENT_COIN_INIT_POSITION)
                 if (remove) elemsToRemove.push("bronzeCoin7")
             }
+            if (animateArr.current[i].elem === "asteroid1") {
+                const remove = elementAnimation(asteroid1, asteroid1Coords, animateArr.current[i].startPosition, Constants.ELEMENT_ASTEROID_INIT_POSITION)
+                if (remove) elemsToRemove.push("asteroid1")
+            }
+            if (animateArr.current[i].elem === "fuel1") {
+                const remove = elementAnimation(fuel1, fuel1Coords, animateArr.current[i].startPosition, Constants.ELEMENT_FUEL_INIT_POSITION)
+                if (remove) elemsToRemove.push("fuel1")
+            }
         }
 
         for (let i = 0; i < elemsToRemove.length; i++) {
@@ -235,7 +229,6 @@ const Game = () => {
                     elemsToRemove.splice(i, 1)
                     i--
                     // consoleRef(animateArr)
-                    // console.log(elemsToRemove)
                     break
                 }
             }
@@ -244,39 +237,99 @@ const Game = () => {
 
     function addAnimateElem() {
         if (frames.current.currentFrames > frames.current.expectFrames) {
-            const elemType = RandomlyDefineElement()
+            const elemType = RandomlyDefineElement() // "coin" or "asteroid" or "fuel"
             const newXElementCoord = RandomlyDefineXCoord(
-            WidthDiveided2, elemType, bronzeCoin1, fuel1, asteroid1)
+            WidthDiveided2, elemType, bronzeCoin1, fuel1, asteroid1) // отдаёт координаты в зависимости от элемента
+            const framesQuantity = RandomlyExpectFrames()
 
             if (animateArr.current.length === 0) {
-                animateArr.current.push({elem: allCoins[0], startPosition: newXElementCoord})
+                if (elemType === "coin") animateArr.current.push({elem: allCoins[0], startPosition: newXElementCoord})
+                if (elemType === "asteroid") animateArr.current.push({elem: allAsteroid[0], startPosition: newXElementCoord})
+                if (elemType === "fuel") animateArr.current.push({elem: allFuel[0], startPosition: newXElementCoord})
                 // consoleRef(animateArr)
             } else {
-                outer_loop: 
-                for (let i = 0; i < allCoins.length; i++) {
-                    for (let j = 0; j < animateArr.current.length; j++) {
-                        if (allCoins[i] === animateArr.current[j].elem) {
-                            break
-                        }
-                        if (j === animateArr.current.length - 1) { // последняя итерация
-                            animateArr.current.push({elem: allCoins[i], startPosition: newXElementCoord})
-                            // consoleRef(animateArr)
-                            break outer_loop
-                        }
+                if (elemType === "coin") {
+                    for (let i = 0; i < allCoins.length; i++) {
+                        const pushed = handleAnimateArrElement(allCoins[i], animateArr, newXElementCoord)
+                        if (pushed === true) break
                     }
+                }
+                if (elemType === "asteroid") {                  
+                    for (let i = 0; i < allAsteroid.length; i++) {
+                        const pushed = handleAnimateArrElement(allAsteroid[i], animateArr, newXElementCoord)
+                        if (pushed === true) break
+                    }
+                }
+                if (elemType === "fuel") {           
+                    for (let i = 0; i < allFuel.length; i++) {
+                        const pushed = handleAnimateArrElement(allFuel[i], animateArr, newXElementCoord)
+                        if (pushed === true) break
+                    }  
                 }
             }
             frames.current.currentFrames = -1
-            frames.current.expectFrames = 50
+            frames.current.expectFrames = framesQuantity
             // consoleRef(animateArr)
         }
         frames.current.currentFrames++
+    }
+
+    // collision
+    function hasCollision() {
+        const RocketYTop = rocketCoords.current.y
+        const RocketYBottom = rocketCoords.current.y + rocket.current.clientHeight
+        
+        for (let i = 0; i < animateArr.current.length; i++) { 
+            let elemYTop
+            let elemYBottom 
+            if (animateArr.current[i].elem === "bronzeCoin1") {
+                elemYTop = bronzeCoin1Coords.current.y
+                elemYBottom = bronzeCoin1Coords.current.y + bronzeCoin1.current.clientHeight
+            }
+            if (animateArr.current[i].elem === "bronzeCoin2") {
+                elemYTop = bronzeCoin2Coords.current.y
+                elemYBottom = bronzeCoin2Coords.current.y + bronzeCoin2.current.clientHeight
+            }
+            if (animateArr.current[i].elem === "bronzeCoin3") {
+                elemYTop = bronzeCoin3Coords.current.y
+                elemYBottom = bronzeCoin3Coords.current.y + bronzeCoin3.current.clientHeight
+            }
+            if (animateArr.current[i].elem === "bronzeCoin4") {
+                elemYTop = bronzeCoin4Coords.current.y
+                elemYBottom = bronzeCoin4Coords.current.y + bronzeCoin4.current.clientHeight
+            }
+            if (animateArr.current[i].elem === "bronzeCoin5") {
+                elemYTop = bronzeCoin5Coords.current.y
+                elemYBottom = bronzeCoin5Coords.current.y + bronzeCoin5.current.clientHeight
+            }
+            if (animateArr.current[i].elem === "bronzeCoin6") {
+                elemYTop = bronzeCoin6Coords.current.y
+                elemYBottom = bronzeCoin6Coords.current.y + bronzeCoin6.current.clientHeight
+            }
+            if (animateArr.current[i].elem === "bronzeCoin7") {
+                elemYTop = bronzeCoin7Coords.current.y
+                elemYBottom = bronzeCoin7Coords.current.y + bronzeCoin7.current.clientHeight
+            }
+            if (animateArr.current[i].elem === "asteroid1") {
+                elemYTop = asteroid1Coords.current.y
+                elemYBottom = asteroid1Coords.current.y + asteroid1.current.clientHeight
+            }
+            if (animateArr.current[i].elem === "fuel1") {
+                elemYTop = fuel1Coords.current.y
+                elemYBottom = fuel1Coords.current.y + fuel1.current.clientHeight
+            }
+
+            if (RocketYTop < elemYBottom && RocketYBottom > elemYTop) {
+                console.log("collizion false")
+            }
+        }
     }
 
     const animate = () => {
         rocketAnimation()
         addAnimateElem()
         startAnimateElem()
+        hasCollision()
 
         requestRef.current = requestAnimationFrame(animate)
     }

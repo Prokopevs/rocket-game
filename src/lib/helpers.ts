@@ -48,20 +48,20 @@ export function MapValue(value: number, min1: number, max1: number, min2: number
 }
 
 
-const normalElemProbability = 80;
-const epicElemProbability = 5;
+const normalElemProbability = 70;
+const epicElemProbability = 10;
 
 export function RandomlyDefineElement() {
   const calculated = Math.random() * 100
   if (calculated <= normalElemProbability && calculated > epicElemProbability) {
-    // normal 80%
+    // normal 70%
     return "coin"
   } else if (calculated <= epicElemProbability) {
-    // epic 5%  
-    return "asteroid"
+    // epic 10%  
+    return "fuel"
   }
-  // gas 15%
-  return "fuel"
+  // gas 20%
+  return "asteroid"
 }
 
 
@@ -98,6 +98,12 @@ export function RandomlyDefineXCoord(
   return newXElementCoord
 }
 
+const numbers = [40, 50, 60, 70]
+export function RandomlyExpectFrames() {
+  const randomIndex = Math.floor(Math.random() * numbers.length)
+  return numbers[randomIndex]
+}
+
 export function consoleRef(ref: any) {
   const arr = []
   for (let i = 0; i < ref.current.length; i++) {
@@ -105,3 +111,5 @@ export function consoleRef(ref: any) {
   }
   console.log(arr)
 }
+
+

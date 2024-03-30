@@ -27,10 +27,12 @@
 .game__rocket {
     position: absolute;
     transform: rotate(0deg) translate(0, 87vh);
+    border: 1px solid red;
 }
 
 .game__coin {
     position: absolute;
+    border: 1px solid green;
 }
 
 .bronzecoin {
@@ -47,12 +49,12 @@
 
 .game__asteroid {
     position: absolute;
-    transform: translate(120px, 0);
+    transform: translate(120px, -90px);
 }
 
 .game__fuel{
     position: absolute;
-    transform: translate(-100px, 0);
+    transform: translate(-100px, -60px);
 }
 
 .game__button_start {
