@@ -27,34 +27,39 @@
 .game__rocket {
     position: absolute;
     transform: rotate(0deg) translate(0, 87vh);
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .game__coin {
     position: absolute;
-    border: 1px solid green;
+    /* border: 1px solid green; */
 }
 
 .bronzecoin {
     transform: translate(0, -80px);
+    display: initial;
 }
 
 .silvercoin {
     transform: translate(0, -60px);
+    display: initial;
 }
 
 .goldcoin {
     transform: translate(0, -60px);
+    display: initial;
 }
 
 .game__asteroid {
     position: absolute;
     transform: translate(120px, -90px);
+    display: initial;
 }
 
 .game__fuel{
     position: absolute;
     transform: translate(-100px, -60px);
+    display: initial;
 }
 
 .game__button_start {
@@ -66,4 +71,40 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.game__info {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+}
+
+.game__score {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.game__score_img {
+    padding-right: 8px;
+}
+
+.game__score_coins {
+    color: white;
+    font-size: 25px;
+}
+
+.game__percent {
+    display: flex;
+    align-items: center;
+    margin-left: 4px;
+}
+
+.game__percent_img {
+    padding-right: 8px;
+}
+
+.game__percent_num {
+    color: white;
+    font-size: 25px;
 }
