@@ -4,7 +4,7 @@ import { Constants } from '../Constants';
 import React from "react";
 import { MapValue, RandomlyDefineElement, RandomlyDefineXCoord, RandomlyExpectFrames, consoleRef, getCoords } from '../lib/helpers';
 import Player from '../components/fire/player';
-import { elemCurrentCoords, elementAnimation, handleAnimateArrElement } from '../lib/gameHelp';
+import { elemCurrentCoords, elementAnimation, handleAnimateArrElement, removeAllVisibleElements } from '../lib/gameHelp';
 
 const Game = () => {
     const rocketWidth = Constants.MAX_WIDTH / 7
@@ -277,7 +277,7 @@ const Game = () => {
             }
             frames.current.currentFrames = -1
             frames.current.expectFrames = framesQuantity
-            consoleRef(animateArr)
+            // consoleRef(animateArr)
         }
         frames.current.currentFrames++
     }
@@ -375,7 +375,10 @@ const Game = () => {
     }
 
     function finishGame() {
-        animateArr.current = []
+        removeAllVisibleElements(animateArr, bronzeCoin1, bronzeCoin2, bronzeCoin3, bronzeCoin4, bronzeCoin5, bronzeCoin6, bronzeCoin7, asteroid1, asteroid2, fuel1,
+            bronzeCoin1Coords, bronzeCoin2Coords, bronzeCoin3Coords, bronzeCoin4Coords, bronzeCoin5Coords, bronzeCoin6Coords, bronzeCoin7Coords, 
+            asteroid1Coords, asteroid2Coords, fuel1Coords, Constants.ELEMENT_COIN_INIT_POSITION, Constants.ELEMENT_ASTEROID_INIT_POSITION, 
+            Constants.ELEMENT_FUEL_INIT_POSITION)
         setPlay(() => false)
     }
 

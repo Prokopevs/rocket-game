@@ -47,3 +47,50 @@ export function elemCurrentCoords(elem: any, elemCoords: any, rocketObj: RocketO
   }
   return false
 }
+
+export function removeAllVisibleElements(animateArr: any, bronzeCoin1: any, bronzeCoin2: any, bronzeCoin3: any, bronzeCoin4: any, bronzeCoin5: any, bronzeCoin6: any, 
+  bronzeCoin7: any, asteroid1: any, asteroid2: any, fuel1: any,bronzeCoin1Coords: any, bronzeCoin2Coords: any, bronzeCoin3Coords: any, bronzeCoin4Coords: any, 
+  bronzeCoin5Coords: any, bronzeCoin6Coords: any, bronzeCoin7Coords: any, asteroid1Coords: any, asteroid2Coords: any, fuel1Coords: any, 
+  ELEMENT_COIN_INIT_POSITION: number, ELEMENT_ASTEROID_INIT_POSITION: number, ELEMENT_FUEL_INIT_POSITION: number) 
+  {
+    for (let i = 0; i < animateArr.current.length; i++) {
+      if (animateArr.current[i].elem === "bronzeCoin1") {
+        remove(bronzeCoin1, bronzeCoin1Coords, ELEMENT_COIN_INIT_POSITION)
+      }
+      if (animateArr.current[i].elem === "bronzeCoin2") {
+        remove(bronzeCoin2, bronzeCoin2Coords, ELEMENT_COIN_INIT_POSITION)
+      }
+      if (animateArr.current[i].elem === "bronzeCoin3") {
+        remove(bronzeCoin3, bronzeCoin3Coords, ELEMENT_COIN_INIT_POSITION)
+      }
+      if (animateArr.current[i].elem === "bronzeCoin4") {
+        remove(bronzeCoin4, bronzeCoin4Coords, ELEMENT_COIN_INIT_POSITION)
+      }
+      if (animateArr.current[i].elem === "bronzeCoin5") {
+        remove(bronzeCoin5, bronzeCoin5Coords, ELEMENT_COIN_INIT_POSITION)
+      }
+      if (animateArr.current[i].elem === "bronzeCoin6") {
+        remove(bronzeCoin6, bronzeCoin6Coords, ELEMENT_COIN_INIT_POSITION)
+      }
+      if (animateArr.current[i].elem === "bronzeCoin7") {
+        remove(bronzeCoin7, bronzeCoin7Coords, ELEMENT_COIN_INIT_POSITION)
+      }
+      if (animateArr.current[i].elem === "asteroid1") {
+        remove(asteroid1, asteroid1Coords, ELEMENT_ASTEROID_INIT_POSITION)
+      }
+      if (animateArr.current[i].elem === "asteroid2") {
+        remove(asteroid2, asteroid2Coords, ELEMENT_ASTEROID_INIT_POSITION)
+      }
+      if (animateArr.current[i].elem === "fuel1") {
+        remove(fuel1, fuel1Coords, ELEMENT_FUEL_INIT_POSITION)
+      }
+    }
+
+    animateArr.current = []
+  }
+
+function remove(element: any, elementCoords: any, elementInitialYCoord: any) {
+  elementCoords.current.y = elementInitialYCoord
+  element.current.style.transform = `translate(${elementCoords.current.x}px, ${elementInitialYCoord}px)`
+  element.current.style.display = 'initial'
+}
