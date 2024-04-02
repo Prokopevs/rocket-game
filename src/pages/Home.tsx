@@ -43,6 +43,7 @@ const Home: React.FC<{}> = () => {
     }, [])
 
     const onClickPlay = () => {
+        navigate(`/game`)
         if (completed > 33) {
             if (timeToFilled > 0) {
                 let timeToFinish = Number(localStorage.getItem("futureTime"))
