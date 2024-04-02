@@ -96,7 +96,6 @@
     line-height: 0px;
 }
 
-
 /* play */
 .home_play {
     width: 34%;
@@ -189,6 +188,11 @@
     width: 90%;
     text-align: center;
     cursor: pointer;
+
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
 }
 
 .home_footer_line {

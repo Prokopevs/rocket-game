@@ -1,10 +1,15 @@
 import "../style/pages/home.css"
 import { ArrowImg, CoinImg, RocketImg, Result, Friend, Missions, Boost } from "../pictures"
 import Progress from "../components/Progress"
+import { useNavigate } from "react-router-dom"
 import React from "react"
+import { CSSTransition } from "react-transition-group"
+import PopupInfo from "../components/PopupInfo"
 const Home: React.FC<{}> = () => {
     const [completed, setCompleted] = React.useState(0)
     const tick = React.useRef<number>(0)
+    const navigate = useNavigate()
+    const [showPopup, setShowPopup] = React.useState(false)
 
     React.useEffect(() => {
         setInterval(() => {
@@ -15,8 +20,35 @@ const Home: React.FC<{}> = () => {
         }, 300)
     }, [])
 
+    React.useEffect(() => {
+        let timeout: NodeJS.Timeout
+        if (showPopup) {
+            timeout = setTimeout(() => {
+                setShowPopup(!showPopup)
+            }, 3000)
+        }
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, [showPopup])
+
+    const onClickEvent = (category: string) => {
+        if (category === "Missions") {
+            setShowPopup(!showPopup)
+        }
+        if (category === "Friends") {
+            navigate(`/Friends`)
+        }
+        if (category === "Boost") {
+            navigate(`/Boost`)
+        }
+    }
+
     return (
         <div className="home">
+            <CSSTransition in={showPopup} timeout={150} classNames="my-node" unmountOnExit>
+                <PopupInfo text={"Not available yet"} />
+            </CSSTransition>
             <div className="home_center">
                 <div className="home_header">
                     <img className="home_coin" src={String(Result)} alt=""></img>
@@ -47,21 +79,25 @@ const Home: React.FC<{}> = () => {
                 <Progress completed={completed} />
 
                 <div className="home_footer">
-                    <div className="home_footer_items">
+                    <button
+                        className="home_footer_items"
+                        disabled={showPopup}
+                        onClick={() => onClickEvent("Missions")}
+                    >
                         <img
                             className="home_footer_missions_img"
                             src={String(Missions)}
                             alt=""
                         ></img>
                         <p className="home_footer_items_text">Missions</p>
-                    </div>
+                    </button>
                     <div className="home_footer_line"></div>
-                    <div className="home_footer_items">
+                    <div className="home_footer_items" onClick={() => onClickEvent("Boost")}>
                         <img className="home_footer_boost_img" src={String(Boost)} alt=""></img>
                         <p className="home_footer_items_text">Boost</p>
                     </div>
                     <div className="home_footer_line"></div>
-                    <div className="home_footer_items">
+                    <div className="home_footer_items" onClick={() => onClickEvent("Friends")}>
                         <img className="home_footer_friends_img" src={String(Friend)} alt=""></img>
                         <p className="home_footer_items_text">Friends</p>
                     </div>

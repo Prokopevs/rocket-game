@@ -1,0 +1,145 @@
+.boost {
+    background-image: url("../../assets/home.jpg");
+    background-position: 50% 100%;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.boost_center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.boost_text_description {
+    color: white;
+    font-size: 18px;
+    margin-top: 40px;
+    font-weight: 700;       
+    line-height: 20px;
+    padding-top: 10px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.boost_text_center {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.boost_balance_img {
+    width: 20%;
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+}
+
+.boost_balance_score {
+    color: white;
+    font-size: 35px;
+    line-height: 0px;
+}
+
+.boost_item {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    background: rgba(247, 242, 241, 0.789);
+    padding: 16px;
+    gap: 24px;
+    width: 80vw;
+}
+
+.boost_item_inner {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.boost_item_inner_img {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(246, 241, 241, 0.77);
+    flex-shrink: 0;
+    object-fit: contain;
+    border: none;
+    padding: 4px;
+}
+
+.boost_item_inner_text {
+    font-weight: bold;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 22px;
+    color: rgb(44, 48, 52);
+    margin: 0px;
+    text-decoration: none;
+}
+
+.boost_item_inner_description {
+    font-weight: bold;
+    line-height: 18px;
+    white-space: pre-wrap;
+    margin-bottom: 8px;
+    font-family: Manrope;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+    color: rgb(88, 84, 80);
+    margin: 0px;
+}
+
+.boost_item_inner_cost {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+    margin-left: -2px;
+}
+
+.boost_item_inner_cost_img {
+    width: 24px;
+    height: 24px;
+}
+
+.boost_item_inner_cost_price {
+    font-weight: bold;
+    font-family: Manrope;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: rgb(44, 48, 52);
+    margin: 0px;
+    text-decoration: none;
+}
+
+.boost_item_inner_cost_level {
+    color: rgb(107, 102, 97);
+    font-family: Manrope;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: rgb(44, 48, 52);
+    margin: 0px;
+    text-decoration: none;
+}
+
+.boost_item_inner_arrow {
+    margin-left: auto;
+    opacity: 0.6;
+    width: 23px;
+    height: 23px;
+}   

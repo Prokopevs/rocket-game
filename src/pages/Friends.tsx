@@ -1,7 +1,12 @@
 import "../style/pages/friends.css"
 import React from "react"
 import FriendsList from "../components/FriendsList"
+import PopupInfo from "../components/PopupInfo"
+import { CSSTransition } from "react-transition-group"
+
 const Friends: React.FC<{}> = () => {
+    const [showPopup, setShowPopup] = React.useState(false)
+
     const arr = [
         { name: "Vova Prokopev", score: 0.011 },
         { name: "Vova Prokopev", score: 0.011 },
@@ -14,8 +19,29 @@ const Friends: React.FC<{}> = () => {
         { name: "Vova Prokopev", score: 0.011 },
     ]
 
+    const onClickLink = async () => {
+        const text = "https://www.youtube.com/watch?v="
+        await navigator.clipboard.writeText(text)
+        setShowPopup(!showPopup)
+    }
+
+    React.useEffect(() => {
+        let timeout: NodeJS.Timeout
+        if (showPopup) {
+            timeout = setTimeout(() => {
+                setShowPopup(!showPopup)
+            }, 3000)
+        }
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, [showPopup])
+
     return (
         <div className="friends">
+            <CSSTransition in={showPopup} timeout={150} classNames="my-node" unmountOnExit>
+                <PopupInfo text={"Invite link is copied"} />
+            </CSSTransition>
             <div className="friends_center">
                 <p className="friends_text_count">7 friend</p>
                 <p className="friends_text_description">
@@ -27,7 +53,9 @@ const Friends: React.FC<{}> = () => {
                         <FriendsList key={`${items.name}_${index}`} {...items} />
                     ))}
                 </div>
-                <button className="friends_button">Invite a Friend</button>
+                <button className="friends_button" disabled={showPopup} onClick={() => onClickLink()}>
+                    Invite a Friend
+                </button>
             </div>
         </div>
     )

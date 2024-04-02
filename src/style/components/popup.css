@@ -1,0 +1,15 @@
+.popup {
+    position: absolute;
+    width: 140px;
+    height: auto;
+    background-color: rgba(232, 228, 228, 0.954);
+    z-index: 11;
+    top: 40px;
+    left: 20px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.popup_text {
+    font-size: 16px;
+}
