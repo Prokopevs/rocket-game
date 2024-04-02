@@ -6,19 +6,73 @@ import React from "react"
 import { CSSTransition } from "react-transition-group"
 import PopupInfo from "../components/PopupInfo"
 const Home: React.FC<{}> = () => {
-    const [completed, setCompleted] = React.useState(0)
+    const minutsToFill = 60000 // 1 min
+    // let timestamp = Date.now()
+    // timestamp += 1 * 60 * 1000
+    // localStorage.setItem("futureTime", timestamp.toString())
+    let percentL
+    let futureTimeL = localStorage.getItem("futureTime") // время заполнения
+    let timeToFilled = Number(futureTimeL) - Date.now() // сколько заполнено
+    if (timeToFilled > 0) {
+        percentL = Number((100 - (timeToFilled * 100) / minutsToFill).toFixed(2))
+    } else {
+        percentL = 100
+    }
+
+    const [completed, setCompleted] = React.useState(percentL)
+    const [showPopup, setShowPopup] = React.useState(false)
     const tick = React.useRef<number>(0)
     const navigate = useNavigate()
-    const [showPopup, setShowPopup] = React.useState(false)
 
     React.useEffect(() => {
         setInterval(() => {
             if (tick.current < 100) {
-                setCompleted((completed) => completed + 0.5)
-                tick.current = tick.current + 0.5
+                let futureTime = localStorage.getItem("futureTime") // время заполнения
+                let filled = Number(futureTime) - Date.now() // сколько заполнено
+                if (filled > 0) {
+                    let percent = Number((100 - (filled * 100) / minutsToFill).toFixed(2))
+                    setCompleted(percent)
+                    tick.current = percent
+                }
+                if (filled < 0) {
+                    setCompleted(100)
+                    tick.current = 100
+                }
             }
-        }, 300)
+        }, 500)
     }, [])
+
+    const onClickPlay = () => {
+        if (completed > 33) {
+            if (timeToFilled > 0) {
+                let timeToFinish = Number(localStorage.getItem("futureTime"))
+                let addedTime = timeToFinish + 20000
+                localStorage.setItem("futureTime", addedTime.toString())
+                setCompleted((completed) => completed - 33.33)
+                tick.current = tick.current - 33.33
+            } else {
+                let timestamp = Date.now()
+                timestamp += 20000
+                localStorage.setItem("futureTime", timestamp.toString())
+                setCompleted((completed) => completed - 33.33)
+                tick.current = tick.current - 33.33
+            }
+        } else {
+            setShowPopup(true)
+        }
+    }
+
+    const onClickEvent = (category: string) => {
+        if (category === "Missions") {
+            navigate(`/Missions`)
+        }
+        if (category === "Friends") {
+            navigate(`/Friends`)
+        }
+        if (category === "Boost") {
+            navigate(`/Boost`)
+        }
+    }
 
     React.useEffect(() => {
         let timeout: NodeJS.Timeout
@@ -32,22 +86,10 @@ const Home: React.FC<{}> = () => {
         }
     }, [showPopup])
 
-    const onClickEvent = (category: string) => {
-        if (category === "Missions") {
-            setShowPopup(!showPopup)
-        }
-        if (category === "Friends") {
-            navigate(`/Friends`)
-        }
-        if (category === "Boost") {
-            navigate(`/Boost`)
-        }
-    }
-
     return (
         <div className="home">
             <CSSTransition in={showPopup} timeout={150} classNames="my-node" unmountOnExit>
-                <PopupInfo text={"Not available yet"} />
+                <PopupInfo text={"Not enough gas"} />
             </CSSTransition>
             <div className="home_center">
                 <div className="home_header">
@@ -67,7 +109,7 @@ const Home: React.FC<{}> = () => {
                     </div>
                 </div>
 
-                <div className="home_play">
+                <div className="home_play" onClick={() => onClickPlay()}>
                     <div className="home_play_btn">
                         <p className="home_play_btn_text">Play</p>
                         <img className="home_play_img" src={String(RocketImg)} alt=""></img>
@@ -79,11 +121,7 @@ const Home: React.FC<{}> = () => {
                 <Progress completed={completed} />
 
                 <div className="home_footer">
-                    <button
-                        className="home_footer_items"
-                        disabled={showPopup}
-                        onClick={() => onClickEvent("Missions")}
-                    >
+                    <button className="home_footer_items" onClick={() => onClickEvent("Missions")}>
                         <img
                             className="home_footer_missions_img"
                             src={String(Missions)}
