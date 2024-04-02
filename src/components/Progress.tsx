@@ -20,7 +20,7 @@ const Progress: React.FC<IProgress> = ({ completed }) => {
     const fillerStyles = {
         height: "100%",
         width: `${completed}%`,
-        backgroundColor: "#6a1b9a",
+        backgroundColor: "#e0cf07",
         transition: "width 0.3s ease-in-out",
         borderRadius: "inherit",
         textAlign: "right" as const,

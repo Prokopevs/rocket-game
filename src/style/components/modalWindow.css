@@ -214,7 +214,8 @@
     align-items: center;
     -webkit-box-pack: center;
     justify-content: center;
-    background: rgb(156, 38, 60);
+    background-image: url("../../assets/green.jpg");
+
     flex-shrink: 0;
     width: 100%;
     height: 56px;
