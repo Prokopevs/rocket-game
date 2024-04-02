@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom"
 import Game from "../pages/Game"
 import Home from "../pages/Home"
-import Progress from "../components/Progress"
 import React from "react"
 import Friends from "../pages/Friends"
+import Boost from "../pages/Boost"
 
 const AppRouter: React.FC<{}> = () => {
     return (
@@ -12,6 +12,7 @@ const AppRouter: React.FC<{}> = () => {
                 <Route path="/" element={<Home />} />
                 <Route path="/Game" element={<Game />} />
                 <Route path="/Friends" element={<Friends />} />
+                <Route path="/Boost" element={<Boost />} />
             </Routes>
         </>
     )
