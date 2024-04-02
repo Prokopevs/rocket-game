@@ -1,10 +1,10 @@
 import '../style/pages/game.css';
-import { RocketImg, BronzecoinImg, SilvercoinImg, GoldcoinImg, AsteroidImg, FuelImg } from "../pictures"
+import { RocketImg, BronzecoinImg, SilvercoinImg, GoldcoinImg, AsteroidImg, FuelImg, Oil } from "../pictures"
 import { Constants } from '../Constants';
 import React from "react";
 import { MapValue, RandomlyDefineElement, RandomlyDefineXCoord, RandomlyExpectFrames, consoleRef, getCoords } from '../lib/helpers';
 import Player from '../components/fire/player';
-import { elementAnimation, handleAnimateArrElement } from '../lib/gameHelp';
+import { elemCurrentCoords, elementAnimation, handleAnimateArrElement } from '../lib/gameHelp';
 
 const Game = () => {
     const rocketWidth = Constants.MAX_WIDTH / 7
@@ -36,11 +36,13 @@ const Game = () => {
     const bronzeCoin9 = React.useRef()
     const bronzeCoin10 = React.useRef()
     const asteroid1 = React.useRef()
+    const asteroid2 = React.useRef()
     const fuel1 = React.useRef()
 
     const rocketExponentLaunch = React.useRef(-1)
     const requestRef = React.useRef()
     const [play, setPlay] = React.useState(false)
+    const [score, setScore] = React.useState(0)
 
     const rocketCoords = React.useRef({x: 0, y: 0, z: 0})
     const bronzeCoin1Coords = React.useRef({x: 0, y: 0, z: 0})
@@ -54,6 +56,7 @@ const Game = () => {
     const bronzeCoin9Coords = React.useRef({x: 0, y: 0, z: 0})
     const bronzeCoin10Coords = React.useRef({x: 0, y: 0, z: 0})
     const asteroid1Coords = React.useRef({x: 0, y: 0, z: 0})
+    const asteroid2Coords = React.useRef({x: 0, y: 0, z: 0})
     const fuel1Coords = React.useRef({x: 0, y: 0, z: 0})
 
     const frames = React.useRef({currentFrames: 0, expectFrames: 80})
@@ -71,6 +74,7 @@ const Game = () => {
         bronzeCoin9Coords.current = getCoords(bronzeCoin9.current)
         bronzeCoin10Coords.current = getCoords(bronzeCoin10.current)
         asteroid1Coords.current = getCoords(asteroid1.current)
+        asteroid2Coords.current = getCoords(asteroid2.current)
         fuel1Coords.current = getCoords(fuel1.current)
     }, [])
 
@@ -175,7 +179,7 @@ const Game = () => {
     const animateArr = React.useRef([]) // {elem: bronzeCoin1, startPosition: 13}
     const allCoins = ["bronzeCoin1", "bronzeCoin2", "bronzeCoin3", "bronzeCoin4", "bronzeCoin5", "bronzeCoin6", "bronzeCoin7", "bronzeCoin8", 
     "bronzeCoin9", "bronzeCoin10"]
-    const allAsteroid = ["asteroid1"]
+    const allAsteroid = ["asteroid1", "asteroid2"]
     const allFuel = ["fuel1"]
 
     
@@ -214,6 +218,10 @@ const Game = () => {
                 const remove = elementAnimation(asteroid1, asteroid1Coords, animateArr.current[i].startPosition, Constants.ELEMENT_ASTEROID_INIT_POSITION)
                 if (remove) elemsToRemove.push("asteroid1")
             }
+            if (animateArr.current[i].elem === "asteroid2") {
+                const remove = elementAnimation(asteroid2, asteroid2Coords, animateArr.current[i].startPosition, Constants.ELEMENT_ASTEROID_INIT_POSITION)
+                if (remove) elemsToRemove.push("asteroid2")
+            }
             if (animateArr.current[i].elem === "fuel1") {
                 const remove = elementAnimation(fuel1, fuel1Coords, animateArr.current[i].startPosition, Constants.ELEMENT_FUEL_INIT_POSITION)
                 if (remove) elemsToRemove.push("fuel1")
@@ -243,9 +251,9 @@ const Game = () => {
             const framesQuantity = RandomlyExpectFrames()
 
             if (animateArr.current.length === 0) {
-                if (elemType === "coin") animateArr.current.push({elem: allCoins[0], startPosition: newXElementCoord})
-                if (elemType === "asteroid") animateArr.current.push({elem: allAsteroid[0], startPosition: newXElementCoord})
-                if (elemType === "fuel") animateArr.current.push({elem: allFuel[0], startPosition: newXElementCoord})
+                if (elemType === "coin") animateArr.current.push({elem: allCoins[0], startPosition: newXElementCoord, removed: false})
+                if (elemType === "asteroid") animateArr.current.push({elem: allAsteroid[0], startPosition: newXElementCoord, removed: false})
+                if (elemType === "fuel") animateArr.current.push({elem: allFuel[0], startPosition: newXElementCoord, removed: false})
                 // consoleRef(animateArr)
             } else {
                 if (elemType === "coin") {
@@ -269,60 +277,106 @@ const Game = () => {
             }
             frames.current.currentFrames = -1
             frames.current.expectFrames = framesQuantity
-            // consoleRef(animateArr)
+            consoleRef(animateArr)
         }
         frames.current.currentFrames++
     }
 
     // collision
     function hasCollision() {
-        const RocketYTop = rocketCoords.current.y
-        const RocketYBottom = rocketCoords.current.y + rocket.current.clientHeight
+        const rocketWidthDevided2 = rocket.current.clientWidth / 2
+        const obj = {
+            RocketYTop: rocketCoords.current.y,
+            RocketYBottom: rocketCoords.current.y + rocket.current.clientHeight,
+            RocketXLeft: rocketCoords.current.x - rocketWidthDevided2,
+            RocketXRight: rocketCoords.current.x + rocketWidthDevided2,
+        }
         
         for (let i = 0; i < animateArr.current.length; i++) { 
-            let elemYTop
-            let elemYBottom 
-            if (animateArr.current[i].elem === "bronzeCoin1") {
-                elemYTop = bronzeCoin1Coords.current.y
-                elemYBottom = bronzeCoin1Coords.current.y + bronzeCoin1.current.clientHeight
+            if (animateArr.current[i].elem === "bronzeCoin1" && animateArr.current[i].removed === false) {
+                const isCollision = elemCurrentCoords(bronzeCoin1, bronzeCoin1Coords, obj)
+                if (isCollision) {
+                    setScore((score) => score + 1)
+                    animateArr.current[i].removed = true
+                    continue
+                }
             }
-            if (animateArr.current[i].elem === "bronzeCoin2") {
-                elemYTop = bronzeCoin2Coords.current.y
-                elemYBottom = bronzeCoin2Coords.current.y + bronzeCoin2.current.clientHeight
+            if (animateArr.current[i].elem === "bronzeCoin2" && animateArr.current[i].removed === false) {
+                const isCollision = elemCurrentCoords(bronzeCoin2, bronzeCoin2Coords, obj)
+                if (isCollision) {
+                    setScore((score) => score + 1)
+                    animateArr.current[i].removed = true
+                    continue
+                }
             }
-            if (animateArr.current[i].elem === "bronzeCoin3") {
-                elemYTop = bronzeCoin3Coords.current.y
-                elemYBottom = bronzeCoin3Coords.current.y + bronzeCoin3.current.clientHeight
+            if (animateArr.current[i].elem === "bronzeCoin3" && animateArr.current[i].removed === false) {
+                const isCollision = elemCurrentCoords(bronzeCoin3, bronzeCoin3Coords, obj)
+                if (isCollision) {
+                    setScore((score) => score + 1)
+                    animateArr.current[i].removed = true
+                    continue
+                }
             }
-            if (animateArr.current[i].elem === "bronzeCoin4") {
-                elemYTop = bronzeCoin4Coords.current.y
-                elemYBottom = bronzeCoin4Coords.current.y + bronzeCoin4.current.clientHeight
+            if (animateArr.current[i].elem === "bronzeCoin4" && animateArr.current[i].removed === false) {
+                const isCollision = elemCurrentCoords(bronzeCoin4, bronzeCoin4Coords, obj)
+                if (isCollision) {
+                    setScore((score) => score + 1)
+                    animateArr.current[i].removed = true
+                    continue
+                }
             }
-            if (animateArr.current[i].elem === "bronzeCoin5") {
-                elemYTop = bronzeCoin5Coords.current.y
-                elemYBottom = bronzeCoin5Coords.current.y + bronzeCoin5.current.clientHeight
+            if (animateArr.current[i].elem === "bronzeCoin5" && animateArr.current[i].removed === false) {
+                const isCollision = elemCurrentCoords(bronzeCoin5, bronzeCoin5Coords, obj)
+                if (isCollision) {
+                    setScore((score) => score + 1)
+                    animateArr.current[i].removed = true
+                    continue
+                }
             }
-            if (animateArr.current[i].elem === "bronzeCoin6") {
-                elemYTop = bronzeCoin6Coords.current.y
-                elemYBottom = bronzeCoin6Coords.current.y + bronzeCoin6.current.clientHeight
+            if (animateArr.current[i].elem === "bronzeCoin6" && animateArr.current[i].removed === false) {
+                const isCollision = elemCurrentCoords(bronzeCoin6, bronzeCoin6Coords, obj)
+                if (isCollision) {
+                    setScore((score) => score + 1)
+                    animateArr.current[i].removed = true
+                    continue
+                }
             }
-            if (animateArr.current[i].elem === "bronzeCoin7") {
-                elemYTop = bronzeCoin7Coords.current.y
-                elemYBottom = bronzeCoin7Coords.current.y + bronzeCoin7.current.clientHeight
+            if (animateArr.current[i].elem === "bronzeCoin7" && animateArr.current[i].removed === false) {
+                const isCollision = elemCurrentCoords(bronzeCoin7, bronzeCoin7Coords, obj)
+                if (isCollision) {
+                    setScore((score) => score + 1)
+                    animateArr.current[i].removed = true
+                    continue
+                }
             }
-            if (animateArr.current[i].elem === "asteroid1") {
-                elemYTop = asteroid1Coords.current.y
-                elemYBottom = asteroid1Coords.current.y + asteroid1.current.clientHeight
+            if (animateArr.current[i].elem === "asteroid1" && animateArr.current[i].removed === false) {
+                const isCollision = elemCurrentCoords(asteroid1, asteroid1Coords, obj)
+                if (isCollision) {
+                    finishGame()
+                    return
+                }
             }
-            if (animateArr.current[i].elem === "fuel1") {
-                elemYTop = fuel1Coords.current.y
-                elemYBottom = fuel1Coords.current.y + fuel1.current.clientHeight
+            if (animateArr.current[i].elem === "asteroid2" && animateArr.current[i].removed === false) {
+                const isCollision = elemCurrentCoords(asteroid2, asteroid2Coords, obj)
+                if (isCollision) {
+                    finishGame()
+                    return
+                }
             }
-
-            if (RocketYTop < elemYBottom && RocketYBottom > elemYTop) {
-                console.log("collizion false")
+            if (animateArr.current[i].elem === "fuel1" && animateArr.current[i].removed === false) {
+                const isCollision = elemCurrentCoords(fuel1, fuel1Coords, obj)
+                if (isCollision) {
+                    setScore((score) => score + 1)
+                    animateArr.current[i].removed = true
+                    continue
+                }
             }
         }
+    }
+
+    function finishGame() {
+        animateArr.current = []
+        setPlay(() => false)
     }
 
     const animate = () => {
@@ -330,7 +384,6 @@ const Game = () => {
         addAnimateElem()
         startAnimateElem()
         hasCollision()
-
         requestRef.current = requestAnimationFrame(animate)
     }
 
@@ -370,12 +423,25 @@ const Game = () => {
                 <img className="game__coin bronzecoin" ref={bronzeCoin9} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
                 <img className="game__coin bronzecoin" ref={bronzeCoin10} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
 
-                <img className="game__asteroid" ref={asteroid1} src={String(AsteroidImg)} alt="" style={{width: `${asteroidWidth}px`}}/>
+                <img className="game__asteroid" ref={asteroid1} src={String(AsteroidImg)} alt="" style={{width: `${asteroidWidth}px`}}/>\
+                <img className="game__asteroid" ref={asteroid2} src={String(AsteroidImg)} alt="" style={{width: `${asteroidWidth}px`}}/>
+
                 <img className="game__fuel" ref={fuel1} src={String(FuelImg)} alt="" style={{width: `${fuelWidth}px`}}/>
 
                 <button className="game__button_start" onClick={() => setPlay(!play)}>
-                    start game
+                    start
                 </button>
+
+                <div className="game__info">
+                    <div className="game__score">
+                        <img className="game__score_img" src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth / 1.4}px`}}/>
+                        <div className="game__score_coins"> {score} </div>
+                    </div>
+                    <div className="game__percent">
+                        <img className="game__percent_img" src={String(Oil)} alt="" style={{width: `${coinsWidth / 1.8}px`}}/>
+                        <div className="game__percent_num"> 100 % </div>
+                    </div>
+                </div>
             </div>
         </div>
     )
