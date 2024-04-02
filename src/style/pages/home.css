@@ -65,7 +65,7 @@
             /* balance */
 .home_balance {
     width: 100vw;
-    margin-top: 80px;
+    margin-top: 9vh;
     text-align: center
 }    
 
@@ -99,7 +99,7 @@
 /* play */
 .home_play {
     width: 34%;
-    margin-top: 85px;
+    margin-top: 11vh;
     text-align: center
 } 
 
