@@ -108,7 +108,7 @@ function remove(element: any, elementCoords: any, elementInitialYCoord: any) {
       
       star.style.left = x + 'px'
       star.style.width = 1 + 'px'
-      star.style.height = 10 + h + 'px'
+      star.style.height = 5 + h + 'px'
       star.style.animationDuration = duration + 's'
       
       game?.appendChild(star);
