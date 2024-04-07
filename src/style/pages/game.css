@@ -1,6 +1,6 @@
 
 .game {
-    background: black;
+    background: rgb(7, 1, 42);
     background-size: cover;
     height: 100vh;
     width: 100vw;
@@ -85,13 +85,12 @@
 }
 
 .game__button_start {
-    /* background: transparent;
-    border: none;
-    padding: 0; */
     z-index: 1000;
-    position: absolute;
+    position: absolute; 
     right: 0;
-    margin: 10px;
+    margin: 15px 12px;
+    width: 35px;
+    height: 35px;
 }
 
 .game__info {

@@ -1,12 +1,14 @@
 import '../style/pages/game.css';
-import { RocketImg, BronzecoinImg, SilvercoinImg, GoldcoinImg, AsteroidImg, FuelImg, Oil } from "../pictures"
+import { RocketImg, BronzecoinImg, SilvercoinImg, GoldcoinImg, AsteroidImg, FuelImg, Oil, Pause } from "../pictures"
 import { Constants } from '../Constants';
 import React from "react";
 import { MapValue, RandomlyDefineElement, RandomlyDefineXCoord, RandomlyExpectFrames, consoleRef, getCoords } from '../lib/helpers';
-import Player from '../components/fire/player';
 import { deleteStars, elemCurrentCoords, elementAnimation, handleAnimateArrElement, removeAllVisibleElements, stars } from '../lib/gameHelp';
+import GameFooterOver from '../components/GameFooter/GameFooterOver';
+import GameFooterStopped from '../components/GameFooter/GameFooterStoped';
+import { CSSTransition } from 'react-transition-group';
 
-const Game = () => {
+const Game = ({play, setPlay}) => {
     const rocketWidth = Constants.MAX_WIDTH / 7
     const coinsWidth = Constants.MAX_WIDTH / 13
     const asteroidWidth = Constants.MAX_WIDTH / 5
@@ -41,8 +43,12 @@ const Game = () => {
 
     const rocketExponentLaunch = React.useRef(-1)
     const requestRef = React.useRef()
-    const [play, setPlay] = React.useState(false)
+    const [pause, setPause] = React.useState(false)
+    const [gameOver, setGameOver] = React.useState(false)
     const [score, setScore] = React.useState(0)
+
+    const [isCalled, setIsCalled] = React.useState(false)
+    const tick = React.useRef(0)
 
     const rocketCoords = React.useRef({x: 0, y: 0, z: 0})
     const bronzeCoin1Coords = React.useRef({x: 0, y: 0, z: 0})
@@ -382,6 +388,23 @@ const Game = () => {
         setPlay(() => false)
     }
 
+    // function checkEndGame() {
+    //     let timeout = setInterval(() => {  
+    //             if((tick.current < 30) && !pause) {
+    //                 tick.current = tick.current + 1
+    //                 // console.log(tick.current)
+    //             }
+    //             else {
+    //                 finishGame()
+    //                 clearTimeout(timeout)
+    //                 console.log("game finished")    
+    //                 setIsCalled(false)
+    //                 tick.current = 0
+    //                 setGameOver(true)
+    //             }
+    //         }, 500)
+    // }
+
     const animate = () => {
         rocketAnimation()
         addAnimateElem()
@@ -393,19 +416,26 @@ const Game = () => {
     React.useEffect(() => {
         if (play) {
             requestRef.current = requestAnimationFrame(animate)
-            console.log("here")
+
+            // if(!isCalled) {
+            //     checkEndGame()
+            //     setIsCalled(true)
+            // }
             stars()
         
             return () => {
                 if (requestRef.current) {
                     cancelAnimationFrame(requestRef.current)
                     deleteStars()
-                    console.log("stop")
                 }
             }
         }
     }, [play]);
 
+    function stopGame() {
+        setPlay(() => false)
+        setPause(() => true)
+    }
 
     return (
         <div className="game">
@@ -434,9 +464,7 @@ const Game = () => {
 
                 <img className="game__fuel" ref={fuel1} src={String(FuelImg)} alt="" style={{width: `${fuelWidth}px`}}/>
 
-                <button className="game__button_start" onClick={() => setPlay(!play)}>
-                    start
-                </button>
+                <img className="game__button_start" src={String(Pause)} alt="" onClick={() => stopGame()}/>
 
                 <div className="game__info">
                     <div className="game__score">
@@ -448,7 +476,16 @@ const Game = () => {
                         <div className="game__percent_num"> 100 % </div>
                     </div>
                 </div>
-            </div>
+
+                {/* <GameFooterOver /> */}
+                <CSSTransition in={pause} timeout={150} classNames="my-node" unmountOnExit>
+                    <GameFooterStopped setPlay={setPlay} setPause={setPause}/>
+                </CSSTransition>
+
+                <CSSTransition in={gameOver} timeout={150} classNames="my-node" unmountOnExit>
+                    <GameFooterOver setPlay={setPlay} setPause={setPause}/>
+                </CSSTransition>
+            </div>  
         </div>
     )
 }

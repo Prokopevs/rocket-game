@@ -5,7 +5,12 @@ import { useNavigate } from "react-router-dom"
 import React from "react"
 import { CSSTransition } from "react-transition-group"
 import PopupInfo from "../components/PopupInfo"
-const Home: React.FC<{}> = () => {
+
+interface IHomeProps {
+    play: boolean,
+    setPlay: (...args: boolean[]) => void
+  }
+const Home: React.FC<IHomeProps> = ({play, setPlay}) => {
     const minutsToFill = 60000 // 1 min
     // let timestamp = Date.now()
     // timestamp += 1 * 60 * 1000
@@ -43,8 +48,9 @@ const Home: React.FC<{}> = () => {
     }, [])
 
     const onClickPlay = () => {
-        navigate(`/game`)
         if (completed > 33) {
+            navigate(`/game`)
+            setPlay(true)
             if (timeToFilled > 0) {
                 let timeToFinish = Number(localStorage.getItem("futureTime"))
                 let addedTime = timeToFinish + 20000

@@ -7,11 +7,12 @@ import Boost from "../pages/Boost"
 import Missions from "../pages/Missions"
 
 const AppRouter: React.FC<{}> = () => {
+    const [play, setPlay] = React.useState(false)
     return (
         <>
             <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/Game" element={<Game />} />
+                <Route path="/" element={<Home play={play} setPlay={setPlay}/>} />
+                <Route path="/Game" element={<Game play={play} setPlay={setPlay}/>} />
                 <Route path="/Missions" element={<Missions />} />
                 <Route path="/Friends" element={<Friends />} />
                 <Route path="/Boost" element={<Boost />} />

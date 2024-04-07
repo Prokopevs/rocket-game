@@ -1,0 +1,67 @@
+.game_footer {  
+    background: rgb(60, 0, 181);    
+    border-radius: 20px;
+    border: 2px solid rgb(0, 1, 14);    
+    width: 85vw;
+    height: 17.5vh;
+
+    position: relative;
+    top: 38%;
+    z-index: 101;
+}
+
+.game_footer_score {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.game_footer_score_stop {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.game_footer_text {
+    color: white;
+    font-size: 30px;
+    text-align: center;
+}
+
+.game_footer_img {
+    width: 32px;
+    height: 39px;
+    margin-left: 5px;
+}
+
+.game_footer_buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer_button {
+    color: rgb(255, 255, 255);
+    border: none;
+    text-decoration: none;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    background: rgb(44, 48, 52);
+    width: 42%;
+    height: 45px;
+    cursor: pointer;
+    box-sizing: border-box;
+    overflow: hidden;   
+    font-weight: bolder;
+    border-radius: 24px;
+    transition: opacity 0.2s ease 0s, background 0.2s ease 0s, color 0.2s ease 0s;
+    margin: 20px;
+}

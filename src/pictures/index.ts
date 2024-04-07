@@ -19,6 +19,7 @@ const OilBoost = require('../assets/oil_boost.png')
 const Forward = require('../assets/forward.png')
 const Shield = require('../assets/shield.png')
 const GasPump = require('../assets/gas-pump.png')
+const Pause = require('../assets/pause.png')
 
 
-export{ AsteroidImg, BronzecoinImg, FuelImg, GoldcoinImg, RocketImg, SilvercoinImg, SpaceImg, ArrowImg, CoinImg, FireImg, Result, Missions, Friend, Boost, Oil, Oil_em, Friendship, OilBoost, Forward, Shield, GasPump }
+export{ AsteroidImg, BronzecoinImg, FuelImg, GoldcoinImg, RocketImg, SilvercoinImg, SpaceImg, ArrowImg, CoinImg, FireImg, Result, Missions, Friend, Boost, Oil, Oil_em, Friendship, OilBoost, Forward, Shield, GasPump, Pause }
