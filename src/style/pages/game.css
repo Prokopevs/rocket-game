@@ -1,11 +1,31 @@
 
 .game {
-    background-image: url("../../assets/space.jpg");
+    background: black;
     background-size: cover;
     height: 100vh;
     width: 100vw;
     background-repeat: no-repeat;
     margin: 0;
+
+    position: relative;
+
+}
+
+.game i {
+    position: absolute;
+    top: -250px;
+    background: rgba(255, 255, 255, 0.5);
+    animation: animateStars linear infinite;
+}
+
+@keyframes animateStars 
+{
+    0%{
+        transform: translateY(0);
+    }
+    100%{
+        transform: translateY(200vh);
+    }
 }
 
 .game__road {
@@ -27,7 +47,7 @@
 .game__rocket {
     position: absolute;
     transform: rotate(0deg) translate(0, 87vh);
-    /* border: 1px solid red; */
+    /* border: 1px solid red; */ 
 }
 
 .game__coin {

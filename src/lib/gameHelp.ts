@@ -94,3 +94,31 @@ function remove(element: any, elementCoords: any, elementInitialYCoord: any) {
   element.current.style.transform = `translate(${elementCoords.current.x}px, ${elementInitialYCoord}px)`
   element.current.style.display = 'initial'
 }
+
+  export function stars() {
+    let count = 20
+    let game = document.querySelector('.game')
+    let i = 0
+    while (i < count) {
+      let star = document.createElement('i')
+      let x = Math.floor(Math.random() * window.innerWidth)
+
+      let duration = Math.random() * 3
+      let h = Math.random() * 50
+      
+      star.style.left = x + 'px'
+      star.style.width = 1 + 'px'
+      star.style.height = 10 + h + 'px'
+      star.style.animationDuration = duration + 's'
+      
+      game?.appendChild(star);
+      i++
+    }
+  } 
+
+export function deleteStars() {
+  let stars = document.querySelectorAll('.game i');
+  stars.forEach(star => {
+    star.remove();
+  });
+}

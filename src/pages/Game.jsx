@@ -4,7 +4,7 @@ import { Constants } from '../Constants';
 import React from "react";
 import { MapValue, RandomlyDefineElement, RandomlyDefineXCoord, RandomlyExpectFrames, consoleRef, getCoords } from '../lib/helpers';
 import Player from '../components/fire/player';
-import { elemCurrentCoords, elementAnimation, handleAnimateArrElement, removeAllVisibleElements } from '../lib/gameHelp';
+import { deleteStars, elemCurrentCoords, elementAnimation, handleAnimateArrElement, removeAllVisibleElements, stars } from '../lib/gameHelp';
 
 const Game = () => {
     const rocketWidth = Constants.MAX_WIDTH / 7
@@ -393,10 +393,13 @@ const Game = () => {
     React.useEffect(() => {
         if (play) {
             requestRef.current = requestAnimationFrame(animate)
+            console.log("here")
+            stars()
         
             return () => {
                 if (requestRef.current) {
                     cancelAnimationFrame(requestRef.current)
+                    deleteStars()
                     console.log("stop")
                 }
             }
