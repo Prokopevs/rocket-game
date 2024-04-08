@@ -3,17 +3,15 @@ import { RocketImg, BronzecoinImg, SilvercoinImg, GoldcoinImg, AsteroidImg, Fuel
 import { Constants } from '../Constants';
 import React from "react";
 import { MapValue, RandomlyDefineElement, RandomlyDefineXCoord, RandomlyExpectFrames, consoleRef, getCoords } from '../lib/helpers';
-import { deleteStars, elemCurrentCoords, elementAnimation, handleAnimateArrElement, removeAllVisibleElements, stars } from '../lib/gameHelp';
+import { DefineElemsWidth, deleteStars, elemCurrentCoords, elementAnimation, handleAnimateArrElement, removeAllVisibleElements, stars } from '../lib/gameHelp';
 import GameFooterOver from '../components/GameFooter/GameFooterOver';
 import GameFooterStopped from '../components/GameFooter/GameFooterStoped';
 import { CSSTransition } from 'react-transition-group';
+import Player from "../components/fire/player"; 
 
 const Game = ({play, setPlay}) => {
-    const rocketWidth = Constants.MAX_WIDTH / 7
-    const coinsWidth = Constants.MAX_WIDTH / 13
-    const asteroidWidth = Constants.MAX_WIDTH / 5
-    const fuelWidth = Constants.MAX_WIDTH / 8
-    const WidthDiveided2 = Constants.MAX_WIDTH / 2
+    const obj = DefineElemsWidth()
+    const {rocketWidth, coinsWidth, asteroidWidth, fuelWidth} = obj
 
     const maxRocketLaunchYHeightPx = (Constants.MAX_HEIGHT * 72) / 100
     const maxRocketRightMovePx = (Constants.MAX_WIDTH / 2) - (rocketWidth / 2) // для ракеты максимальное направо это 300
@@ -253,7 +251,7 @@ const Game = ({play, setPlay}) => {
         if (frames.current.currentFrames > frames.current.expectFrames) {
             const elemType = RandomlyDefineElement() // "coin" or "asteroid" or "fuel"
             const newXElementCoord = RandomlyDefineXCoord(
-            WidthDiveided2, elemType, bronzeCoin1, fuel1, asteroid1) // отдаёт координаты в зависимости от элемента
+            Constants.MAX_WIDTH / 2, elemType, bronzeCoin1, fuel1, asteroid1) // отдаёт координаты в зависимости от элемента
             const framesQuantity = RandomlyExpectFrames()
 
             if (animateArr.current.length === 0) {
@@ -443,8 +441,8 @@ const Game = ({play, setPlay}) => {
                 <div className="game__toucharea" ref={touchareaRef} onTouchStart={onTouchStartFunc} onTouchEnd={onTouchEndFunc}></div>
 
                 <div className="game__rocket" ref={rocket}>
-                    <img  src={String(RocketImg)} alt="" style={{width: `${rocketWidth}px`}} />
-                    {/* <Player/> */}
+                    {/* <img  src={String(RocketImg)} alt="" style={{width: `${rocketWidth}px`}} /> */}
+                    <Player/>
                 </div>
                 
 
@@ -475,7 +473,7 @@ const Game = ({play, setPlay}) => {
                         <img className="game__percent_img" src={String(Oil)} alt="" style={{width: `${coinsWidth / 1.8}px`}}/>
                         <div className="game__percent_num"> 100 % </div>
                     </div>
-                </div>
+                </div>``
 
                 {/* <GameFooterOver /> */}
                 <CSSTransition in={pause} timeout={150} classNames="my-node" unmountOnExit>

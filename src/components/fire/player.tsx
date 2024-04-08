@@ -1,14 +1,14 @@
 
 import Sprite from "./sprite" 
-import { FireImg } from "../../pictures";
+import { RocketFrameImg } from "../../pictures";
  
 const Player: React.FC<{}> = () => {
   return ( 
       <Sprite 
-        src={String(FireImg)}
+        src={String(RocketFrameImg)}
         states={9} 
-        tile={{ width: 140, height: 110 }} 
-        scale={0.7} 
+        tile={{ width: 66, height: 179 }} 
+        scale={0.6} 
         framesPerStep={8} 
       /> 
   ) 

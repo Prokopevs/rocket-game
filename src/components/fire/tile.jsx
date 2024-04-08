@@ -6,6 +6,7 @@ const Container = styled.div`
   overflow: hidden;
   transform: scale(${({ scale }) => `${scale}, ${scale}`});
   transform-origin: top left;
+  left: 20px
 `;
 
 const Image = styled.img`
@@ -16,7 +17,7 @@ const Tile = ({ src, tile, scale, state }) => {
     const left = tile.width * state;
 
     return (
-      <Container width={tile.width} height={tile.height} scale={scale}>
+      <Container width={tile.width} height={tile.height}>
         <Image src={src} left={left} />
       </Container>
     );

@@ -49,6 +49,9 @@
 .game__rocket {
     position: absolute;
     transform: rotate(0deg) translate(0, 87vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     /* border: 1px solid red; */ 
 }
 

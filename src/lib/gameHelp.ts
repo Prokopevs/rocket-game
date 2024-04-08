@@ -1,6 +1,28 @@
 import { Constants } from "../Constants"
 import { RocketObject } from "./types"
 
+export function DefineElemsWidth() {
+  let rocketWidth
+  let coinsWidth
+  let asteroidWidth
+  let fuelWidth
+
+  if (Constants.MAX_WIDTH <= 600) {
+    rocketWidth = 66
+    coinsWidth = 30
+    asteroidWidth = 78
+    fuelWidth = 49
+  }
+
+  const obj = {
+    rocketWidth,
+    coinsWidth,
+    asteroidWidth,
+    fuelWidth
+  }
+  return obj
+}
+
 export function handleAnimateArrElement(element: string, animateArr: any, newXElementCoord: number) {
     for (let j = 0; j < animateArr.current.length; j++) {
       if (element === animateArr.current[j].elem) {

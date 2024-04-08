@@ -5,7 +5,7 @@ const GoldcoinImg = require('../assets/goldcoin.png')
 const RocketImg = require('../assets/rocket.png')
 const SilvercoinImg = require('../assets/silvercoin.png')
 const SpaceImg = require('../assets/space.jpg')
-const FireImg = require('../assets/fire.png')
+const RocketFrameImg = require('../assets/rezult60.png')
 const ArrowImg = require('../assets/arrow.png')
 const CoinImg = require('../assets/coin.png')
 const Boost = require('../assets/boost.png')
@@ -22,4 +22,4 @@ const GasPump = require('../assets/gas-pump.png')
 const Pause = require('../assets/pause.png')
 
 
-export{ AsteroidImg, BronzecoinImg, FuelImg, GoldcoinImg, RocketImg, SilvercoinImg, SpaceImg, ArrowImg, CoinImg, FireImg, Result, Missions, Friend, Boost, Oil, Oil_em, Friendship, OilBoost, Forward, Shield, GasPump, Pause }
+export{ AsteroidImg, BronzecoinImg, FuelImg, GoldcoinImg, RocketImg, SilvercoinImg, SpaceImg, ArrowImg, CoinImg, RocketFrameImg, Result, Missions, Friend, Boost, Oil, Oil_em, Friendship, OilBoost, Forward, Shield, GasPump, Pause }
