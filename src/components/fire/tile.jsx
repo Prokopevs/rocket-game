@@ -11,14 +11,15 @@ const Container = styled.div`
 
 const Image = styled.img`
   transform: translate(-${({ left }) => left}px, 0);
+  width: ${({ frameRocketWidth }) => frameRocketWidth}px;
 `;
 
-const Tile = ({ src, tile, scale, state }) => { 
+const Tile = ({ src, tile, scale, state, frameRocketWidth }) => { 
     const left = tile.width * state;
 
     return (
       <Container width={tile.width} height={tile.height}>
-        <Image src={src} left={left} />
+        <Image src={src} left={left} frameRocketWidth={frameRocketWidth}/>
       </Container>
     );
 }

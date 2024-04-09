@@ -2,23 +2,31 @@ import { Constants } from "../Constants"
 import { RocketObject } from "./types"
 
 export function DefineElemsWidth() {
-  let rocketWidth
   let coinsWidth
   let asteroidWidth
   let fuelWidth
 
+  let rocketWidth
+  let rocketHeight
+  let frameRocketWidth
+
   if (Constants.MAX_WIDTH <= 600) {
-    rocketWidth = 66
     coinsWidth = 30
     asteroidWidth = 78
     fuelWidth = 49
+
+    rocketWidth = 66
+    rocketHeight = 179
+    frameRocketWidth = 594
   }
 
   const obj = {
-    rocketWidth,
     coinsWidth,
     asteroidWidth,
-    fuelWidth
+    fuelWidth,
+    rocketWidth,
+    rocketHeight,
+    frameRocketWidth
   }
   return obj
 }

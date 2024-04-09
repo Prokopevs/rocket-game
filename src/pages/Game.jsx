@@ -11,7 +11,11 @@ import Player from "../components/fire/player";
 
 const Game = ({play, setPlay}) => {
     const obj = DefineElemsWidth()
-    const {rocketWidth, coinsWidth, asteroidWidth, fuelWidth} = obj
+    const {coinsWidth, asteroidWidth, fuelWidth, rocketWidth, rocketHeight, frameRocketWidth} = obj
+    const rocketWidthDevided2 = rocketWidth / 2
+    const rocketCutWidth = 8 * rocketWidth / 100 // с каждой стороны уберем 2 % для коллизии.
+    const rocketCutHeightTop = 4 * rocketHeight / 100 // с сверху уберем 2 % для коллизии.
+    const rocketCutHeightBottom = 35 * rocketHeight / 100 // с снизу уберем 30 % для коллизии.
 
     const maxRocketLaunchYHeightPx = (Constants.MAX_HEIGHT * 72) / 100
     const maxRocketRightMovePx = (Constants.MAX_WIDTH / 2) - (rocketWidth / 2) // для ракеты максимальное направо это 300
@@ -288,12 +292,11 @@ const Game = ({play, setPlay}) => {
 
     // collision
     function hasCollision() {
-        const rocketWidthDevided2 = rocket.current.clientWidth / 2
         const obj = {
-            RocketYTop: rocketCoords.current.y,
-            RocketYBottom: rocketCoords.current.y + rocket.current.clientHeight,
-            RocketXLeft: rocketCoords.current.x - rocketWidthDevided2,
-            RocketXRight: rocketCoords.current.x + rocketWidthDevided2,
+            RocketYTop: rocketCoords.current.y + rocketCutHeightTop,
+            RocketYBottom: rocketCoords.current.y + rocketHeight - rocketCutHeightBottom,
+            RocketXLeft: rocketCoords.current.x - rocketWidthDevided2 + rocketCutWidth,
+            RocketXRight: rocketCoords.current.x + rocketWidthDevided2 - rocketCutWidth,
         }
         
         for (let i = 0; i < animateArr.current.length; i++) { 
@@ -441,8 +444,7 @@ const Game = ({play, setPlay}) => {
                 <div className="game__toucharea" ref={touchareaRef} onTouchStart={onTouchStartFunc} onTouchEnd={onTouchEndFunc}></div>
 
                 <div className="game__rocket" ref={rocket}>
-                    {/* <img  src={String(RocketImg)} alt="" style={{width: `${rocketWidth}px`}} /> */}
-                    <Player/>
+                    <Player rocketWidth = {rocketWidth} rocketHeight = {rocketHeight} frameRocketWidth = {frameRocketWidth}/>
                 </div>
                 
 

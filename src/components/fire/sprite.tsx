@@ -6,10 +6,11 @@ interface ISpriteProps {
   states: number,
   tile: { width: number, height: number },
   scale: number,
-  framesPerStep: number
+  framesPerStep: number,
+  frameRocketWidth: number
 }
 
-const Sprite: React.FC<ISpriteProps> = ({ src, states, tile, scale, framesPerStep }) => { 
+const Sprite: React.FC<ISpriteProps> = ({ src, states, tile, scale, framesPerStep, frameRocketWidth }) => { 
   const tick = React.useRef(0) 
   const [state, setState] = React.useState(0) 
   const frame = React.useRef<number | null>(null)
@@ -36,7 +37,7 @@ const Sprite: React.FC<ISpriteProps> = ({ src, states, tile, scale, framesPerSte
  
   return ( 
     <> 
-      <Tile src={src} state={state} tile={tile} scale={scale} /> 
+      <Tile src={src} state={state} tile={tile} scale={scale} frameRocketWidth={frameRocketWidth} /> 
     </> 
   ); 
 }; 
