@@ -1,11 +1,12 @@
 .home {
-    background-image: url("../../assets/green.jpg");
+    background: linear-gradient(4deg, #4063b3, #43dfe4);
     background-position: 50% 100%;
     background-size: cover;
     height: 100vh;
     width: 100vw;
     background-repeat: no-repeat;
     position: relative;
+
 }
 
 .home_center {
@@ -22,11 +23,11 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 30px;
-    background-image: url("../../assets/green.jpg");
+    background: linear-gradient(70deg, #4063b3, #43dfe4);
     background-position: 70% 40%;
     background-size: cover;
     border-radius: 20px;
-    border: 2px solid black;
+    border: 2px solid rgb(84, 164, 235);
 }
 
 .home_coin {
@@ -98,8 +99,10 @@
 /* play */
 .home_play {
     width: 34%;
-    margin-top: 11vh;
-    text-align: center
+    margin-top: 9vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 } 
 
 
@@ -110,12 +113,20 @@
     padding-bottom: 20px;
 }
 
+.home_play_btn_img {
+    margin-left: 1px;
+}
+
 .home_play_btn {
-    padding: 14px 29px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 14px 40px;
     border-radius: 3px;
     box-shadow: 0px 0px 12px -2px rgba(0, 0, 0, 0.5);
     line-height: 1.25;
-    background-image: url("../../assets/green.jpg");
+    background: linear-gradient(4deg, #4063b3, #43dfe4);
     background-position: 49% 66%;
     text-decoration: none;
     color: white;
@@ -166,10 +177,10 @@
 .home_footer {  
     justify-content: space-between;
     margin-bottom: 9vh;
-    background-image: url("../../assets/green.jpg");
+    background: linear-gradient(4deg, #4063b3, #43dfe4);
     background-position: 70% 70%;
     border-radius: 20px;
-    border: 2px solid rgb(0, 1, 14);
+    border: 1px solid rgb(84, 164, 235);
     position:absolute;
     bottom:0;
 
@@ -179,6 +190,7 @@
     padding: 0px 16px;
     width: 80vw;
     gap: 8px;
+    
 }
 
 .home_footer_items {

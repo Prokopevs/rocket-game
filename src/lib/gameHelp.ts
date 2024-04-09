@@ -8,7 +8,7 @@ export function DefineElemsWidth() {
 
   let rocketWidth
   let rocketHeight
-  let frameRocketWidth
+  let framerocketwidth
 
   if (Constants.MAX_WIDTH <= 600) {
     coinsWidth = 30
@@ -17,7 +17,7 @@ export function DefineElemsWidth() {
 
     rocketWidth = 66
     rocketHeight = 179
-    frameRocketWidth = 594
+    framerocketwidth = 594
   }
 
   const obj = {
@@ -26,9 +26,25 @@ export function DefineElemsWidth() {
     fuelWidth,
     rocketWidth,
     rocketHeight,
-    frameRocketWidth
+    framerocketwidth
   }
   return obj
+}
+
+export function onTouchStartRightFunc(isTouchRight: any)  {
+  isTouchRight.current = true
+}
+
+export function onTouchEndRightFunc(isTouchRight: any) {
+  isTouchRight.current = false
+}
+
+export function onTouchStartLeftFunc(isTouchLeft: any) {
+  isTouchLeft.current = true
+}
+
+export function onTouchEndLeftFunc(isTouchLeft: any) {
+  isTouchLeft.current = false
 }
 
 export function handleAnimateArrElement(element: string, animateArr: any, newXElementCoord: number) {
@@ -125,26 +141,33 @@ function remove(element: any, elementCoords: any, elementInitialYCoord: any) {
   element.current.style.display = 'initial'
 }
 
-  export function stars() {
-    let count = 20
-    let game = document.querySelector('.game')
-    let i = 0
-    while (i < count) {
-      let star = document.createElement('i')
-      let x = Math.floor(Math.random() * window.innerWidth)
+export function initRocket(rocket: any, rocketCoords: any) {
+  rocketCoords.current.y = 87 * Constants.MAX_HEIGHT / 100 // также менять в css
+  rocketCoords.current.x = 0
+  rocketCoords.current.z = 0
+  rocket.current.style.transform = `translate(${0}px, ${87}vh) rotate(${0}deg)`
+} 
 
-      let duration = Math.random() * 3
-      let h = Math.random() * 50
-      
-      star.style.left = x + 'px'
-      star.style.width = 1 + 'px'
-      star.style.height = 5 + h + 'px'
-      star.style.animationDuration = duration + 's'
-      
-      game?.appendChild(star);
-      i++
-    }
-  } 
+export function stars() {
+  let count = 20
+  let game = document.querySelector('.game')
+  let i = 0
+  while (i < count) {
+    let star = document.createElement('i')
+    let x = Math.floor(Math.random() * window.innerWidth)
+
+    let duration = Math.random() * 3
+    let h = Math.random() * 50
+    
+    star.style.left = x + 'px'
+    star.style.width = 1 + 'px'
+    star.style.height = 5 + h + 'px'
+    star.style.animationDuration = duration + 's'
+    
+    game?.appendChild(star);
+    i++
+  }
+} 
 
 export function deleteStars() {
   let stars = document.querySelectorAll('.game i');

@@ -13,7 +13,6 @@ const GameFooterStopped: React.FC<IGameFooter> = ({ setPlay, setPause }) => {
     const onClickEvent = (category: string) => {}
 
     const onClickLink = (str: string) => {
-        console.log("here1")
         if (str === "continue") {
             setPause(false)
             setPlay(true)

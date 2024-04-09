@@ -3,7 +3,8 @@ import { RocketImg, BronzecoinImg, SilvercoinImg, GoldcoinImg, AsteroidImg, Fuel
 import { Constants } from '../Constants';
 import React from "react";
 import { MapValue, RandomlyDefineElement, RandomlyDefineXCoord, RandomlyExpectFrames, consoleRef, getCoords } from '../lib/helpers';
-import { DefineElemsWidth, deleteStars, elemCurrentCoords, elementAnimation, handleAnimateArrElement, removeAllVisibleElements, stars } from '../lib/gameHelp';
+import { DefineElemsWidth, deleteStars, elemCurrentCoords, elementAnimation, handleAnimateArrElement, initRocket, onTouchEndLeftFunc, onTouchEndRightFunc, 
+    onTouchStartLeftFunc, onTouchStartRightFunc, removeAllVisibleElements, stars } from '../lib/gameHelp';
 import GameFooterOver from '../components/GameFooter/GameFooterOver';
 import GameFooterStopped from '../components/GameFooter/GameFooterStoped';
 import { CSSTransition } from 'react-transition-group';
@@ -11,7 +12,7 @@ import Player from "../components/fire/player";
 
 const Game = ({play, setPlay}) => {
     const obj = DefineElemsWidth()
-    const {coinsWidth, asteroidWidth, fuelWidth, rocketWidth, rocketHeight, frameRocketWidth} = obj
+    const {coinsWidth, asteroidWidth, fuelWidth, rocketWidth, rocketHeight, framerocketwidth} = obj
     const rocketWidthDevided2 = rocketWidth / 2
     const rocketCutWidth = 8 * rocketWidth / 100 // с каждой стороны уберем 2 % для коллизии.
     const rocketCutHeightTop = 4 * rocketHeight / 100 // с сверху уберем 2 % для коллизии.
@@ -20,13 +21,6 @@ const Game = ({play, setPlay}) => {
     const maxRocketLaunchYHeightPx = (Constants.MAX_HEIGHT * 72) / 100
     const maxRocketRightMovePx = (Constants.MAX_WIDTH / 2) - (rocketWidth / 2) // для ракеты максимальное направо это 300
     const minRocketLeftMovePx = -maxRocketRightMovePx // мин налево -300 так как общая ширина 600
-
-    const gameTouchAreaWigth = Constants.MAX_WIDTH * 55 / 100 // 45% ширина области для управления ракетой
-    const minTouchAreaWigthMovePx = (Constants.MAX_WIDTH - gameTouchAreaWigth) / 2
-    const maxTouchAreaWigthMovePx = gameTouchAreaWigth + minTouchAreaWigthMovePx
-    const gameTouchAreaHeight = Constants.MAX_HEIGHT * 40 / 100 // 40% высота области для управления ракетой нужно менять в css
-    const minTouchAreaHeightMovePx = Constants.MAX_HEIGHT - gameTouchAreaHeight
-    const maxTouchAreaHeightMovePx = Constants.MAX_HEIGHT
 
     const rocket = React.useRef()
     const bronzeCoin1 = React.useRef()
@@ -45,12 +39,14 @@ const Game = ({play, setPlay}) => {
 
     const rocketExponentLaunch = React.useRef(-1)
     const requestRef = React.useRef()
+    const [score, setScore] = React.useState(0)
+    const [gas, setGas] = React.useState(100)
+
     const [pause, setPause] = React.useState(false)
     const [gameOver, setGameOver] = React.useState(false)
-    const [score, setScore] = React.useState(0)
-
-    const [isCalled, setIsCalled] = React.useState(false)
+    const allowTick = React.useRef(true)
     const tick = React.useRef(0)
+
 
     const rocketCoords = React.useRef({x: 0, y: 0, z: 0})
     const bronzeCoin1Coords = React.useRef({x: 0, y: 0, z: 0})
@@ -87,37 +83,12 @@ const Game = ({play, setPlay}) => {
     }, [])
 
     //----------------touch area----------------//
-    const touchareaRef = React.useRef(null)
-    const touchPositionRef = React.useRef({ x: Constants.MAX_WIDTH / 2 }) // начинаем с координаты по середине так как ракета по середине
-    const isTouch = React.useRef(false)
-    React.useEffect(() => {
-        const handleTouchMove = (e) => {
-            const touchX = e.touches[0].clientX
-            const touchY = e.touches[0].clientY
-            
-            if (touchX >= minTouchAreaWigthMovePx && touchX <= maxTouchAreaWigthMovePx 
-                && touchY >= minTouchAreaHeightMovePx && touchY <= maxTouchAreaHeightMovePx && play) 
-            {
-                touchPositionRef.current = { x: touchX }
-            }
-        }
-        const myArea = touchareaRef.current
-        myArea?.addEventListener('touchmove', handleTouchMove)
-        return () => {
-            myArea?.removeEventListener('touchmove', handleTouchMove)
-        }
-    }, [play])
-
-    const onTouchStartFunc = (event) => {
-        isTouch.current = true
-    }
-    
-    const onTouchEndFunc = (event) => {
-        isTouch.current = false
-    }
+    const isTouchRight = React.useRef(false)
+    const isTouchLeft = React.useRef(false)
 
     // ------------rocket animation--------------//
     function rocketAnimation() {
+        // движение вверх
         if (rocketCoords.current.y > maxRocketLaunchYHeightPx) { //ракета долетает максимум до 72vh высоты экрана
 
             const speed = Math.exp(rocketExponentLaunch.current)
@@ -131,43 +102,38 @@ const Game = ({play, setPlay}) => {
             }
         }
 
-        // движение направо
-        if (touchPositionRef.current.x - MapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx) > 3) {
-            const newXCoord = rocketCoords.current.x + Constants.ROCKET_TOUCH_MOVE_SPEED
-            let newZCoord = rocketCoords.current.z
+        if (isTouchLeft.current === true && isTouchRight.current === true) {
+            //ничего не делаем
+        } else {
+            // движение направо
+            if (isTouchRight.current === true && rocketCoords.current.x < maxRocketRightMovePx) {
+                const newXCoord = rocketCoords.current.x + Constants.ROCKET_TOUCH_MOVE_SPEED
+                let newZCoord = rocketCoords.current.z
 
-            if (isTouch.current === true) {
                 if (newZCoord < Constants.ROCKET_Z_DEGREE) {
                     newZCoord = rocketCoords.current.z + Constants.ROCKET_Z_MOVE
                     rocketCoords.current.z = newZCoord
                 }
                 rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px) rotate(${newZCoord}deg)`
                 rocketCoords.current.x = newXCoord
-            } else {
-                const lastMovePosition = MapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx)
-                touchPositionRef.current = lastMovePosition
-            }   
-        }
+            }
 
-        // движение налево
-        if (MapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx) - touchPositionRef.current.x > 3 ) {
-            const newXCoord = rocketCoords.current.x - Constants.ROCKET_TOUCH_MOVE_SPEED
-            let newZCoord = rocketCoords.current.z
+            // движение налево
+            if (isTouchLeft.current === true && rocketCoords.current.x > minRocketLeftMovePx) {
+                const newXCoord = rocketCoords.current.x - Constants.ROCKET_TOUCH_MOVE_SPEED
+                let newZCoord = rocketCoords.current.z
 
-            if (isTouch.current === true) {
                 if (newZCoord > -Constants.ROCKET_Z_DEGREE) {
                     newZCoord = rocketCoords.current.z - Constants.ROCKET_Z_MOVE
                     rocketCoords.current.z = newZCoord
                 }
                 rocket.current.style.transform = `translate(${newXCoord}px, ${rocketCoords.current.y}px) rotate(${newZCoord}deg)`
                 rocketCoords.current.x = newXCoord
-            } else {
-                const lastMovePosition = MapValue(rocketCoords.current.x, minRocketLeftMovePx, maxRocketRightMovePx, minTouchAreaWigthMovePx, maxTouchAreaWigthMovePx)
-                touchPositionRef.current = lastMovePosition
             }
         }
+        
 
-        if (isTouch.current === false) {
+        if (isTouchRight.current === false && isTouchLeft.current === false) {
             let newZCoord = rocketCoords.current.z
 
             if (newZCoord > 0) {
@@ -359,14 +325,14 @@ const Game = ({play, setPlay}) => {
             if (animateArr.current[i].elem === "asteroid1" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(asteroid1, asteroid1Coords, obj)
                 if (isCollision) {
-                    finishGame()
+                    // finishGame()
                     return
                 }
             }
             if (animateArr.current[i].elem === "asteroid2" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(asteroid2, asteroid2Coords, obj)
                 if (isCollision) {
-                    finishGame()
+                    // finishGame()
                     return
                 }
             }
@@ -386,65 +352,73 @@ const Game = ({play, setPlay}) => {
             bronzeCoin1Coords, bronzeCoin2Coords, bronzeCoin3Coords, bronzeCoin4Coords, bronzeCoin5Coords, bronzeCoin6Coords, bronzeCoin7Coords, 
             asteroid1Coords, asteroid2Coords, fuel1Coords, Constants.ELEMENT_COIN_INIT_POSITION, Constants.ELEMENT_ASTEROID_INIT_POSITION, 
             Constants.ELEMENT_FUEL_INIT_POSITION)
+        initRocket(rocket, rocketCoords)
         setPlay(() => false)
+        setGameOver(() => true) // показать конечное модальное окно
     }
 
-    // function checkEndGame() {
-    //     let timeout = setInterval(() => {  
-    //             if((tick.current < 30) && !pause) {
-    //                 tick.current = tick.current + 1
-    //                 // console.log(tick.current)
-    //             }
-    //             else {
-    //                 finishGame()
-    //                 clearTimeout(timeout)
-    //                 console.log("game finished")    
-    //                 setIsCalled(false)
-    //                 tick.current = 0
-    //                 setGameOver(true)
-    //             }
-    //         }, 500)
-    // }
+    function checkEndGame() {
+        if(tick.current < Constants.TIME_TO_PLAY) {
+            tick.current = tick.current + 1
+            allowTick.current = true
+            const percent = 100 - ((tick.current * 100) / Constants.TIME_TO_PLAY)
+            setGas(() => percent)
+        } else {    
+            tick.current = 0
+            allowTick.current = true
+            finishGame()
+        }
+    }
+
+    function stopGame() {
+        if (gameOver !== true) {
+            setPlay(() => false)
+            setPause(() => true)
+        }
+    }
 
     const animate = () => {
         rocketAnimation()
         addAnimateElem()
         startAnimateElem()
         hasCollision()
+
+        if (allowTick.current === true) {
+            allowTick.current = false
+            setTimeout(checkEndGame, 250)
+        }
         requestRef.current = requestAnimationFrame(animate)
     }
 
     React.useEffect(() => {
         if (play) {
             requestRef.current = requestAnimationFrame(animate)
-
-            // if(!isCalled) {
-            //     checkEndGame()
-            //     setIsCalled(true)
-            // }
             stars()
         
             return () => {
                 if (requestRef.current) {
                     cancelAnimationFrame(requestRef.current)
+                    console.log("stop")
                     deleteStars()
                 }
             }
         }
     }, [play]);
 
-    function stopGame() {
-        setPlay(() => false)
-        setPause(() => true)
-    }
-
     return (
         <div className="game">
             <div className="game__road">
-                <div className="game__toucharea" ref={touchareaRef} onTouchStart={onTouchStartFunc} onTouchEnd={onTouchEndFunc}></div>
+                <div className="game__toucharea">
+                    <div className="game__toucharea_button" 
+                    onTouchStart={() => onTouchStartLeftFunc(isTouchLeft)} onTouchEnd={() => onTouchEndLeftFunc(isTouchLeft)}></div>
+
+                    <div className="game__toucharea_button" 
+                    onTouchStart={() => onTouchStartRightFunc(isTouchRight)} onTouchEnd={() => onTouchEndRightFunc(isTouchRight)}></div>
+                </div>
 
                 <div className="game__rocket" ref={rocket}>
-                    <Player rocketWidth = {rocketWidth} rocketHeight = {rocketHeight} frameRocketWidth = {frameRocketWidth}/>
+                    {!gameOver && <Player rocketWidth = {rocketWidth} rocketHeight = {rocketHeight} framerocketwidth = {framerocketwidth}
+                    pause = {pause}/>}
                 </div>
                 
 
@@ -459,7 +433,7 @@ const Game = ({play, setPlay}) => {
                 <img className="game__coin bronzecoin" ref={bronzeCoin9} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
                 <img className="game__coin bronzecoin" ref={bronzeCoin10} src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth}px`}}/>
 
-                <img className="game__asteroid" ref={asteroid1} src={String(AsteroidImg)} alt="" style={{width: `${asteroidWidth}px`}}/>\
+                <img className="game__asteroid" ref={asteroid1} src={String(AsteroidImg)} alt="" style={{width: `${asteroidWidth}px`}}/>
                 <img className="game__asteroid" ref={asteroid2} src={String(AsteroidImg)} alt="" style={{width: `${asteroidWidth}px`}}/>
 
                 <img className="game__fuel" ref={fuel1} src={String(FuelImg)} alt="" style={{width: `${fuelWidth}px`}}/>
@@ -473,7 +447,7 @@ const Game = ({play, setPlay}) => {
                     </div>
                     <div className="game__percent">
                         <img className="game__percent_img" src={String(Oil)} alt="" style={{width: `${coinsWidth / 1.8}px`}}/>
-                        <div className="game__percent_num"> 100 % </div>
+                        <div className="game__percent_num"> {Math.floor(gas)} % </div>
                     </div>
                 </div>``
 
@@ -483,7 +457,7 @@ const Game = ({play, setPlay}) => {
                 </CSSTransition>
 
                 <CSSTransition in={gameOver} timeout={150} classNames="my-node" unmountOnExit>
-                    <GameFooterOver setPlay={setPlay} setPause={setPause}/>
+                    <GameFooterOver setPlay={setPlay} setGameOver ={setGameOver}/>
                 </CSSTransition>
             </div>  
         </div>
@@ -491,3 +465,5 @@ const Game = ({play, setPlay}) => {
 }
 
 export default Game
+
+// src={String(AsteroidImg)}

@@ -5,19 +5,20 @@ import { RocketFrameImg } from "../../pictures";
 interface ISpriteProps {
   rocketWidth: number,
   rocketHeight: number,
-  frameRocketWidth: number,
-
+  framerocketwidth: number,
+  pause: boolean,
 }
 
-const Player: React.FC<ISpriteProps> = ({ rocketWidth, rocketHeight, frameRocketWidth }) => {
+const Player: React.FC<ISpriteProps> = ({ rocketWidth, rocketHeight, framerocketwidth, pause }) => {
   return ( 
       <Sprite 
         src={String(RocketFrameImg)}
         states={9} 
         tile={{ width: rocketWidth, height: rocketHeight}} 
-        scale={0.6} 
+        scale={1} 
         framesPerStep={8} 
-        frameRocketWidth = {frameRocketWidth}
+        framerocketwidth = {framerocketwidth}
+        pause = {pause}
       /> 
   ) 
 } 

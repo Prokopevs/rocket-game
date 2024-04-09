@@ -3,11 +3,25 @@ import { BronzecoinImg } from "../../pictures"
 import "../../style/components/gameFooter.css"
 import React from "react"
 
-const GameFooterOver: React.FC<{}> = () => {
+
+interface IGameFooterOver {
+    setPlay: (...args: boolean[]) => void
+    setGameOver: (...args: boolean[]) => void
+}
+
+const GameFooterOver: React.FC<IGameFooterOver> = ({ setPlay, setGameOver }) => {
     const navigate = useNavigate()
     const onClickEvent = (category: string) => {}
 
-    const onClickLink = () => {}
+    const onClickLink = (str: string) => {
+        if (str === "play") {
+            setPlay(true)
+        }
+        if (str === "home") {
+            navigate(`/`)
+        }
+        setGameOver(false)
+    }
 
     return (
         <div className="game_footer">
@@ -18,10 +32,10 @@ const GameFooterOver: React.FC<{}> = () => {
                 <img className="game_footer_img" src={String(BronzecoinImg)} alt=""></img>
             </div>
             <div className="game_footer_buttons">
-                <button className="footer_button" onClick={() => onClickLink()}>
+                <button className="footer_button" onClick={() => onClickLink("play")}>
                     Play again
                 </button>
-                <button className="footer_button" onClick={() => onClickLink()}>
+                <button className="footer_button" onClick={() => onClickLink("home")}>
                     Home
                 </button>
             </div>

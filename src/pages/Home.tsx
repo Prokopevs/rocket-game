@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import React from "react"
 import { CSSTransition } from "react-transition-group"
 import PopupInfo from "../components/PopupInfo"
+import Player from "../components/fire/player"
 
 interface IHomeProps {
     play: boolean,
@@ -119,7 +120,9 @@ const Home: React.FC<IHomeProps> = ({play, setPlay}) => {
                 <div className="home_play" onClick={() => onClickPlay()}>
                     <div className="home_play_btn">
                         <p className="home_play_btn_text">Play</p>
-                        <img className="home_play_img" src={String(RocketImg)} alt=""></img>
+                        
+                            <Player rocketWidth = {44} rocketHeight = {120} framerocketwidth = {396} pause = {false}/>
+                       
                     </div>
                 </div>
 
