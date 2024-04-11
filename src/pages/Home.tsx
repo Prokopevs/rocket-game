@@ -8,68 +8,22 @@ import PopupInfo from "../components/PopupInfo"
 import Player from "../components/fire/player"
 
 interface IHomeProps {
-    play: boolean,
-    setPlay: (...args: boolean[]) => void
+    completed: number
+    onClickPlay: (...args: boolean[]) => boolean
+    score: number
   }
-const Home: React.FC<IHomeProps> = ({play, setPlay}) => {
-    const minutsToFill = 60000 // 1 min
-    // let timestamp = Date.now()
-    // timestamp += 1 * 60 * 1000
-    // localStorage.setItem("futureTime", timestamp.toString())
-    let percentL
-    let futureTimeL = localStorage.getItem("futureTime") // время заполнения
-    let timeToFilled = Number(futureTimeL) - Date.now() // сколько заполнено
-    if (timeToFilled > 0) {
-        percentL = Number((100 - (timeToFilled * 100) / minutsToFill).toFixed(2))
-    } else {
-        percentL = 100
-    }
-
-    const [completed, setCompleted] = React.useState(percentL)
+const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score}) => {
     const [showPopup, setShowPopup] = React.useState(false)
-    const tick = React.useRef<number>(0)
     const navigate = useNavigate()
 
-    React.useEffect(() => {
-        setInterval(() => {
-            if (tick.current < 100) {
-                let futureTime = localStorage.getItem("futureTime") // время заполнения
-                let filled = Number(futureTime) - Date.now() // сколько заполнено
-                if (filled > 0) {
-                    let percent = Number((100 - (filled * 100) / minutsToFill).toFixed(2))
-                    setCompleted(percent)
-                    tick.current = percent
-                }
-                if (filled < 0) {
-                    setCompleted(100)
-                    tick.current = 100
-                }
-            }
-        }, 500)
-    }, [])
-
-    const onClickPlay = () => {
-        if (completed > 33) {
+    let onClickHandler = () => {
+        let result = onClickPlay()
+        if (result === true) {
             navigate(`/game`)
-            setPlay(true)
-            if (timeToFilled > 0) {
-                let timeToFinish = Number(localStorage.getItem("futureTime"))
-                let addedTime = timeToFinish + 20000
-                localStorage.setItem("futureTime", addedTime.toString())
-                setCompleted((completed) => completed - 33.33)
-                tick.current = tick.current - 33.33
-            } else {
-                let timestamp = Date.now()
-                timestamp += 20000
-                localStorage.setItem("futureTime", timestamp.toString())
-                setCompleted((completed) => completed - 33.33)
-                tick.current = tick.current - 33.33
-            }
         } else {
             setShowPopup(true)
         }
     }
-
     const onClickEvent = (category: string) => {
         if (category === "Missions") {
             navigate(`/Missions`)
@@ -104,7 +58,7 @@ const Home: React.FC<IHomeProps> = ({play, setPlay}) => {
                     <img className="home_coin" src={String(Result)} alt=""></img>
                     <div className="home_text">
                         <p className="home_text_name">Rocket Game</p>
-                        <p className="home_text_place">24423</p>
+                        <p className="home_text_place">{1}</p>
                     </div>
                     <img className="home_arrow" src={String(ArrowImg)} alt=""></img>
                 </div>
@@ -113,16 +67,14 @@ const Home: React.FC<IHomeProps> = ({play, setPlay}) => {
                     <p className="home_balance_name">Balance:</p>
                     <div className="home_balance_center">
                         <img className="home_balance_img" src={String(CoinImg)} alt=""></img>
-                        <p className="home_balance_score">24423</p>
+                        <p className="home_balance_score">{score}</p>
                     </div>
                 </div>
 
-                <div className="home_play" onClick={() => onClickPlay()}>
+                <div className="home_play" onClick={() => onClickHandler()}>
                     <div className="home_play_btn">
                         <p className="home_play_btn_text">Play</p>
-                        
                             <Player rocketWidth = {44} rocketHeight = {120} framerocketwidth = {396} pause = {false}/>
-                       
                     </div>
                 </div>
 

@@ -9,8 +9,10 @@ import GameFooterOver from '../components/GameFooter/GameFooterOver';
 import GameFooterStopped from '../components/GameFooter/GameFooterStoped';
 import { CSSTransition } from 'react-transition-group';
 import Player from "../components/fire/player"; 
+import PopupInfo from "../components/PopupInfo"; 
+import { useNavigate } from "react-router-dom"
 
-const Game = ({play, setPlay}) => {
+const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
     const obj = DefineElemsWidth()
     const {coinsWidth, asteroidWidth, fuelWidth, rocketWidth, rocketHeight, framerocketwidth} = obj
     const rocketWidthDevided2 = rocketWidth / 2
@@ -37,16 +39,17 @@ const Game = ({play, setPlay}) => {
     const asteroid2 = React.useRef()
     const fuel1 = React.useRef()
 
+    const navigate = useNavigate()
     const rocketExponentLaunch = React.useRef(-1)
     const requestRef = React.useRef()
-    const [score, setScore] = React.useState(0)
+    const [localScore, setLocalScore] = React.useState(0)
     const [gas, setGas] = React.useState(100)
-
+   
     const [pause, setPause] = React.useState(false)
     const [gameOver, setGameOver] = React.useState(false)
     const allowTick = React.useRef(true)
     const tick = React.useRef(0)
-
+    const [showPopup, setShowPopup] = React.useState(false)
 
     const rocketCoords = React.useRef({x: 0, y: 0, z: 0})
     const bronzeCoin1Coords = React.useRef({x: 0, y: 0, z: 0})
@@ -269,7 +272,7 @@ const Game = ({play, setPlay}) => {
             if (animateArr.current[i].elem === "bronzeCoin1" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(bronzeCoin1, bronzeCoin1Coords, obj)
                 if (isCollision) {
-                    setScore((score) => score + 1)
+                    setLocalScore((localScore) => localScore + 1)
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -277,7 +280,7 @@ const Game = ({play, setPlay}) => {
             if (animateArr.current[i].elem === "bronzeCoin2" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(bronzeCoin2, bronzeCoin2Coords, obj)
                 if (isCollision) {
-                    setScore((score) => score + 1)
+                    setLocalScore((localScore) => localScore + 1)
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -285,7 +288,7 @@ const Game = ({play, setPlay}) => {
             if (animateArr.current[i].elem === "bronzeCoin3" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(bronzeCoin3, bronzeCoin3Coords, obj)
                 if (isCollision) {
-                    setScore((score) => score + 1)
+                    setLocalScore((localScore) => localScore + 1)
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -293,7 +296,7 @@ const Game = ({play, setPlay}) => {
             if (animateArr.current[i].elem === "bronzeCoin4" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(bronzeCoin4, bronzeCoin4Coords, obj)
                 if (isCollision) {
-                    setScore((score) => score + 1)
+                    setLocalScore((localScore) => localScore + 1)
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -301,7 +304,7 @@ const Game = ({play, setPlay}) => {
             if (animateArr.current[i].elem === "bronzeCoin5" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(bronzeCoin5, bronzeCoin5Coords, obj)
                 if (isCollision) {
-                    setScore((score) => score + 1)
+                    setLocalScore((localScore) => localScore + 1)
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -309,7 +312,7 @@ const Game = ({play, setPlay}) => {
             if (animateArr.current[i].elem === "bronzeCoin6" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(bronzeCoin6, bronzeCoin6Coords, obj)
                 if (isCollision) {
-                    setScore((score) => score + 1)
+                    setLocalScore((localScore) => localScore + 1)
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -317,7 +320,7 @@ const Game = ({play, setPlay}) => {
             if (animateArr.current[i].elem === "bronzeCoin7" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(bronzeCoin7, bronzeCoin7Coords, obj)
                 if (isCollision) {
-                    setScore((score) => score + 1)
+                    setLocalScore((localScore) => localScore + 1)
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -339,13 +342,18 @@ const Game = ({play, setPlay}) => {
             if (animateArr.current[i].elem === "fuel1" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(fuel1, fuel1Coords, obj)
                 if (isCollision) {
-                    setScore((score) => score + 1)
+                    if ((tick.current - 5) < 0) {
+                        tick.current = 0
+                    } else {
+                        tick.current = tick.current - 5
+                    }
                     animateArr.current[i].removed = true
                     continue
                 }
             }
         }
     }
+
 
     function finishGame() {
         removeAllVisibleElements(animateArr, bronzeCoin1, bronzeCoin2, bronzeCoin3, bronzeCoin4, bronzeCoin5, bronzeCoin6, bronzeCoin7, asteroid1, asteroid2, fuel1,
@@ -355,6 +363,8 @@ const Game = ({play, setPlay}) => {
         initRocket(rocket, rocketCoords)
         setPlay(() => false)
         setGameOver(() => true) // показать конечное модальное окно
+        console.log(score + localScore)
+        setScore(() => (score + localScore))
     }
 
     function checkEndGame() {
@@ -407,6 +417,9 @@ const Game = ({play, setPlay}) => {
 
     return (
         <div className="game">
+            <CSSTransition in={showPopup} timeout={150} classNames="my-node" unmountOnExit>
+                <PopupInfo text={"Not enough gas"} />
+            </CSSTransition>
             <div className="game__road">
                 <div className="game__toucharea">
                     <div className="game__toucharea_button" 
@@ -443,7 +456,7 @@ const Game = ({play, setPlay}) => {
                 <div className="game__info">
                     <div className="game__score">
                         <img className="game__score_img" src={String(BronzecoinImg)} alt="" style={{width: `${coinsWidth / 1.4}px`}}/>
-                        <div className="game__score_coins"> {score} </div>
+                        <div className="game__score_coins"> {localScore} </div>
                     </div>
                     <div className="game__percent">
                         <img className="game__percent_img" src={String(Oil)} alt="" style={{width: `${coinsWidth / 1.8}px`}}/>
@@ -457,7 +470,7 @@ const Game = ({play, setPlay}) => {
                 </CSSTransition>
 
                 <CSSTransition in={gameOver} timeout={150} classNames="my-node" unmountOnExit>
-                    <GameFooterOver setPlay={setPlay} setGameOver ={setGameOver}/>
+                    <GameFooterOver setPlay={setPlay} setGameOver ={setGameOver} onClickPlay={onClickPlay} showPopup={showPopup} setShowPopup={setShowPopup} localScore={localScore} setLocalScore={setLocalScore}/>
                 </CSSTransition>
             </div>  
         </div>
