@@ -12,9 +12,10 @@ interface IGameFooterOver {
     setShowPopup: (...args: boolean[]) => void
     localScore: number
     setLocalScore: (...args: number[]) => void
+    StoreTick: any
 }
 
-const GameFooterOver: React.FC<IGameFooterOver> = ({ setPlay, setGameOver, onClickPlay, showPopup, setShowPopup, localScore, setLocalScore}) => {
+const GameFooterOver: React.FC<IGameFooterOver> = ({ setPlay, setGameOver, onClickPlay, showPopup, setShowPopup, localScore, setLocalScore, StoreTick}) => {
     const navigate = useNavigate()
     const onClickEvent = (category: string) => {}
 
@@ -26,6 +27,7 @@ const GameFooterOver: React.FC<IGameFooterOver> = ({ setPlay, setGameOver, onCli
             } else {
                 setGameOver(false)
                 setLocalScore(0)
+                StoreTick.current = 0
             }
         }
         if (str === "home") {

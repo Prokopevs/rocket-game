@@ -3,6 +3,7 @@ import React from "react"
 import FriendsList from "../components/FriendsList"
 import PopupInfo from "../components/PopupInfo"
 import { CSSTransition } from "react-transition-group"
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const Friends: React.FC<{}> = () => {
     const [showPopup, setShowPopup] = React.useState(false)
@@ -20,8 +21,8 @@ const Friends: React.FC<{}> = () => {
     ]
 
     const onClickLink = async () => {
-        const text = "https://www.youtube.com/watch?v="
-        await navigator.clipboard.writeText(text)
+        // const text = "https://www.youtube.com/watch?v="
+        // await navigator.clipboard.writeText(text)
         setShowPopup(!showPopup)
     }
 
@@ -53,9 +54,11 @@ const Friends: React.FC<{}> = () => {
                         <FriendsList key={`${items.name}_${index}`} {...items} />
                     ))}
                 </div>
-                <button className="friends_button" disabled={showPopup} onClick={() => onClickLink()}>
-                    Invite a Friend
-                </button>
+                <CopyToClipboard text={"https://www.youtube.com/watch?v="}>
+                    <button className="friends_button" disabled={showPopup} onClick={() => onClickLink()}>
+                        Invite a Friend
+                    </button>
+                </CopyToClipboard>
             </div>
         </div>
     )

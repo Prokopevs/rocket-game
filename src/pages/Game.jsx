@@ -23,6 +23,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
     const maxRocketLaunchYHeightPx = (Constants.MAX_HEIGHT * 72) / 100
     const maxRocketRightMovePx = (Constants.MAX_WIDTH / 2) - (rocketWidth / 2) // для ракеты максимальное направо это 300
     const minRocketLeftMovePx = -maxRocketRightMovePx // мин налево -300 так как общая ширина 600
+    const navigate = useNavigate()
 
     const rocket = React.useRef()
     const bronzeCoin1 = React.useRef()
@@ -39,9 +40,9 @@ const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
     const asteroid2 = React.useRef()
     const fuel1 = React.useRef()
 
-    const navigate = useNavigate()
     const rocketExponentLaunch = React.useRef(-1)
     const requestRef = React.useRef()
+    const StoreTick = React.useRef(0)
     const [localScore, setLocalScore] = React.useState(0)
     const [gas, setGas] = React.useState(100)
    
@@ -273,6 +274,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
                 const isCollision = elemCurrentCoords(bronzeCoin1, bronzeCoin1Coords, obj)
                 if (isCollision) {
                     setLocalScore((localScore) => localScore + 1)
+                    StoreTick.current = StoreTick.current + 1
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -281,6 +283,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
                 const isCollision = elemCurrentCoords(bronzeCoin2, bronzeCoin2Coords, obj)
                 if (isCollision) {
                     setLocalScore((localScore) => localScore + 1)
+                    StoreTick.current = StoreTick.current + 1
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -289,6 +292,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
                 const isCollision = elemCurrentCoords(bronzeCoin3, bronzeCoin3Coords, obj)
                 if (isCollision) {
                     setLocalScore((localScore) => localScore + 1)
+                    StoreTick.current = StoreTick.current + 1
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -297,6 +301,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
                 const isCollision = elemCurrentCoords(bronzeCoin4, bronzeCoin4Coords, obj)
                 if (isCollision) {
                     setLocalScore((localScore) => localScore + 1)
+                    StoreTick.current = StoreTick.current + 1
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -305,6 +310,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
                 const isCollision = elemCurrentCoords(bronzeCoin5, bronzeCoin5Coords, obj)
                 if (isCollision) {
                     setLocalScore((localScore) => localScore + 1)
+                    StoreTick.current = StoreTick.current + 1
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -313,6 +319,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
                 const isCollision = elemCurrentCoords(bronzeCoin6, bronzeCoin6Coords, obj)
                 if (isCollision) {
                     setLocalScore((localScore) => localScore + 1)
+                    StoreTick.current = StoreTick.current + 1
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -321,6 +328,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
                 const isCollision = elemCurrentCoords(bronzeCoin7, bronzeCoin7Coords, obj)
                 if (isCollision) {
                     setLocalScore((localScore) => localScore + 1)
+                    StoreTick.current = StoreTick.current + 1
                     animateArr.current[i].removed = true
                     continue
                 }
@@ -363,8 +371,8 @@ const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
         initRocket(rocket, rocketCoords)
         setPlay(() => false)
         setGameOver(() => true) // показать конечное модальное окно
-        console.log(score + localScore)
-        setScore(() => (score + localScore))
+        console.log(score + StoreTick.current)
+        setScore(() => (score + StoreTick.current))
     }
 
     function checkEndGame() {
@@ -470,7 +478,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
                 </CSSTransition>
 
                 <CSSTransition in={gameOver} timeout={150} classNames="my-node" unmountOnExit>
-                    <GameFooterOver setPlay={setPlay} setGameOver ={setGameOver} onClickPlay={onClickPlay} showPopup={showPopup} setShowPopup={setShowPopup} localScore={localScore} setLocalScore={setLocalScore}/>
+                    <GameFooterOver setPlay={setPlay} setGameOver ={setGameOver} onClickPlay={onClickPlay} showPopup={showPopup} setShowPopup={setShowPopup} localScore={localScore} setLocalScore={setLocalScore} StoreTick={StoreTick}/>
                 </CSSTransition>
             </div>  
         </div>
