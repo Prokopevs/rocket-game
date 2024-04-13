@@ -12,9 +12,8 @@ import Player from "../components/fire/player";
 import PopupInfo from "../components/PopupInfo"; 
 import { useNavigate } from "react-router-dom"
 
-const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas}) => {
+const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas, BackButton}) => {
     const navigate = useNavigate()
-    const BackButton = window.Telegram.WebApp.BackButton;
     BackButton.show();
     BackButton.onClick(function() {
         navigate("/rocket-game")

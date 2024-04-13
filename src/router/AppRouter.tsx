@@ -73,9 +73,9 @@ const AppRouter: React.FC<{}> = () => {
             <Routes>
                 <Route path="/rocket-game" element={<Home completed={completed} onClickPlay={onClickPlay} score={score} setIsNotReload={setIsNotReload}/>} />
                 <Route path="/Game" element={<Game play={play} setPlay={setPlay} onClickPlay={onClickPlay} setScore={setScore} 
-                    score={score} isNotReload={isNotReload} tickGas={tickGas}/>} />
-                <Route path="/Missions" element={<Missions />} />
-                <Route path="/Friends" element={<Friends />} />
+                    score={score} isNotReload={isNotReload} tickGas={tickGas} BackButton={BackButton}/>} />
+                <Route path="/Missions" element={<Missions BackButton={BackButton}/>} />
+                <Route path="/Friends" element={<Friends BackButton={BackButton}/>} />
                 <Route path="/Boost" element={<Boost score={score} BackButton={BackButton}/>} />
             </Routes>
         </>
