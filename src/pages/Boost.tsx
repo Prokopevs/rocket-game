@@ -5,8 +5,10 @@ import StorageModalWindow from "../components/ModalWindows/StorageModalWindow"
 import MiningModalWindow from "../components/ModalWindows/MiningModalWindow"
 import ProtectionModalWindow from "../components/ModalWindows/ProtectionModalWindow"
 
-
-const Boost: React.FC<{}> = () => {
+interface IBoostProps {
+    score: number
+  }
+const Boost: React.FC<IBoostProps> = ({score}) => {
     const [storageMW, setStorageMW] = React.useState(false)
     const [mintingMW, setMintingMW] = React.useState(false)
     const [protectionMW, setProtectionMW] = React.useState(false)
@@ -32,7 +34,7 @@ const Boost: React.FC<{}> = () => {
                 <p className="boost_text_description">Your balance</p>
                 <div className="boost_text_center">
                     <img className="boost_balance_img" src={String(CoinImg)} alt=""></img>
-                    <p className="boost_balance_score">24423</p>
+                    <p className="boost_balance_score">{score}</p>
                 </div>
 
                 <div className="boost_item" onClick={() => onClickLink("storage")}>

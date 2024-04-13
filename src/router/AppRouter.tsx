@@ -74,7 +74,7 @@ const AppRouter: React.FC<{}> = () => {
                     score={score} isNotReload={isNotReload} tickGas={tickGas}/>} />
                 <Route path="/Missions" element={<Missions />} />
                 <Route path="/Friends" element={<Friends />} />
-                <Route path="/Boost" element={<Boost />} />
+                <Route path="/Boost" element={<Boost score={score}/>} />
             </Routes>
         </>
     )

@@ -478,7 +478,8 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
                     </div>
                 </div>``
 
-                {/* <GameFooterOver /> */}
+            </div>  
+            <div className="game_popaps">
                 <CSSTransition in={pause} timeout={150} classNames="my-node" unmountOnExit>
                     <GameFooterStopped setPlay={setPlay} setPause={setPause}/>
                 </CSSTransition>
@@ -486,7 +487,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
                 <CSSTransition in={gameOver} timeout={150} classNames="my-node" unmountOnExit>
                     <GameFooterOver setPlay={setPlay} setGameOver ={setGameOver} onClickPlay={onClickPlay} showPopup={showPopup} setShowPopup={setShowPopup} localScore={localScore} setLocalScore={setLocalScore} StoreTick={StoreTick}/>
                 </CSSTransition>
-            </div>  
+            </div>
         </div>
     )
 }

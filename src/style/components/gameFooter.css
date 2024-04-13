@@ -3,7 +3,12 @@
     border-radius: 20px;
     border: 2px solid rgb(0, 1, 14);    
     width: 85vw;
-    height: 17.5vh;
+}
+
+.game_popaps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     position: relative;
     top: 38%;
