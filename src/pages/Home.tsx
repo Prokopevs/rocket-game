@@ -21,7 +21,7 @@ const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotRelo
         let result = onClickPlay()
         if (result === true) {
             setIsNotReload(true)
-            navigate(`/rocket-game/Game`)
+            navigate(`/Game`)
         } else {
             setShowPopup(true)
         }
