@@ -7,7 +7,9 @@ import Boost from "../pages/Boost"
 import Missions from "../pages/Missions"
 
 const AppRouter: React.FC<{}> = () => {
-    const BackButton = (window as any).Telegram.WebApp.BackButton;
+    const telegramWeb = (window as any).Telegram.WebApp
+    const BackButton = telegramWeb.BackButton
+    telegramWeb.expand()
 
     const [score, setScore] = React.useState(0)
     const [play, setPlay] = React.useState(false)
