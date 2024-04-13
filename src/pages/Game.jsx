@@ -424,9 +424,8 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
     }, [play]);
 
     React.useEffect(() => {
-        console.log(isNotReload)
         if (isNotReload === false) {
-            navigate(`/Home`)
+            navigate(`/rocket-game`)
         }
     }, []);
 

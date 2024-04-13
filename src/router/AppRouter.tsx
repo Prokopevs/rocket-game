@@ -5,7 +5,6 @@ import React from "react"
 import Friends from "../pages/Friends"
 import Boost from "../pages/Boost"
 import Missions from "../pages/Missions"
-import { useSessionStorage } from "../hooks/useSessionStorage"
 
 const AppRouter: React.FC<{}> = () => {
     const [score, setScore] = React.useState(0)
@@ -70,7 +69,7 @@ const AppRouter: React.FC<{}> = () => {
     return (
         <>
             <Routes>
-                <Route path="/Home" element={<Home completed={completed} onClickPlay={onClickPlay} score={score} setIsNotReload={setIsNotReload}/>} />
+                <Route path="/rocket-game" element={<Home completed={completed} onClickPlay={onClickPlay} score={score} setIsNotReload={setIsNotReload}/>} />
                 <Route path="/Game" element={<Game play={play} setPlay={setPlay} onClickPlay={onClickPlay} setScore={setScore} 
                     score={score} isNotReload={isNotReload} tickGas={tickGas}/>} />
                 <Route path="/Missions" element={<Missions />} />

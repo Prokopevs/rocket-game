@@ -19,7 +19,7 @@ const GameFooterStopped: React.FC<IGameFooter> = ({ setPlay, setPause }) => {
         }
         if (str === "home") {
             setPlay(false)
-            navigate(`/Home`)
+            navigate(`/rocket-game`)
         }
     }
 

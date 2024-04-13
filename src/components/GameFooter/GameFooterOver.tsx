@@ -31,7 +31,7 @@ const GameFooterOver: React.FC<IGameFooterOver> = ({ setPlay, setGameOver, onCli
             }
         }
         if (str === "home") {
-            navigate(`/Home`)
+            navigate(`/rocket-game`)
             setGameOver(false)
         }
         
