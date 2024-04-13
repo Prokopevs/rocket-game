@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/rocket-game/static/css/main.f1802338.css",
+    "main.js": "/rocket-game/static/js/main.db6bc539.js",
+    "static/js/453.9e2e3a91.chunk.js": "/rocket-game/static/js/453.9e2e3a91.chunk.js",
+    "static/media/coin.png": "/rocket-game/static/media/coin.80ab86e7dc876c7ae1be.png",
+    "static/media/green.jpg": "/rocket-game/static/media/green.836ec89f171ba77809a8.jpg",
+    "static/media/space.jpg": "/rocket-game/static/media/space.8a30dcfa140b4bf9a5be.jpg",
+    "static/media/asteroid.png": "/rocket-game/static/media/asteroid.cc06bf5ea326947b75cb.png",
+    "static/media/silvercoin.png": "/rocket-game/static/media/silvercoin.357c0e499717d23eebb9.png",
+    "static/media/bronzecoin.png": "/rocket-game/static/media/bronzecoin.107511d4ee2128e7a40f.png",
+    "static/media/rezult.png": "/rocket-game/static/media/rezult.54609c5129fb2fd62f7d.png",
+    "static/media/goldcoin.png": "/rocket-game/static/media/goldcoin.646fde3eac0473b4417f.png",
+    "static/media/missions.png": "/rocket-game/static/media/missions.f9f44248721f0601f25b.png",
+    "static/media/shield.png": "/rocket-game/static/media/shield.d3957ebcdd906d636884.png",
+    "static/media/friendship.png": "/rocket-game/static/media/friendship.0620d6f52e4b003b6129.png",
+    "static/media/friend.png": "/rocket-game/static/media/friend.8efc64cd65ca53a355a9.png",
+    "static/media/boost.png": "/rocket-game/static/media/boost.58833b693169ed5b0ecc.png",
+    "static/media/fuel.png": "/rocket-game/static/media/fuel.1534cbc1a73d1b047de9.png",
+    "static/media/result.png": "/rocket-game/static/media/result.3c31caa42504c0da2baa.png",
+    "static/media/pause.png": "/rocket-game/static/media/pause.fa8791b837bf3544f3c6.png",
+    "static/media/gas-pump.png": "/rocket-game/static/media/gas-pump.a304cda31e23c60ebb65.png",
+    "static/media/rocket.png": "/rocket-game/static/media/rocket.096e741c296092669c79.png",
+    "static/media/oil_boost.png": "/rocket-game/static/media/oil_boost.2358323fc24832ae5148.png",
+    "static/media/arrow.png": "/rocket-game/static/media/arrow.21727cb8f959c7946e73.png",
+    "static/media/oil.png": "/rocket-game/static/media/oil.e400bd7264e35ccc0db1.png",
+    "index.html": "/rocket-game/index.html",
+    "main.f1802338.css.map": "/rocket-game/static/css/main.f1802338.css.map",
+    "main.db6bc539.js.map": "/rocket-game/static/js/main.db6bc539.js.map",
+    "453.9e2e3a91.chunk.js.map": "/rocket-game/static/js/453.9e2e3a91.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f1802338.css",
+    "static/js/main.db6bc539.js"
+  ]
+}
