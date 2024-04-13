@@ -18,7 +18,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
     BackButton.show();
     BackButton.onClick(function() {
         BackButton.hide();
-        navigate("/Home")
+        navigate("/rocket-game")
     });
 
     const obj = DefineElemsWidth()
