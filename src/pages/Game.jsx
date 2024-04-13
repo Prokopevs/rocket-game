@@ -13,6 +13,14 @@ import PopupInfo from "../components/PopupInfo";
 import { useNavigate } from "react-router-dom"
 
 const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas}) => {
+    const navigate = useNavigate()
+    const BackButton = window.Telegram.WebApp.BackButton;
+    BackButton.show();
+    BackButton.onClick(function() {
+        BackButton.hide();
+        navigate("/Home")
+    });
+
     const obj = DefineElemsWidth()
     const {coinsWidth, asteroidWidth, fuelWidth, rocketWidth, rocketHeight, framerocketwidth} = obj
     const rocketWidthDevided2 = rocketWidth / 2
@@ -23,7 +31,6 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
     const maxRocketLaunchYHeightPx = (Constants.MAX_HEIGHT * 72) / 100
     const maxRocketRightMovePx = (Constants.MAX_WIDTH / 2) - (rocketWidth / 2) // для ракеты максимальное направо это 300
     const minRocketLeftMovePx = -maxRocketRightMovePx // мин налево -300 так как общая ширина 600
-    const navigate = useNavigate()
 
     const rocket = React.useRef()
     const bronzeCoin1 = React.useRef()
