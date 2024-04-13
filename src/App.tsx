@@ -5,7 +5,7 @@ import { isMobileNavigator } from './lib/helpers';
 import { useEffect, useRef, useState } from 'react';
 
 function App() {
-  const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  // const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   
   // if (isMobile && (width < 800)) {
     return (
