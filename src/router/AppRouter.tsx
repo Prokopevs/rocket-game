@@ -11,6 +11,7 @@ const AppRouter: React.FC<{}> = () => {
     const [score, setScore] = React.useState(0)
     const [play, setPlay] = React.useState(false)
     const [isNotReload, setIsNotReload] = React.useState(false)
+    const tickGas = React.useRef(0)
 
     // Time ------------------------------
     const minutsToFill = 60000 // 1 min
@@ -45,6 +46,7 @@ const AppRouter: React.FC<{}> = () => {
 
     const onClickPlay = () => {
         if (completed > 33) {
+            tickGas.current = 0
             setPlay(true)
             if (timeToFilled > 0) {
                 let timeToFinish = Number(localStorage.getItem("futureTime"))
@@ -69,7 +71,8 @@ const AppRouter: React.FC<{}> = () => {
         <>
             <Routes>
                 <Route path="/" element={<Home completed={completed} onClickPlay={onClickPlay} score={score} setIsNotReload={setIsNotReload}/>} />
-                <Route path="/Game" element={<Game play={play} setPlay={setPlay} onClickPlay={onClickPlay} setScore={setScore} score={score} isNotReload={isNotReload}/>} />
+                <Route path="/Game" element={<Game play={play} setPlay={setPlay} onClickPlay={onClickPlay} setScore={setScore} 
+                    score={score} isNotReload={isNotReload} tickGas={tickGas}/>} />
                 <Route path="/Missions" element={<Missions />} />
                 <Route path="/Friends" element={<Friends />} />
                 <Route path="/Boost" element={<Boost />} />

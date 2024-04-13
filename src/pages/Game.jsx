@@ -12,7 +12,7 @@ import Player from "../components/fire/player";
 import PopupInfo from "../components/PopupInfo"; 
 import { useNavigate } from "react-router-dom"
 
-const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload}) => {
+const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas}) => {
     const obj = DefineElemsWidth()
     const {coinsWidth, asteroidWidth, fuelWidth, rocketWidth, rocketHeight, framerocketwidth} = obj
     const rocketWidthDevided2 = rocketWidth / 2
@@ -49,7 +49,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload}) => {
     const [pause, setPause] = React.useState(false)
     const [gameOver, setGameOver] = React.useState(false)
     const allowTick = React.useRef(true)
-    const tick = React.useRef(0)
+    
     const [showPopup, setShowPopup] = React.useState(false)
 
     const rocketCoords = React.useRef({x: 0, y: 0, z: 0})
@@ -350,10 +350,10 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload}) => {
             if (animateArr.current[i].elem === "fuel1" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(fuel1, fuel1Coords, obj)
                 if (isCollision) {
-                    if ((tick.current - 5) < 0) {
-                        tick.current = 0
+                    if ((tickGas.current - 5) < 0) {
+                        tickGas.current = 0
                     } else {
-                        tick.current = tick.current - 5
+                        tickGas.current = tickGas.current - 5
                     }
                     animateArr.current[i].removed = true
                     continue
@@ -376,13 +376,13 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload}) => {
     }
 
     function checkEndGame() {
-        if(tick.current < Constants.TIME_TO_PLAY) {
-            tick.current = tick.current + 1
+        if(tickGas.current < Constants.TIME_TO_PLAY) {
+            tickGas.current = tickGas.current + 1
             allowTick.current = true
-            const percent = 100 - ((tick.current * 100) / Constants.TIME_TO_PLAY)
+            const percent = 100 - ((tickGas.current * 100) / Constants.TIME_TO_PLAY)
             setGas(() => percent)
         } else {    
-            tick.current = 0
+            tickGas.current = 0
             allowTick.current = true
             finishGame()
         }

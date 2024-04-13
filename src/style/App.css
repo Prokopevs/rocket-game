@@ -28,3 +28,16 @@
   color: #61dafb;
 }
 
+.dontMobile {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(4deg, #4063b3, #43dfe4);
+}
+
+.dontMobile_text {
+  color: white;
+  font-size: 30px;
+  line-height: 20px;
+  padding-top: 10vh;
+  text-align: center;
+}
