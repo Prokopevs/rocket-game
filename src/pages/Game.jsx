@@ -426,8 +426,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
     React.useEffect(() => {
         console.log(isNotReload)
         if (isNotReload === false) {
-            
-            navigate(`/`)
+            navigate(`/Home`)
         }
     }, []);
 
