@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/rocket-game/static/css/main.f1802338.css",
-    "main.js": "/rocket-game/static/js/main.a964a879.js",
+    "main.css": "/rocket-game/static/css/main.5bb14042.css",
+    "main.js": "/rocket-game/static/js/main.0eb12b85.js",
     "static/js/453.9e2e3a91.chunk.js": "/rocket-game/static/js/453.9e2e3a91.chunk.js",
     "static/media/coin.png": "/rocket-game/static/media/coin.80ab86e7dc876c7ae1be.png",
     "static/media/green.jpg": "/rocket-game/static/media/green.836ec89f171ba77809a8.jpg",
@@ -25,12 +25,12 @@
     "static/media/arrow.png": "/rocket-game/static/media/arrow.21727cb8f959c7946e73.png",
     "static/media/oil.png": "/rocket-game/static/media/oil.e400bd7264e35ccc0db1.png",
     "index.html": "/rocket-game/index.html",
-    "main.f1802338.css.map": "/rocket-game/static/css/main.f1802338.css.map",
-    "main.a964a879.js.map": "/rocket-game/static/js/main.a964a879.js.map",
+    "main.5bb14042.css.map": "/rocket-game/static/css/main.5bb14042.css.map",
+    "main.0eb12b85.js.map": "/rocket-game/static/js/main.0eb12b85.js.map",
     "453.9e2e3a91.chunk.js.map": "/rocket-game/static/js/453.9e2e3a91.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f1802338.css",
-    "static/js/main.a964a879.js"
+    "static/css/main.5bb14042.css",
+    "static/js/main.0eb12b85.js"
   ]
 }
