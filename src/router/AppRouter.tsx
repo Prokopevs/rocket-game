@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes, useNavigate } from "react-router-dom"
 import Game from "../pages/Game"
 import Home from "../pages/Home"
 import React from "react"
@@ -7,6 +7,8 @@ import Boost from "../pages/Boost"
 import Missions from "../pages/Missions"
 
 const AppRouter: React.FC<{}> = () => {
+    const BackButton = (window as any).Telegram.WebApp.BackButton;
+
     const [score, setScore] = React.useState(0)
     const [play, setPlay] = React.useState(false)
     const [isNotReload, setIsNotReload] = React.useState(false)
@@ -74,7 +76,7 @@ const AppRouter: React.FC<{}> = () => {
                     score={score} isNotReload={isNotReload} tickGas={tickGas}/>} />
                 <Route path="/Missions" element={<Missions />} />
                 <Route path="/Friends" element={<Friends />} />
-                <Route path="/Boost" element={<Boost score={score}/>} />
+                <Route path="/Boost" element={<Boost score={score} BackButton={BackButton}/>} />
             </Routes>
         </>
     )

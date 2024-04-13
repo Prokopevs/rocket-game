@@ -3,13 +3,6 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 
 const Missions: React.FC<{}> = () => {
-    const navigate = useNavigate()
-    const BackButton = (window as any).Telegram.WebApp.BackButton;
-    BackButton.show();
-    BackButton.onClick(function() {
-        navigate("/rocket-game")
-        BackButton.hide();
-    });
     return (
         <div className="friends">
             <div className="friends_center">

@@ -8,10 +8,10 @@ import { useNavigate } from "react-router-dom"
 
 interface IBoostProps {
     score: number
+    BackButton: any
   }
-const Boost: React.FC<IBoostProps> = ({score}) => {
+const Boost: React.FC<IBoostProps> = ({score, BackButton}) => {
     const navigate = useNavigate()
-    const BackButton = (window as any).Telegram.WebApp.BackButton;
     BackButton.show();
     BackButton.onClick(function() {
         navigate("/rocket-game")
