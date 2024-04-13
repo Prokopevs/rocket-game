@@ -11,14 +11,16 @@ interface IHomeProps {
     completed: number
     onClickPlay: (...args: boolean[]) => boolean
     score: number
+    setIsNotReload: (...args: boolean[]) => void
   }
-const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score}) => {
+const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotReload}) => {
     const [showPopup, setShowPopup] = React.useState(false)
     const navigate = useNavigate()
 
     let onClickHandler = () => {
         let result = onClickPlay()
         if (result === true) {
+            setIsNotReload(true)
             navigate(`/game`)
         } else {
             setShowPopup(true)

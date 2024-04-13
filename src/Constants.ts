@@ -17,5 +17,5 @@ export const Constants = {
     ELEMENT_ASTEROID_INIT_POSITION: -90,
     ELEMENT_FUEL_INIT_POSITION: -60,
 
-    TIME_TO_PLAY: 60,
+    TIME_TO_PLAY: 100,
 }

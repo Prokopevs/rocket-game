@@ -9,15 +9,15 @@ const Friends: React.FC<{}> = () => {
     const [showPopup, setShowPopup] = React.useState(false)
 
     const arr = [
-        { name: "Vova Prokopev", score: 0.011 },
-        { name: "Vova Prokopev", score: 0.011 },
-        { name: "Vova Prokopev", score: 0.011 },
-        { name: "Vova Prokopev", score: 0.011 },
-        { name: "Vova Prokopev", score: 0.011 },
-        { name: "Vova Prokopev", score: 0.011 },
-        { name: "Vova Prokopev", score: 0.011 },
-        { name: "Vova Prokopev", score: 0.011 },
-        { name: "Vova Prokopev", score: 0.011 },
+        { name: "Friend", score: 0.1 },
+        { name: "Friend", score: 0.011 },
+        { name: "Friend", score: 0.3 },
+        { name: "Friend", score: 0.33 },
+        { name: "Friend", score: 0.1 },
+        { name: "Friend", score: 1 },
+        { name: "Friend", score: 0.041 },
+        { name: "Friend", score: 3 },
+        { name: "Friend", score: 0.2 },
     ]
 
     const onClickLink = async () => {

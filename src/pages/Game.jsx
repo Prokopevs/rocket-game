@@ -12,7 +12,7 @@ import Player from "../components/fire/player";
 import PopupInfo from "../components/PopupInfo"; 
 import { useNavigate } from "react-router-dom"
 
-const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
+const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload}) => {
     const obj = DefineElemsWidth()
     const {coinsWidth, asteroidWidth, fuelWidth, rocketWidth, rocketHeight, framerocketwidth} = obj
     const rocketWidthDevided2 = rocketWidth / 2
@@ -336,14 +336,14 @@ const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
             if (animateArr.current[i].elem === "asteroid1" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(asteroid1, asteroid1Coords, obj)
                 if (isCollision) {
-                    // finishGame()
+                    finishGame()
                     return
                 }
             }
             if (animateArr.current[i].elem === "asteroid2" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(asteroid2, asteroid2Coords, obj)
                 if (isCollision) {
-                    // finishGame()
+                    finishGame()
                     return
                 }
             }
@@ -422,6 +422,14 @@ const Game = ({play, setPlay, onClickPlay, setScore, score}) => {
             }
         }
     }, [play]);
+
+    React.useEffect(() => {
+        console.log(isNotReload)
+        if (isNotReload === false) {
+            
+            navigate(`/`)
+        }
+    }, []);
 
     return (
         <div className="game">

@@ -10,6 +10,7 @@ import { useSessionStorage } from "../hooks/useSessionStorage"
 const AppRouter: React.FC<{}> = () => {
     const [score, setScore] = React.useState(0)
     const [play, setPlay] = React.useState(false)
+    const [isNotReload, setIsNotReload] = React.useState(false)
 
     // Time ------------------------------
     const minutsToFill = 60000 // 1 min
@@ -67,8 +68,8 @@ const AppRouter: React.FC<{}> = () => {
     return (
         <>
             <Routes>
-                <Route path="/" element={<Home completed={completed} onClickPlay={onClickPlay} score={score}/>} />
-                <Route path="/Game" element={<Game play={play} setPlay={setPlay} onClickPlay={onClickPlay} setScore={setScore} score={score}/>} />
+                <Route path="/" element={<Home completed={completed} onClickPlay={onClickPlay} score={score} setIsNotReload={setIsNotReload}/>} />
+                <Route path="/Game" element={<Game play={play} setPlay={setPlay} onClickPlay={onClickPlay} setScore={setScore} score={score} isNotReload={isNotReload}/>} />
                 <Route path="/Missions" element={<Missions />} />
                 <Route path="/Friends" element={<Friends />} />
                 <Route path="/Boost" element={<Boost />} />
