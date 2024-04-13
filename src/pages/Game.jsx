@@ -17,8 +17,8 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
     const BackButton = window.Telegram.WebApp.BackButton;
     BackButton.show();
     BackButton.onClick(function() {
-        BackButton.hide();
         navigate("/rocket-game")
+        BackButton.hide();
     });
 
     const obj = DefineElemsWidth()

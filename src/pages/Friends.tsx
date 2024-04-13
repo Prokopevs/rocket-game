@@ -4,8 +4,16 @@ import FriendsList from "../components/FriendsList"
 import PopupInfo from "../components/PopupInfo"
 import { CSSTransition } from "react-transition-group"
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { useNavigate } from "react-router-dom"
 
 const Friends: React.FC<{}> = () => {
+    const navigate = useNavigate()
+    const BackButton = (window as any).Telegram.WebApp.BackButton;
+    BackButton.show();
+    BackButton.onClick(function() {
+        navigate("/rocket-game")
+        BackButton.hide();
+    });
     const [showPopup, setShowPopup] = React.useState(false)
 
     const arr = [

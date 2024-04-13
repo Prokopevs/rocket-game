@@ -4,11 +4,19 @@ import React from "react"
 import StorageModalWindow from "../components/ModalWindows/StorageModalWindow"
 import MiningModalWindow from "../components/ModalWindows/MiningModalWindow"
 import ProtectionModalWindow from "../components/ModalWindows/ProtectionModalWindow"
+import { useNavigate } from "react-router-dom"
 
 interface IBoostProps {
     score: number
   }
 const Boost: React.FC<IBoostProps> = ({score}) => {
+    const navigate = useNavigate()
+    const BackButton = (window as any).Telegram.WebApp.BackButton;
+    BackButton.show();
+    BackButton.onClick(function() {
+        navigate("/rocket-game")
+        BackButton.hide();
+    });
     const [storageMW, setStorageMW] = React.useState(false)
     const [mintingMW, setMintingMW] = React.useState(false)
     const [protectionMW, setProtectionMW] = React.useState(false)
