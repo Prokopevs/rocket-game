@@ -19,7 +19,7 @@ function App() {
   // <div className='dontMobile'> 
   //   <p className='dontMobile_text'>Please use mobile</p>
   // </div>
-)
+// )
 }
 // isMobileNavigator()
 export default App;
