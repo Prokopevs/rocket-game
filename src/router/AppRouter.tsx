@@ -69,7 +69,6 @@ const AppRouter: React.FC<{}> = () => {
 
     return (
         <>
-        
             <Routes>
                 <Route path="/Home" element={<Home completed={completed} onClickPlay={onClickPlay} score={score} setIsNotReload={setIsNotReload}/>} />
                 <Route path="/Game" element={<Game play={play} setPlay={setPlay} onClickPlay={onClickPlay} setScore={setScore} 
