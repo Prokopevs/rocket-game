@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/rocket-game/static/css/main.5bb14042.css",
-    "main.js": "/rocket-game/static/js/main.f4fcfc6a.js",
+    "main.js": "/rocket-game/static/js/main.a41dc993.js",
     "static/js/453.9e2e3a91.chunk.js": "/rocket-game/static/js/453.9e2e3a91.chunk.js",
     "static/media/coin.png": "/rocket-game/static/media/coin.80ab86e7dc876c7ae1be.png",
     "static/media/green.jpg": "/rocket-game/static/media/green.836ec89f171ba77809a8.jpg",
@@ -26,11 +26,11 @@
     "static/media/oil.png": "/rocket-game/static/media/oil.e400bd7264e35ccc0db1.png",
     "index.html": "/rocket-game/index.html",
     "main.5bb14042.css.map": "/rocket-game/static/css/main.5bb14042.css.map",
-    "main.f4fcfc6a.js.map": "/rocket-game/static/js/main.f4fcfc6a.js.map",
+    "main.a41dc993.js.map": "/rocket-game/static/js/main.a41dc993.js.map",
     "453.9e2e3a91.chunk.js.map": "/rocket-game/static/js/453.9e2e3a91.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5bb14042.css",
-    "static/js/main.f4fcfc6a.js"
+    "static/js/main.a41dc993.js"
   ]
 }
