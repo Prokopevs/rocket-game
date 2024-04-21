@@ -1,10 +1,11 @@
 import './style/App.css';
 import AppRouter from "./router/AppRouter";
 import {isMobile} from 'react-device-detect';
-import { useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 function App() {
   const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  console.log(window.location.href)
   
   if (isMobile && (width < 800)) {
     return (
