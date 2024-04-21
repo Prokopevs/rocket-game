@@ -66,7 +66,7 @@ const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotRelo
                 </div>
 
                 <div className="home_balance">
-                    <p className="home_balance_name">Balance: {window.location.href}</p>
+                    <p className="home_balance_name">Balance:</p>
                     <div className="home_balance_center">
                         <img className="home_balance_img" src={String(CoinImg)} alt=""></img>
                         <p className="home_balance_score">{score}</p>

@@ -726,3 +726,96 @@
 // }
 
 // export default Game
+
+
+
+const crypto = require('crypto')
+const secretToken = '5768337691:AAH5YkoiEuPk8-FZa32hStHTqXiLPtAEhx8';
+const initData =
+'query_id=AAHdF6IQAAAAAN0XohDhrOrc' +
+'&user=%7B%22id%22%3A279058397%2C%22first_name%22%3A%22Vladislav%22%2C%22last_name%22%3A%22Kibenko%22%2C%22username%22%3A%22vdkfrost%22%2C%22language_code%22%3A%22ru%22%2C%22is_premium%22%3Atrue%7D' +
+'&auth_date=1662771648' +
+'&hash=c501b71e775f74ce10e377dea85a7ea24ecd640b223ea86dfe453e0eaed2e2b2';
+
+
+
+// const secret = '7073464722:AAE-F76ZBJ_HBKnZ7wJrDkpNl3XcFf7MeOI'
+// const string = 'Гоша'
+// const hash = crypto.createHmac('HMAC_SHA256', secret).update(string).digest('base64');
+// console.log(hash)
+
+function validate(sp, token, options = {}) {
+    const searchParams = typeof sp === 'string' ? new URLSearchParams(sp) : sp;
+  
+    // Init data creation time.
+    let authDate = new Date(0);
+  
+    // Init data sign.
+    let hash = '';
+  
+    // All search params pairs presented as `k=v`.
+    const pairs = [];
+  
+    // Iterate over all key-value pairs of parsed parameters and find required
+    // parameters.
+    searchParams.forEach((value, key) => {
+      if (key === 'hash') {
+        hash = value;
+        return;
+      }
+  
+      if (key === 'auth_date') {
+        const authDateNum = parseInt(value, 10);
+  
+        if (Number.isNaN(authDateNum)) {
+            console.log('"auth_date" should present integer');
+        }
+        authDate = new Date(authDateNum * 1000);
+      }
+  
+      // Append new pair.
+      pairs.push(`${key}=${value}`);
+    });
+  
+    // Hash and auth date always required.
+    if (hash.length === 0) {
+      console.log('"hash" is empty or not found');
+    }
+  
+    if (authDate.getTime() === 0) {
+      console.log('"auth_date" is empty or not found');
+    }
+  
+    // In case, expiration time passed, we do additional parameters check.
+    const { expiresIn = 86400 } = options;
+  
+    if (expiresIn > 0) {
+      // Check if init data expired.
+      if (authDate.getTime() + expiresIn * 1000 < new Date().getTime()) {
+        console.log('Init data expired');
+      }
+    }
+  
+    // According to docs, we sort all the pairs in alphabetical order.
+    pairs.sort();
+    console.log(pairs)
+
+
+    // Compute sign.
+    const computedHash = crypto.createHmac(
+      'sha256',
+      crypto.createHmac('sha256', 'WebAppData').update(token).digest(),
+    )
+      .update(pairs.join('\n'))
+      .digest()
+      .toString('hex');
+    
+    // In case, our sign is not equal to found one, we should throw an error.
+    if (computedHash !== hash) {
+        console.log('Signature is invalid');
+    } else {
+        console.log("super")
+    }
+  }
+
+  validate(initData, secretToken)

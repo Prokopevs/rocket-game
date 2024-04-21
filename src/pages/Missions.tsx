@@ -13,6 +13,8 @@ const Missions: React.FC<IMissionProps> = ({ BackButton }) => {
         navigate("/rocket-game")
         BackButton.hide();
     });
+
+    //window.location.href
     return (
         <div className="friends">
             <div className="friends_center">
