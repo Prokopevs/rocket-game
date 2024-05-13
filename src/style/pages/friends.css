@@ -142,8 +142,7 @@
 }
 
 .friends_button {
-    position: absolute;
-    bottom: 10vh;
+    margin-top: 20px;
     z-index: 1;
 
     color: rgb(255, 255, 255);

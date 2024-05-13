@@ -6,14 +6,16 @@ import React from "react"
 import { CSSTransition } from "react-transition-group"
 import PopupInfo from "../components/PopupInfo"
 import Player from "../components/fire/player"
+import { IUserData } from "../models/IUserData"
 
 interface IHomeProps {
     completed: number
     onClickPlay: (...args: boolean[]) => boolean
     score: number
     setIsNotReload: (...args: boolean[]) => void
+    userData: IUserData;
   }
-const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotReload}) => {
+const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotReload, userData}) => {
     const [showPopup, setShowPopup] = React.useState(false)
     const navigate = useNavigate()
 
@@ -60,7 +62,7 @@ const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotRelo
                     <img className="home_coin" src={String(Result)} alt=""></img>
                     <div className="home_text">
                         <p className="home_text_name">Rocket Game</p>
-                        <p className="home_text_place">{1}</p>
+                        <p className="home_text_place">{userData.username ? userData.username : userData.firstname}</p>
                     </div>
                     <img className="home_arrow" src={String(ArrowImg)} alt=""></img>
                 </div>

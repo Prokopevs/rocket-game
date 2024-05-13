@@ -2,24 +2,64 @@ import "../../style/components/modalWindow.css"
 import React from "react"
 import { CSSTransition } from "react-transition-group"
 import { OilBoost, Forward, CoinImg } from "../../pictures"
+import { IGame } from "../../models/IUserData"
+import { createSignature } from "../../helpers/createSignature"
+import { updateMultiplicator } from "../../http/updateMultiplicator"
+import PopupInfo from "../PopupInfo"
 
 interface IModalStatus {
     modalIn: boolean
     setModalIn: (...args: boolean[]) => void
+    prices: any
+    game: IGame
+    setGame: any
+    setScore: any
+    score: number
 }
-const StorageModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn }) => {
+const StorageModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn, prices, game, setGame, setScore, score}) => {
     const [loading, setLoading] = React.useState(false)
+    const litters = [15, 25, 35, 45, 55, 65, 75, 85, 95]
+    const [showPopup, setShowPopup] = React.useState(false)
     const closeStorageWindow = () => {
         setModalIn(false)
     }
 
-    const onClickButton = () => {
-        setLoading(true)
+    const onClickButton = async () => {
+        if (score - prices[game.gasStorage] >= 0) {
+            setLoading(true)
+            const signature = createSignature(game.ownerId, "gasStorage")
+            const response = await updateMultiplicator(game.ownerId, "gasStorage", signature)
+            if (response?.status == 200) {
+                setGame(() => ({
+                    ...game,
+                    gasStorage: game.gasStorage + 1
+                }));
+            }
+            setScore(score - prices[game.gasStorage])
+            setLoading(false)
+        } else {
+            setShowPopup(true)
+        }
     }
+
+    React.useEffect(() => {
+        let timeout: NodeJS.Timeout
+        if (showPopup) {
+            timeout = setTimeout(() => {
+                setShowPopup(!showPopup)
+            }, 3000)
+        }
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, [showPopup])
 
     return (
         <CSSTransition in={modalIn} timeout={150} classNames="my-node" unmountOnExit>
             <div className="modalWindow">
+            <CSSTransition in={showPopup} timeout={150} classNames="my-node" unmountOnExit>
+                <PopupInfo text={"Not enough score"} />
+            </CSSTransition>
                 <div className="modalWindow_content">
                     <div className="modalWindow_content_inner">
                         <h2 className="modalWindow_content_title">Upgrade Gas storage</h2>
@@ -27,7 +67,7 @@ const StorageModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn }) => 
                             Better storage holds more Gas and you can fly more
                         </p>
 
-                        <div className="modalWindow_content_upgrade">
+                        {prices[game.gasStorage] && <div className="modalWindow_content_upgrade">
                             <div className="modalWindow_content_upgrade_block">
                                 <img
                                     className="modalWindow_content_upgrade_img"
@@ -35,17 +75,17 @@ const StorageModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn }) => 
                                     alt=""
                                 ></img>
                                 <div className="modalWindow_content_upgrade_text">
-                                    <p className="modalWindow_content_upgrade_level">level 2</p>
-                                    <p className="modalWindow_content_upgrade_hours">75 liters</p>
+                                    <p className="modalWindow_content_upgrade_level">level {game.gasStorage+1}</p>
+                                    <p className="modalWindow_content_upgrade_hours">{litters[game.gasStorage+1]} liters</p>
                                 </div>
                             </div>
-                        </div>
+                        </div>}
 
-                        <img
+                        {prices[game.gasStorage] && <img
                             className="modalWindow_content_arrow"
                             src={String(Forward)}
                             alt=""
-                        ></img>
+                        ></img>}
 
                         <div className="modalWindow_content_upgrade">
                             <div className="modalWindow_content_upgrade_block">
@@ -55,8 +95,8 @@ const StorageModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn }) => 
                                     alt=""
                                 ></img>
                                 <div className="modalWindow_content_upgrade_text">
-                                    <p className="modalWindow_content_upgrade_level">level 1</p>
-                                    <p className="modalWindow_content_upgrade_hours">50 liters</p>
+                                    <p className="modalWindow_content_upgrade_level">level {game.gasStorage}</p>
+                                    <p className="modalWindow_content_upgrade_hours">{litters[game.gasStorage]} liters</p>
                                 </div>
                             </div>
                         </div>
@@ -67,12 +107,12 @@ const StorageModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn }) => 
                                 src={String(CoinImg)}
                                 alt=""
                             ></img>
-                            <p className="modalWindow_content_price_text">3</p>
+                            <p className="modalWindow_content_price_text">{prices[game.gasStorage] ? prices[game.gasStorage] : "max level"}</p>
                         </div>
 
                         <button
                             className="upgrade_button"
-                            disabled={loading}
+                            disabled={loading || !prices[game.gasStorage]}
                             onClick={() => onClickButton()}
                         >
                             Upgrade

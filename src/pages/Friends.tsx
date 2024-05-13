@@ -5,11 +5,16 @@ import PopupInfo from "../components/PopupInfo"
 import { CSSTransition } from "react-transition-group"
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useNavigate } from "react-router-dom"
+import { IUserData } from "../models/IUserData"
+import { getReferralsReq } from "../http/getReferralsReq"
 
 interface IFriendsProps {
     BackButton: any
+    userData: IUserData;
 }
-const Friends: React.FC<IFriendsProps> = ({BackButton}) => {
+const Friends: React.FC<IFriendsProps> = ({BackButton, userData}) => {
+    const [referrals, setReferrals] = React.useState([{referralId: 0, firstname: "", username: ""}])
+    const [loading, setLoading] = React.useState(true)
     const navigate = useNavigate()
     BackButton.show();
     BackButton.onClick(function() {
@@ -18,21 +23,7 @@ const Friends: React.FC<IFriendsProps> = ({BackButton}) => {
     });
     const [showPopup, setShowPopup] = React.useState(false)
 
-    const arr = [
-        { name: "Friend", score: 0.1 },
-        { name: "Friend", score: 0.011 },
-        { name: "Friend", score: 0.3 },
-        { name: "Friend", score: 0.33 },
-        { name: "Friend", score: 0.1 },
-        { name: "Friend", score: 1 },
-        { name: "Friend", score: 0.041 },
-        { name: "Friend", score: 3 },
-        { name: "Friend", score: 0.2 },
-    ]
-
     const onClickLink = async () => {
-        // const text = "https://www.youtube.com/watch?v="
-        // await navigator.clipboard.writeText(text)
         setShowPopup(!showPopup)
     }
 
@@ -48,23 +39,35 @@ const Friends: React.FC<IFriendsProps> = ({BackButton}) => {
         }
     }, [showPopup])
 
+    React.useEffect(() => {
+        getReferrals()
+    }, [])
+    const getReferrals = async () => {
+        const response: any = await getReferralsReq(userData.id)
+        // console.log(response.data.Data)
+        setReferrals(() => response.data.Data)
+        setLoading(false)
+    }
+
     return (
+        loading ? 
+        <p className="friends"></p> :
         <div className="friends">
             <CSSTransition in={showPopup} timeout={150} classNames="my-node" unmountOnExit>
                 <PopupInfo text={"Invite link is copied"} />
             </CSSTransition>
             <div className="friends_center">
-                <p className="friends_text_count">7 friend</p>
+                <p className="friends_text_count">{referrals[0]?.referralId ? referrals.length : 0} friend</p>
                 <p className="friends_text_description">
-                    Every time your friend claims coin you get 20% cashback.
+                When your friends sign up, you will receive cashback.
                 </p>
                 <p className="friends_text_friends">My Friends</p>
-                <div className="friends_list">
-                    {arr.map((items, index) => (
-                        <FriendsList key={`${items.name}_${index}`} {...items} />
+                {referrals[0]?.referralId && <div className="friends_list">
+                    {referrals.map((items, index) => (
+                        <FriendsList key={`${items.referralId}_${index}`} items={items} />
                     ))}
-                </div>
-                <CopyToClipboard text={"https://www.youtube.com/watch?v="}>
+                </div>}
+                <CopyToClipboard text={`https://t.me/testStarterLaunchBot?start=${userData.id}`}>
                     <button className="friends_button" disabled={showPopup} onClick={() => onClickLink()}>
                         Invite a Friend
                     </button>
@@ -75,3 +78,4 @@ const Friends: React.FC<IFriendsProps> = ({BackButton}) => {
 }
 
 export default Friends
+

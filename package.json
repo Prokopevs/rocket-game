@@ -13,6 +13,9 @@
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@types/react-transition-group": "^4.4.10",
+    "axios": "^1.6.8",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.5",
     "gh-pages": "^6.1.1",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
@@ -29,7 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "env-cmd -f .env react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "gh-pages -d build",
@@ -55,6 +58,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/crypto-js": "^4.2.2",
     "@types/react-copy-to-clipboard": "^5.0.7"
   }
 }

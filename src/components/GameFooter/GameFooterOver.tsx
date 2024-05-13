@@ -13,9 +13,10 @@ interface IGameFooterOver {
     localScore: number
     setLocalScore: (...args: number[]) => void
     StoreTick: any
+    AsteroidCollTick: any
 }
 
-const GameFooterOver: React.FC<IGameFooterOver> = ({ setPlay, setGameOver, onClickPlay, showPopup, setShowPopup, localScore, setLocalScore, StoreTick}) => {
+const GameFooterOver: React.FC<IGameFooterOver> = ({ setPlay, setGameOver, onClickPlay, showPopup, setShowPopup, localScore, setLocalScore, StoreTick, AsteroidCollTick}) => {
     const navigate = useNavigate()
     const onClickEvent = (category: string) => {}
 
@@ -28,6 +29,7 @@ const GameFooterOver: React.FC<IGameFooterOver> = ({ setPlay, setGameOver, onCli
                 setGameOver(false)
                 setLocalScore(0)
                 StoreTick.current = 0
+                AsteroidCollTick.current = 0
             }
         }
         if (str === "home") {

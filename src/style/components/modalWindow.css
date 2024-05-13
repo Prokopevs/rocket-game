@@ -238,7 +238,7 @@
 
 .loading {
     position: absolute;
-    top: 12px;
+    top: 18px;
     left: 9px;
     width: 40px;
     height: 40px;
@@ -248,7 +248,7 @@
     width: 16px;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 7px solid #8A8383;
+    border: 6px solid #8A8383;
     border-right-color: rgb(156, 38, 60);
     animation: s2 1s infinite linear;
   }

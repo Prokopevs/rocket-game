@@ -1,8 +1,8 @@
 import '../style/pages/game.css';
-import { RocketImg, BronzecoinImg, SilvercoinImg, GoldcoinImg, AsteroidImg, FuelImg, Oil, Pause } from "../pictures"
+import { BronzecoinImg, AsteroidImg, FuelImg, Oil, Pause } from "../pictures"
 import { Constants } from '../Constants';
 import React from "react";
-import { MapValue, RandomlyDefineElement, RandomlyDefineXCoord, RandomlyExpectFrames, consoleRef, getCoords } from '../lib/helpers';
+import { RandomlyDefineElement, RandomlyDefineXCoord, RandomlyExpectFrames, getCoords } from '../lib/helpers';
 import { DefineElemsWidth, deleteStars, elemCurrentCoords, elementAnimation, handleAnimateArrElement, initRocket, onTouchEndLeftFunc, onTouchEndRightFunc, 
     onTouchStartLeftFunc, onTouchStartRightFunc, removeAllVisibleElements, stars } from '../lib/gameHelp';
 import GameFooterOver from '../components/GameFooter/GameFooterOver';
@@ -11,8 +11,10 @@ import { CSSTransition } from 'react-transition-group';
 import Player from "../components/fire/player"; 
 import PopupInfo from "../components/PopupInfo"; 
 import { useNavigate } from "react-router-dom"
+import { createSignature } from '../helpers/createSignature';
+import { updateScore } from '../http/updateMultiplicator';
 
-const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas, BackButton}) => {
+const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas, BackButton, userData, game}) => {
     const navigate = useNavigate()
     BackButton.show();
     BackButton.onClick(function() {
@@ -49,6 +51,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
     const rocketExponentLaunch = React.useRef(-1)
     const requestRef = React.useRef()
     const StoreTick = React.useRef(0)
+    const AsteroidCollTick = React.useRef(1)
     const [localScore, setLocalScore] = React.useState(0)
     const [gas, setGas] = React.useState(100)
    
@@ -342,15 +345,23 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
             if (animateArr.current[i].elem === "asteroid1" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(asteroid1, asteroid1Coords, obj)
                 if (isCollision) {
-                    finishGame()
-                    return
+                    AsteroidCollTick.current = AsteroidCollTick.current + 1
+                    if (AsteroidCollTick.current === game.protection) {
+                        finishGame()
+                        return
+                    }
+                    animateArr.current[i].removed = true
                 }
             }
             if (animateArr.current[i].elem === "asteroid2" && animateArr.current[i].removed === false) {
                 const isCollision = elemCurrentCoords(asteroid2, asteroid2Coords, obj)
                 if (isCollision) {
-                    finishGame()
-                    return
+                    AsteroidCollTick.current = AsteroidCollTick.current + 1
+                    if (AsteroidCollTick.current === game.protection) {
+                        finishGame()
+                        return
+                    }
+                    animateArr.current[i].removed = true
                 }
             }
             if (animateArr.current[i].elem === "fuel1" && animateArr.current[i].removed === false) {
@@ -369,7 +380,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
     }
 
 
-    function finishGame() {
+    async function finishGame () {
         removeAllVisibleElements(animateArr, bronzeCoin1, bronzeCoin2, bronzeCoin3, bronzeCoin4, bronzeCoin5, bronzeCoin6, bronzeCoin7, asteroid1, asteroid2, fuel1,
             bronzeCoin1Coords, bronzeCoin2Coords, bronzeCoin3Coords, bronzeCoin4Coords, bronzeCoin5Coords, bronzeCoin6Coords, bronzeCoin7Coords, 
             asteroid1Coords, asteroid2Coords, fuel1Coords, Constants.ELEMENT_COIN_INIT_POSITION, Constants.ELEMENT_ASTEROID_INIT_POSITION, 
@@ -377,15 +388,17 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
         initRocket(rocket, rocketCoords)
         setPlay(() => false)
         setGameOver(() => true) // показать конечное модальное окно
-        console.log(score + StoreTick.current)
         setScore(() => (score + StoreTick.current))
+
+        const signature = createSignature(userData.id, StoreTick.current)
+        const response = await updateScore(userData.id, StoreTick.current, signature)
     }
 
     function checkEndGame() {
-        if(tickGas.current < Constants.TIME_TO_PLAY) {
+        if(tickGas.current < Constants.TIME_TO_PLAY + game.gasStorage*20) {
             tickGas.current = tickGas.current + 1
             allowTick.current = true
-            const percent = 100 - ((tickGas.current * 100) / Constants.TIME_TO_PLAY)
+            const percent = 100 - ((tickGas.current * 100) / (Constants.TIME_TO_PLAY + game.gasStorage*20))
             setGas(() => percent)
         } else {    
             tickGas.current = 0
@@ -491,7 +504,8 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
                 </CSSTransition>
 
                 <CSSTransition in={gameOver} timeout={150} classNames="my-node" unmountOnExit>
-                    <GameFooterOver setPlay={setPlay} setGameOver ={setGameOver} onClickPlay={onClickPlay} showPopup={showPopup} setShowPopup={setShowPopup} localScore={localScore} setLocalScore={setLocalScore} StoreTick={StoreTick}/>
+                    <GameFooterOver setPlay={setPlay} setGameOver ={setGameOver} onClickPlay={onClickPlay} showPopup={showPopup} 
+                    setShowPopup={setShowPopup} localScore={localScore} setLocalScore={setLocalScore} StoreTick={StoreTick} AsteroidCollTick={AsteroidCollTick}/>
                 </CSSTransition>
             </div>
         </div>

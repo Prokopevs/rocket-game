@@ -5,11 +5,20 @@ import React from "react"
 import Friends from "../pages/Friends"
 import Boost from "../pages/Boost"
 import Missions from "../pages/Missions"
+import { IUserData, IGame } from "../models/IUserData"
+import { IPrices } from "../http/getPricesReq"
 
-const AppRouter: React.FC<{}> = () => {
+interface IRouteProps {
+    userData: IUserData
+    game: IGame
+    prices: IPrices
+    setGame: (game: IGame) => void
+}
+
+const AppRouter: React.FC<IRouteProps> = ({userData, game, setGame, prices}) => {
     const BackButton = (window as any).Telegram.WebApp.BackButton
 
-    const [score, setScore] = React.useState(0)
+    const [score, setScore] = React.useState(game.score)
     const [play, setPlay] = React.useState(false)
     const [isNotReload, setIsNotReload] = React.useState(false)
     const tickGas = React.useRef(0)
@@ -71,12 +80,12 @@ const AppRouter: React.FC<{}> = () => {
     return (
         <>
             <Routes>
-                <Route path="/rocket-game" element={<Home completed={completed} onClickPlay={onClickPlay} score={score} setIsNotReload={setIsNotReload}/>} />
+                <Route path="/rocket-game" element={<Home completed={completed} onClickPlay={onClickPlay} score={score} setIsNotReload={setIsNotReload} userData={userData}/>} />
                 <Route path="/Game" element={<Game play={play} setPlay={setPlay} onClickPlay={onClickPlay} setScore={setScore} 
-                    score={score} isNotReload={isNotReload} tickGas={tickGas} BackButton={BackButton}/>} />
+                    score={score} isNotReload={isNotReload} tickGas={tickGas} BackButton={BackButton} userData={userData} game={game}/>} />
                 <Route path="/Missions" element={<Missions BackButton={BackButton}/>} />
-                <Route path="/Friends" element={<Friends BackButton={BackButton}/>} />
-                <Route path="/Boost" element={<Boost score={score} BackButton={BackButton}/>} />
+                <Route path="/Friends" element={<Friends BackButton={BackButton} userData={userData}/>} />
+                <Route path="/Boost" element={<Boost score={score} BackButton={BackButton} prices={prices} game={game} setGame={setGame} setScore={setScore} />} />
             </Routes>
         </>
     )

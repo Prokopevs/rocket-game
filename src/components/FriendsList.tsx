@@ -3,11 +3,10 @@ import { Friendship, CoinImg } from "../pictures"
 import React from "react"
 
 export interface IFriendsList {
-    name: string 
-    score: number
+    items: any
 }
 
-const FriendsList: React.FC<IFriendsList> = ({name, score}) => {
+const FriendsList: React.FC<IFriendsList> = ({items}) => {
     return (
         <div className="friends_list_item">
             <div className="friends_list_photo">
@@ -15,11 +14,11 @@ const FriendsList: React.FC<IFriendsList> = ({name, score}) => {
             </div>
             <div className="friends_list_text">
                 <div className="friends_list_text_name">
-                    <p className="friends_list_text_first">{name}</p>
+                    <p className="friends_list_text_first">{items?.username ? items?.username : items?.firstname}</p>
                 </div>
                 <div className="friends_list_total">
                     <img className="friends_list_total_img" src={String(CoinImg)} alt=""></img>
-                    <p className="friends_list_total_score">{score}</p>
+                    <p className="friends_list_total_score">100</p>
                 </div>
             </div>
         </div>
