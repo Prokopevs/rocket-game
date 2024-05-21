@@ -18,7 +18,7 @@ COPY .env .env
 RUN npm run build
 
 FROM nginx:stable-alpine
-# Copying built assets from builder
+# Copying built assets from builders
 COPY --from=builder /app/build /usr/share/nginx/html
 # Copying our nginx.conf
 COPY --from=builder /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
