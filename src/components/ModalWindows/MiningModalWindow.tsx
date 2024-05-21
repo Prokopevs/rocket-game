@@ -6,6 +6,8 @@ import { IGame } from "../../models/IUserData"
 import { createSignature } from "../../helpers/createSignature"
 import { updateMultiplicator } from "../../http/updateMultiplicator"
 import PopupInfo from "../PopupInfo"
+import { ReactComponent as Gasoline} from "../../assets/gasoline.svg";
+import { ReactComponent as Coin } from "../../assets/coinw.svg";
 
 interface IModalStatus {
     modalIn: boolean
@@ -69,11 +71,7 @@ const MiningModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn, prices
 
                         {prices[game.gasMining] && <div className="modalWindow_content_upgrade">
                             <div className="modalWindow_content_upgrade_block">
-                                <img
-                                    className="modalWindow_content_upgrade_img"
-                                    src={String(GasPump)}
-                                    alt=""
-                                ></img>
+                                <svg className="modalWindow_content_upgrade_img"><Gasoline /></svg>
                                 <div className="modalWindow_content_upgrade_text">
                                     <p className="modalWindow_content_upgrade_level">level {game.gasMining+1}</p>
                                     <p className="modalWindow_content_upgrade_hours">{litters[game.gasMining+1]} liters</p>
@@ -89,11 +87,7 @@ const MiningModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn, prices
 
                         <div className="modalWindow_content_upgrade">
                             <div className="modalWindow_content_upgrade_block">
-                                <img
-                                    className="modalWindow_content_upgrade_img"
-                                    src={String(GasPump)}
-                                    alt=""
-                                ></img>
+                                <svg className="modalWindow_content_upgrade_img"><Gasoline /></svg>
                                 <div className="modalWindow_content_upgrade_text">
                                     <p className="modalWindow_content_upgrade_level">level {game.gasMining}</p>
                                     <p className="modalWindow_content_upgrade_hours">{litters[game.gasMining]} liters</p>
@@ -102,11 +96,7 @@ const MiningModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn, prices
                         </div>
 
                         <div className="modalWindow_content_price">
-                            <img
-                                className="modalWindow_content_price_img"
-                                src={String(CoinImg)}
-                                alt=""
-                            ></img>
+                            <svg className="modalWindow_content_price_img"><Coin /></svg>
                             <p className="modalWindow_content_price_text">{prices[game.gasMining] ? prices[game.gasMining] : "max level"}</p>
                         </div>
 

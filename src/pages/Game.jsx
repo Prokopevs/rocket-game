@@ -51,7 +51,7 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
     const rocketExponentLaunch = React.useRef(-1)
     const requestRef = React.useRef()
     const StoreTick = React.useRef(0)
-    const AsteroidCollTick = React.useRef(1)
+    const AsteroidCollTick = React.useRef(0)
     const [localScore, setLocalScore] = React.useState(0)
     const [gas, setGas] = React.useState(100)
    

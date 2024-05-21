@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom"
+import { Route, Routes, useNavigate, useLocation } from "react-router-dom"
 import Game from "../pages/Game"
 import Home from "../pages/Home"
 import React from "react"
@@ -16,6 +16,8 @@ interface IRouteProps {
 }
 
 const AppRouter: React.FC<IRouteProps> = ({userData, game, setGame, prices}) => {
+    let location = useLocation()
+    const navigate = useNavigate()
     const BackButton = (window as any).Telegram.WebApp.BackButton
 
     const [score, setScore] = React.useState(game.score)
@@ -76,6 +78,12 @@ const AppRouter: React.FC<IRouteProps> = ({userData, game, setGame, prices}) => 
             return false
     }
      // Time ------------------------------
+
+    React.useEffect(() => {
+        if (location.pathname == "/") {
+            navigate(`/rocket-game`)
+          }
+    }, [])
 
     return (
         <>

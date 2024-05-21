@@ -1,5 +1,10 @@
 import "../style/pages/home.css"
-import { ArrowImg, CoinImg, RocketImg, Result, Friend, Missions, Boost } from "../pictures"
+import { ArrowImg, Result } from "../pictures"
+import { ReactComponent as Friend } from "../assets/friendsu.svg";
+import { ReactComponent as Boost } from "../assets/boosts.svg";
+import { ReactComponent as Mission } from "../assets/mission.svg";
+import { ReactComponent as Coin } from "../assets/coinw.svg";
+import { ReactComponent as Goblet } from "../assets/goblet.svg";
 import Progress from "../components/Progress"
 import { useNavigate } from "react-router-dom"
 import React from "react"
@@ -59,7 +64,7 @@ const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotRelo
             </CSSTransition>
             <div className="home_center">
                 <div className="home_header">
-                    <img className="home_coin" src={String(Result)} alt=""></img>
+                    <svg className="home_coin"><Goblet /></svg>
                     <div className="home_text">
                         <p className="home_text_name">Rocket Game</p>
                         <p className="home_text_place">{userData.username ? userData.username : userData.firstname}</p>
@@ -70,7 +75,7 @@ const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotRelo
                 <div className="home_balance">
                     <p className="home_balance_name">Balance:</p>
                     <div className="home_balance_center">
-                        <img className="home_balance_img" src={String(CoinImg)} alt=""></img>
+                        <svg className="home_balance_img"><Coin /></svg>
                         <p className="home_balance_score">{score}</p>
                     </div>
                 </div>
@@ -88,21 +93,17 @@ const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotRelo
 
                 <div className="home_footer">
                     <button className="home_footer_items" onClick={() => onClickEvent("Missions")}>
-                        <img
-                            className="home_footer_missions_img"
-                            src={String(Missions)}
-                            alt=""
-                        ></img>
+                        <svg className="home_footer_friends_img"><Mission /></svg>
                         <p className="home_footer_items_text">Missions</p>
                     </button>
                     <div className="home_footer_line"></div>
                     <div className="home_footer_items" onClick={() => onClickEvent("Boost")}>
-                        <img className="home_footer_boost_img" src={String(Boost)} alt=""></img>
+                        <svg className="home_footer_friends_img"><Boost /></svg>
                         <p className="home_footer_items_text">Boost</p>
                     </div>
                     <div className="home_footer_line"></div>
                     <div className="home_footer_items" onClick={() => onClickEvent("Friends")}>
-                        <img className="home_footer_friends_img" src={String(Friend)} alt=""></img>
+                        <svg className="home_footer_friends_img"><Friend /></svg>
                         <p className="home_footer_items_text">Friends</p>
                     </div>
                 </div>

@@ -6,6 +6,8 @@ import { IGame } from "../../models/IUserData"
 import { createSignature } from "../../helpers/createSignature"
 import { updateMultiplicator } from "../../http/updateMultiplicator"
 import PopupInfo from "../PopupInfo"
+import { ReactComponent as Oil} from "../../assets/oil.svg";
+import { ReactComponent as Coin } from "../../assets/coinw.svg";
 
 interface IModalStatus {
     modalIn: boolean
@@ -69,11 +71,7 @@ const StorageModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn, price
 
                         {prices[game.gasStorage] && <div className="modalWindow_content_upgrade">
                             <div className="modalWindow_content_upgrade_block">
-                                <img
-                                    className="modalWindow_content_upgrade_img"
-                                    src={String(OilBoost)}
-                                    alt=""
-                                ></img>
+                                <svg className="modalWindow_content_upgrade_img"><Oil /></svg>
                                 <div className="modalWindow_content_upgrade_text">
                                     <p className="modalWindow_content_upgrade_level">level {game.gasStorage+1}</p>
                                     <p className="modalWindow_content_upgrade_hours">{litters[game.gasStorage+1]} liters</p>
@@ -89,11 +87,7 @@ const StorageModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn, price
 
                         <div className="modalWindow_content_upgrade">
                             <div className="modalWindow_content_upgrade_block">
-                                <img
-                                    className="modalWindow_content_upgrade_img"
-                                    src={String(OilBoost)}
-                                    alt=""
-                                ></img>
+                                <svg className="modalWindow_content_upgrade_img"><Oil /></svg>
                                 <div className="modalWindow_content_upgrade_text">
                                     <p className="modalWindow_content_upgrade_level">level {game.gasStorage}</p>
                                     <p className="modalWindow_content_upgrade_hours">{litters[game.gasStorage]} liters</p>
@@ -102,11 +96,7 @@ const StorageModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn, price
                         </div>
 
                         <div className="modalWindow_content_price">
-                            <img
-                                className="modalWindow_content_price_img"
-                                src={String(CoinImg)}
-                                alt=""
-                            ></img>
+                            <svg className="modalWindow_content_price_img"><Coin /></svg>
                             <p className="modalWindow_content_price_text">{prices[game.gasStorage] ? prices[game.gasStorage] : "max level"}</p>
                         </div>
 

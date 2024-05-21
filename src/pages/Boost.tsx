@@ -1,12 +1,15 @@
 import "../style/pages/boost.css"
-import { CoinImg, OilBoost, Forward, Shield, GasPump } from "../pictures"
+import { Forward} from "../pictures"
 import React from "react"
 import StorageModalWindow from "../components/ModalWindows/StorageModalWindow"
 import MiningModalWindow from "../components/ModalWindows/MiningModalWindow"
 import ProtectionModalWindow from "../components/ModalWindows/ProtectionModalWindow"
 import { useNavigate } from "react-router-dom"
-import { IPrices } from "../http/getPricesReq"
 import { IGame } from "../models/IUserData"
+import { ReactComponent as Coin } from "../assets/coinw.svg";
+import { ReactComponent as Defence} from "../assets/defense.svg";
+import { ReactComponent as Oil} from "../assets/oil.svg";
+import { ReactComponent as Gasoline} from "../assets/gasoline.svg";
 
 interface IBoostProps {
     score: number
@@ -47,24 +50,20 @@ const Boost: React.FC<IBoostProps> = ({score, BackButton, prices, game, setGame,
             <div className="boost_center">
                 <p className="boost_text_description">Your balance</p>
                 <div className="boost_text_center">
-                    <img className="boost_balance_img" src={String(CoinImg)} alt=""></img>
+                    <svg className="boost_balance_img"><Coin /></svg>
                     <p className="boost_balance_score">{score}</p>
                 </div>
 
                 <div className="boost_item" onClick={() => onClickLink("storage")}>
                     <div className="boost_item_inner">
-                        <img className="boost_item_inner_img" src={String(OilBoost)} alt=""></img>
+                        <svg className="boost_item_inner_img"><Oil /></svg>
                         <div>
                             <p className="boost_item_inner_text">Gas Storage</p>
                             <p className="boost_item_inner_description">
                                 Increace gas storage to earn more
                             </p>
                             <div className="boost_item_inner_cost">
-                                <img
-                                    className="boost_item_inner_cost_img"
-                                    src={String(CoinImg)}
-                                    alt=""
-                                ></img>
+                                <svg className="boost_item_inner_cost_img"><Coin /></svg>
                                 <p className="boost_item_inner_cost_price">{prices[game.gasStorage] ? prices[game.gasStorage] : "max level"}</p>
                             </div>
                         </div>
@@ -74,18 +73,14 @@ const Boost: React.FC<IBoostProps> = ({score, BackButton, prices, game, setGame,
 
                 <div className="boost_item" onClick={() => onClickLink("minting")}>
                     <div className="boost_item_inner">
-                        <img className="boost_item_inner_img" src={String(GasPump)} alt=""></img>
+                        <svg className="boost_item_inner_img"><Gasoline /></svg>
                         <div>
                             <p className="boost_item_inner_text">Gas Mining</p>
                             <p className="boost_item_inner_description">
                                 Increace gas mining to fly often
                             </p>
                             <div className="boost_item_inner_cost">
-                                <img
-                                    className="boost_item_inner_cost_img"
-                                    src={String(CoinImg)}
-                                    alt=""
-                                ></img>
+                                <svg className="boost_item_inner_cost_img"><Coin /></svg>
                                 <p className="boost_item_inner_cost_price">{prices[game.gasMining] ? prices[game.gasMining] : "max level"}</p>
                             </div>
                         </div>
@@ -95,18 +90,14 @@ const Boost: React.FC<IBoostProps> = ({score, BackButton, prices, game, setGame,
 
                 <div className="boost_item" onClick={() => onClickLink("protaction")}>
                     <div className="boost_item_inner">
-                        <img className="boost_item_inner_img" src={String(Shield)} alt=""></img>
+                        <svg className="boost_item_inner_img"><Defence /></svg>
                         <div>
                             <p className="boost_item_inner_text">Protection</p>
                             <p className="boost_item_inner_description">
                                 Protection helps against meteorites
                             </p>
                             <div className="boost_item_inner_cost">
-                                <img
-                                    className="boost_item_inner_cost_img"
-                                    src={String(CoinImg)}
-                                    alt=""
-                                ></img>
+                                <svg className="boost_item_inner_cost_img"><Coin /></svg>
                                 <p className="boost_item_inner_cost_price">{prices[game.protection] ? prices[game.protection] : "max level"}</p>
                             </div>
                         </div>

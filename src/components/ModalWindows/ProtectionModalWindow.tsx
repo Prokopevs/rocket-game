@@ -6,6 +6,8 @@ import { IGame } from "../../models/IUserData"
 import { createSignature } from "../../helpers/createSignature"
 import { updateMultiplicator } from "../../http/updateMultiplicator"
 import PopupInfo from "../PopupInfo"
+import { ReactComponent as Defence} from "../../assets/defense.svg";
+import { ReactComponent as Coin } from "../../assets/coinw.svg";
 
 interface IModalStatus {
     modalIn: boolean
@@ -70,11 +72,7 @@ const ProtectionModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn, pr
 
                         {prices[game.protection] && <div className="modalWindow_content_upgrade">
                             <div className="modalWindow_content_upgrade_block">
-                                <img
-                                    className="modalWindow_content_upgrade_img"
-                                    src={String(Shield)}
-                                    alt=""
-                                ></img>
+                                <svg className="modalWindow_content_upgrade_img"><Defence /></svg>
                                 <div className="modalWindow_content_upgrade_text">
                                     <p className="modalWindow_content_upgrade_level">level {game.protection+1}</p>
                                     <p className="modalWindow_content_upgrade_hours">{protectionArr[game.protection+1]} health</p>
@@ -90,11 +88,7 @@ const ProtectionModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn, pr
 
                         <div className="modalWindow_content_upgrade">
                             <div className="modalWindow_content_upgrade_block">
-                                <img
-                                    className="modalWindow_content_upgrade_img"
-                                    src={String(Shield)}
-                                    alt=""
-                                ></img>
+                                <svg className="modalWindow_content_upgrade_img"><Defence /></svg>
                                 <div className="modalWindow_content_upgrade_text">
                                     <p className="modalWindow_content_upgrade_level">level {game.protection}</p>
                                     <p className="modalWindow_content_upgrade_hours">{protectionArr[game.protection]} health</p>
@@ -103,11 +97,7 @@ const ProtectionModalWindow: React.FC<IModalStatus> = ({ modalIn, setModalIn, pr
                         </div>
 
                         <div className="modalWindow_content_price">
-                            <img
-                                className="modalWindow_content_price_img"
-                                src={String(CoinImg)}
-                                alt=""
-                            ></img>
+                            <svg className="modalWindow_content_price_img"><Coin /></svg>
                             <p className="modalWindow_content_price_text">{prices[game.protection] ? prices[game.protection] : "max level"}</p>
                         </div>
 
