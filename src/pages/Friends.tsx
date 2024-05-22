@@ -67,7 +67,7 @@ const Friends: React.FC<IFriendsProps> = ({BackButton, userData}) => {
                         <FriendsList key={`${items.referralId}_${index}`} items={items} />
                     ))}
                 </div>}
-                <CopyToClipboard text={`https://t.me/testStarterLaunchBot?start=${userData.id}`}>
+                <CopyToClipboard text={`https://t.me/rocket_game_tg_bot?start=${userData.id}`}>
                     <button className="friends_button" disabled={showPopup} onClick={() => onClickLink()}>
                         Invite a Friend
                     </button>
