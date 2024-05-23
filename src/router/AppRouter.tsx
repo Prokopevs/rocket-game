@@ -1,4 +1,7 @@
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom"
+import { Route, Routes, Router, useNavigate, useLocation } from "react-router-dom"
+import { useIntegration } from '@tma.js/react-router-integration';
+import { initNavigator } from '@tma.js/sdk-react';
+
 import Game from "../pages/Game"
 import Home from "../pages/Home"
 import React from "react"
@@ -16,9 +19,17 @@ interface IRouteProps {
 }
 
 const AppRouter: React.FC<IRouteProps> = ({userData, game, setGame, prices}) => {
-    let location = useLocation()
-    const navigate = useNavigate()
+    // let location = useLocation()
+    // const navigate = useNavigate()
+    const navigator = React.useMemo(() => initNavigator('app-navigation-state'), []);
+    const [location, reactNavigator] = useIntegration(navigator);
     const BackButton = (window as any).Telegram.WebApp.BackButton
+
+    React.useEffect(() => {
+        navigator.attach();
+        return () => navigator.detach();
+    }, [navigator]);
+
 
     const [score, setScore] = React.useState(game.score)
     const [play, setPlay] = React.useState(false)
@@ -80,13 +91,14 @@ const AppRouter: React.FC<IRouteProps> = ({userData, game, setGame, prices}) => 
      // Time ------------------------------
 
     React.useEffect(() => {
+            console.log(location)
         if (location.pathname == "/") {
-            navigate(`/rocket-game`)
+            navigator.push('/rocket-game')
           }
     }, [])
 
     return (
-        <>
+        <Router location={location} navigator={reactNavigator}>
             <Routes>
                 <Route path="/rocket-game" element={<Home completed={completed} onClickPlay={onClickPlay} score={score} setIsNotReload={setIsNotReload} userData={userData}/>} />
                 <Route path="/Game" element={<Game play={play} setPlay={setPlay} onClickPlay={onClickPlay} setScore={setScore} 
@@ -95,7 +107,7 @@ const AppRouter: React.FC<IRouteProps> = ({userData, game, setGame, prices}) => 
                 <Route path="/Friends" element={<Friends BackButton={BackButton} userData={userData}/>} />
                 <Route path="/Boost" element={<Boost score={score} BackButton={BackButton} prices={prices} game={game} setGame={setGame} setScore={setScore} />} />
             </Routes>
-        </>
+        </Router>
     )
 }
 

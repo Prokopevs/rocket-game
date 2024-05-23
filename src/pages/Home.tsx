@@ -6,7 +6,7 @@ import { ReactComponent as Mission } from "../assets/mission.svg";
 import { ReactComponent as Coin } from "../assets/coinw.svg";
 import { ReactComponent as Goblet } from "../assets/goblet.svg";
 import Progress from "../components/Progress"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import React from "react"
 import { CSSTransition } from "react-transition-group"
 import PopupInfo from "../components/PopupInfo"
@@ -35,7 +35,7 @@ const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotRelo
         }
     }
     const onClickEvent = (category: string) => {
-        console.log(category)
+        
         if (category === "Missions") {
             navigate(`/Missions`)
         }
@@ -98,6 +98,7 @@ const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotRelo
                         <svg className="home_footer_friends_img"><Mission /></svg>
                         <p className="home_footer_items_text">Missions</p>
                     </button>
+                
                     <div className="home_footer_line"></div>
                     <div className="home_footer_items" onClick={() => onClickEvent("Boost")}>
                         <svg className="home_footer_friends_img"><Boost /></svg>
