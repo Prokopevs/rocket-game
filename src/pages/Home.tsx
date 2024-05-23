@@ -34,18 +34,6 @@ const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotRelo
             setShowPopup(true)
         }
     }
-    const onClickEvent = (category: string) => {
-        
-        if (category === "Missions") {
-            navigate(`/Missions`)
-        }
-        if (category === "Friends") {
-            navigate(`/Friends`)
-        }
-        if (category === "Boost") {
-            navigate(`/Boost`)
-        }
-    }
 
     React.useEffect(() => {
         let timeout: NodeJS.Timeout
@@ -94,21 +82,20 @@ const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotRelo
                 <Progress completed={completed} />
 
                 <div className="home_footer">
-                    <button className="home_footer_items" onClick={() => onClickEvent("Missions")}>
+                    <Link to="/Missions" className="home_footer_items"> 
                         <svg className="home_footer_friends_img"><Mission /></svg>
                         <p className="home_footer_items_text">Missions</p>
-                    </button>
-                
+                    </Link>
                     <div className="home_footer_line"></div>
-                    <div className="home_footer_items" onClick={() => onClickEvent("Boost")}>
+                    <Link to="/Boost" className="home_footer_items"> 
                         <svg className="home_footer_friends_img"><Boost /></svg>
                         <p className="home_footer_items_text">Boost</p>
-                    </div>
+                    </Link>
                     <div className="home_footer_line"></div>
-                    <div className="home_footer_items" onClick={() => onClickEvent("Friends")}>
+                    <Link to="/Friends" className="home_footer_items"> 
                         <svg className="home_footer_friends_img"><Friend /></svg>
                         <p className="home_footer_items_text">Friends</p>
-                    </div>
+                    </Link>
                 </div>
             </div>
         </div>
