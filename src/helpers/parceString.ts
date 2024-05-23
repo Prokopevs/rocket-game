@@ -1,7 +1,8 @@
 
 export const parceString = (str: string) => {
-    const urlParams = new URLSearchParams(str);
-    const startappParam = urlParams.get('startapp');
+    let url = new URL(str);
+    let params = new URLSearchParams(url.search);
+    let startappParam = params.get('startapp');
 
     const startIndex = str.indexOf('tgWebAppData=') + 'tgWebAppData='.length;
     const endIndex = str.indexOf('&tgWebAppVersion');

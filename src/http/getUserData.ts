@@ -3,8 +3,8 @@ import { IUserData, IGame } from "../models/IUserData"
 
 export const getUserData = async (id: string | null, header: string) => {
     try{
-        const idReq = id !== null ? `inviterId=${id}` : ""
-        const response = await $api.get<IUserData>(`/auth/me?${idReq}`, {
+        const idReq = id !== null ? `?inviterId=${id}` : ""
+        const response = await $api.get<IUserData>(`/auth/me${idReq}`, {
         headers: {
           initData: header
         }
