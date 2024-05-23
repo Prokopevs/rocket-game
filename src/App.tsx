@@ -13,7 +13,6 @@ function App() {
   const [prices, setPrices] = React.useState({"1": 0, "2": 0, "3": 0, "4": 0, "5": 0})
   React.useEffect(() => {
     getUser()
-    getPrices()
   }, [])
   const getUser = async () => {
     const strObj = parceString(window.location.href)
@@ -21,19 +20,17 @@ function App() {
     setUserData(() => ({
       ...response?.data
     }));
-    if (response?.data.id !== 0) {
-      const game: any = await getGame(response?.data.id)
-      setGame(() => ({
-        ...game?.data
-      }));
-    }
-  }
+    if (response?.data.id) {
+        const game: any = await getGame(response?.data.id)
+        setGame(() => ({
+          ...game?.data
+        }));
 
-  const getPrices = async () => {
-    const response: any = await getReferralsReq()
-    setPrices(() => ({
-      ...response?.data.Data
-    }))
+        const res: any = await getReferralsReq()
+          setPrices(() => ({
+          ...res?.data.Data
+        }))
+    }
   }
 
   if ((isMobile && (width < 800)) && (userData.id) && (game.ownerId)) {
