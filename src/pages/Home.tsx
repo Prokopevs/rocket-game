@@ -26,6 +26,7 @@ const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotRelo
 
     let onClickHandler = () => {
         let result = onClickPlay()
+        console.log(result)
         if (result === true) {
             setIsNotReload(true)
             navigate(`/Game`)
