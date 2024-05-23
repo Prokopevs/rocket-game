@@ -33,7 +33,8 @@ function App() {
     }
   }
 
-  if ((isMobile && (width < 800)) && (userData.id) && (game.ownerId)) {
+  // isMobile && 
+  if (((width < 800)) && (userData.id) && (game.ownerId)) {
     return (
       <>
         <AppRouter userData={userData} game={game} setGame={setGame} prices={prices}/>

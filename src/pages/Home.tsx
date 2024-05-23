@@ -34,6 +34,7 @@ const Home: React.FC<IHomeProps> = ({completed, onClickPlay, score, setIsNotRelo
         }
     }
     const onClickEvent = (category: string) => {
+        console.log(category)
         if (category === "Missions") {
             navigate(`/Missions`)
         }
