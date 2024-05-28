@@ -14,12 +14,14 @@ import { useNavigate } from "react-router-dom"
 import { createSignature } from '../helpers/createSignature';
 import { updateScore } from '../http/updateMultiplicator';
 
-const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas, BackButton, userData, game}) => {
+const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas, userData, game}) => {
     const navigate = useNavigate()
+
+    const BackButton = (window).Telegram.WebApp.BackButton
     BackButton.show();
     BackButton.onClick(function() {
-        navigate("/rocket-game")
         BackButton.hide();
+        navigate("/rocket-game")
     });
 
     const obj = DefineElemsWidth()

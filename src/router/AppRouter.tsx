@@ -18,7 +18,7 @@ interface IRouteProps {
 const AppRouter: React.FC<IRouteProps> = ({userData, game, setGame, prices}) => {
     let location = useLocation()
     const navigate = useNavigate()
-    const BackButton = (window as any).Telegram.WebApp.BackButton
+    // const BackButton = (window as any).Telegram.WebApp.BackButton
 
     const [score, setScore] = React.useState(game.score)
     const [play, setPlay] = React.useState(false)
@@ -90,10 +90,10 @@ const AppRouter: React.FC<IRouteProps> = ({userData, game, setGame, prices}) => 
             <Routes>
                 <Route path="/rocket-game" element={<Home completed={completed} onClickPlay={onClickPlay} score={score} setIsNotReload={setIsNotReload} userData={userData}/>} />
                 <Route path="/Game" element={<Game play={play} setPlay={setPlay} onClickPlay={onClickPlay} setScore={setScore} 
-                    score={score} isNotReload={isNotReload} tickGas={tickGas} BackButton={BackButton} userData={userData} game={game}/>} />
-                <Route path="/Missions" element={<Missions BackButton={BackButton}/>} />
-                <Route path="/Friends" element={<Friends BackButton={BackButton} userData={userData}/>} />
-                <Route path="/Boost" element={<Boost score={score} BackButton={BackButton} prices={prices} game={game} setGame={setGame} setScore={setScore} />} />
+                    score={score} isNotReload={isNotReload} tickGas={tickGas} userData={userData} game={game}/>} />
+                <Route path="/Missions" element={<Missions/>} />
+                <Route path="/Friends" element={<Friends userData={userData}/>} />
+                <Route path="/Boost" element={<Boost score={score} prices={prices} game={game} setGame={setGame} setScore={setScore} />} />
             </Routes>
         </>
     )

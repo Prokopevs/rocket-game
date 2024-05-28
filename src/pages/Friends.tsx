@@ -9,18 +9,20 @@ import { IUserData } from "../models/IUserData"
 import { getReferralsReq } from "../http/getReferralsReq"
 
 interface IFriendsProps {
-    BackButton: any
     userData: IUserData;
 }
-const Friends: React.FC<IFriendsProps> = ({BackButton, userData}) => {
+const Friends: React.FC<IFriendsProps> = ({userData}) => {
     const [referrals, setReferrals] = React.useState([{referralId: 0, firstname: "", username: ""}])
     const [loading, setLoading] = React.useState(true)
     const navigate = useNavigate()
+
+    const BackButton = (window as any).Telegram.WebApp.BackButton
     BackButton.show();
     BackButton.onClick(function() {
-        navigate("/rocket-game")
         BackButton.hide();
+        navigate("/rocket-game")
     });
+
     const [showPopup, setShowPopup] = React.useState(false)
 
     const onClickLink = async () => {

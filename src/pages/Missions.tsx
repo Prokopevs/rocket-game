@@ -2,16 +2,13 @@ import "../style/pages/friends.css"
 import React from "react"
 import { useNavigate } from "react-router-dom"
 
-interface IMissionProps {
-    BackButton: any
-}
-
-const Missions: React.FC<IMissionProps> = ({ BackButton }) => {
+const Missions: React.FC<{}> = () => {
     const navigate = useNavigate()
+    const BackButton = (window as any).Telegram.WebApp.BackButton
     BackButton.show();
     BackButton.onClick(function() {
-        navigate("/rocket-game")
         BackButton.hide();
+        navigate("/rocket-game")
     });
 
     //window.location.href

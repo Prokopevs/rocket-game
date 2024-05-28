@@ -13,19 +13,20 @@ import { ReactComponent as Gasoline} from "../assets/gasoline.svg";
 
 interface IBoostProps {
     score: number
-    BackButton: any
     prices: any
     game: IGame
     setScore: any
     setGame: (game: IGame) => void
   }
-const Boost: React.FC<IBoostProps> = ({score, BackButton, prices, game, setGame, setScore}) => {
+const Boost: React.FC<IBoostProps> = ({score, prices, game, setGame, setScore}) => {
     const navigate = useNavigate()
+    const BackButton = (window as any).Telegram.WebApp.BackButton
     BackButton.show();
     BackButton.onClick(function() {
-        navigate("/rocket-game")
         BackButton.hide();
+        navigate("/rocket-game")
     });
+
     const [storageMW, setStorageMW] = React.useState(false)
     const [mintingMW, setMintingMW] = React.useState(false)
     const [protectionMW, setProtectionMW] = React.useState(false)
