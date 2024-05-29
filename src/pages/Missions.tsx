@@ -4,12 +4,20 @@ import { useNavigate } from "react-router-dom"
 
 const Missions: React.FC<{}> = () => {
     const navigate = useNavigate()
-    const BackButton = (window as any).Telegram.WebApp.BackButton
-    BackButton.show();
-    BackButton.onClick(function() {
-        BackButton.hide();
+
+    React.useEffect(() => {
+        window.Telegram.WebApp.BackButton.show();
+        
+        window.Telegram.WebApp.BackButton.onClick(handleBack);
+
+        return () => {
+            window.Telegram.WebApp.BackButton.hide();
+        }
+    }, [])
+
+    function handleBack() {
         navigate("/rocket-game")
-    });
+    }
 
     //window.location.href
     return (

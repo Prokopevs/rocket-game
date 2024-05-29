@@ -17,12 +17,19 @@ import { updateScore } from '../http/updateMultiplicator';
 const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas, userData, game}) => {
     const navigate = useNavigate()
 
-    const BackButton = (window).Telegram.WebApp.BackButton
-    BackButton.show();
-    BackButton.onClick(function() {
-        BackButton.hide();
+    React.useEffect(() => {
+        window.Telegram.WebApp.BackButton.show();
+        
+        window.Telegram.WebApp.BackButton.onClick(handleBack);
+
+        return () => {
+            window.Telegram.WebApp.BackButton.hide();
+        }
+    }, [])
+
+    function handleBack() {
         navigate("/rocket-game")
-    });
+    }
 
     const obj = DefineElemsWidth()
     const {coinsWidth, asteroidWidth, fuelWidth, rocketWidth, rocketHeight, framerocketwidth} = obj
