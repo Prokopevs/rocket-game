@@ -13,20 +13,9 @@ import PopupInfo from "../components/PopupInfo";
 import { useNavigate } from "react-router-dom"
 import { createSignature } from '../helpers/createSignature';
 import { updateScore } from '../http/updateMultiplicator';
-import {BackButton} from "@vkruglikov/react-telegram-web-app";
 
 const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas, userData, game}) => {
     const navigate = useNavigate()
-
-    // React.useEffect(() => {
-    //     window.Telegram.WebApp.BackButton.show();
-        
-    //     window.Telegram.WebApp.BackButton.onClick(() => navigate(-1));
-
-    //     return () => {
-    //         window.Telegram.WebApp.BackButton.hide();
-    //     }
-    // }, [])
 
     const obj = DefineElemsWidth()
     const {coinsWidth, asteroidWidth, fuelWidth, rocketWidth, rocketHeight, framerocketwidth} = obj
@@ -456,7 +445,6 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
 
     return (
         <div className="game">
-            <BackButton onClick={() => navigate(-1)}/>
             <CSSTransition in={showPopup} timeout={150} classNames="my-node" unmountOnExit>
                 <PopupInfo text={"Not enough gas"} />
             </CSSTransition>

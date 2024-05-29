@@ -17,16 +17,6 @@ const Friends: React.FC<IFriendsProps> = ({userData}) => {
     const [loading, setLoading] = React.useState(true)
     const navigate = useNavigate()
 
-    // React.useEffect(() => {
-    //     window.Telegram.WebApp.BackButton.show();
-        
-    //     window.Telegram.WebApp.BackButton.onClick(() => navigate(-1));
-
-    //     return () => {
-    //         window.Telegram.WebApp.BackButton.hide();
-    //     }
-    // }, [])
-
     const [showPopup, setShowPopup] = React.useState(false)
 
     const onClickLink = async () => {

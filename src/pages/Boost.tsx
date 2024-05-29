@@ -22,16 +22,6 @@ interface IBoostProps {
 const Boost: React.FC<IBoostProps> = ({score, prices, game, setGame, setScore}) => {
     const navigate = useNavigate()
 
-    // React.useEffect(() => {
-    //     window.Telegram.WebApp.BackButton.show();
-        
-    //     window.Telegram.WebApp.BackButton.onClick(() => navigate(-1));
-
-    //     return () => {
-    //         window.Telegram.WebApp.BackButton.hide();
-    //     }
-    // }, [])
-
     const [storageMW, setStorageMW] = React.useState(false)
     const [mintingMW, setMintingMW] = React.useState(false)
     const [protectionMW, setProtectionMW] = React.useState(false)
