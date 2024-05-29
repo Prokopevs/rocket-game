@@ -24,16 +24,12 @@ const Boost: React.FC<IBoostProps> = ({score, prices, game, setGame, setScore}) 
     React.useEffect(() => {
         window.Telegram.WebApp.BackButton.show();
         
-        window.Telegram.WebApp.BackButton.onClick(handleBack);
+        window.Telegram.WebApp.BackButton.onClick(() => navigate(-1));
 
         return () => {
             window.Telegram.WebApp.BackButton.hide();
         }
     }, [])
-
-    function handleBack() {
-        navigate("/rocket-game")
-    }
 
     const [storageMW, setStorageMW] = React.useState(false)
     const [mintingMW, setMintingMW] = React.useState(false)

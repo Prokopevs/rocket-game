@@ -8,16 +8,12 @@ const Missions: React.FC<{}> = () => {
     React.useEffect(() => {
         window.Telegram.WebApp.BackButton.show();
         
-        window.Telegram.WebApp.BackButton.onClick(handleBack);
+        window.Telegram.WebApp.BackButton.onClick(() => navigate(-1));
 
         return () => {
             window.Telegram.WebApp.BackButton.hide();
         }
     }, [])
-
-    function handleBack() {
-        navigate("/rocket-game")
-    }
 
     //window.location.href
     return (

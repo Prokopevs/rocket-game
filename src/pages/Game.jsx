@@ -20,16 +20,12 @@ const Game = ({play, setPlay, onClickPlay, setScore, score, isNotReload, tickGas
     React.useEffect(() => {
         window.Telegram.WebApp.BackButton.show();
         
-        window.Telegram.WebApp.BackButton.onClick(handleBack);
+        window.Telegram.WebApp.BackButton.onClick(() => navigate(-1));
 
         return () => {
             window.Telegram.WebApp.BackButton.hide();
         }
     }, [])
-
-    function handleBack() {
-        navigate("/rocket-game")
-    }
 
     const obj = DefineElemsWidth()
     const {coinsWidth, asteroidWidth, fuelWidth, rocketWidth, rocketHeight, framerocketwidth} = obj
