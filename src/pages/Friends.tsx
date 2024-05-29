@@ -7,6 +7,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { useNavigate } from "react-router-dom"
 import { IUserData } from "../models/IUserData"
 import { getReferralsReq } from "../http/getReferralsReq"
+import {BackButton} from "@vkruglikov/react-telegram-web-app";
 
 interface IFriendsProps {
     userData: IUserData;
@@ -16,15 +17,15 @@ const Friends: React.FC<IFriendsProps> = ({userData}) => {
     const [loading, setLoading] = React.useState(true)
     const navigate = useNavigate()
 
-    React.useEffect(() => {
-        window.Telegram.WebApp.BackButton.show();
+    // React.useEffect(() => {
+    //     window.Telegram.WebApp.BackButton.show();
         
-        window.Telegram.WebApp.BackButton.onClick(() => navigate(-1));
+    //     window.Telegram.WebApp.BackButton.onClick(() => navigate(-1));
 
-        return () => {
-            window.Telegram.WebApp.BackButton.hide();
-        }
-    }, [])
+    //     return () => {
+    //         window.Telegram.WebApp.BackButton.hide();
+    //     }
+    // }, [])
 
     const [showPopup, setShowPopup] = React.useState(false)
 
@@ -56,8 +57,11 @@ const Friends: React.FC<IFriendsProps> = ({userData}) => {
 
     return (
         loading ? 
-        <p className="friends"></p> :
+        <p className="friends">
+            <BackButton onClick={() => navigate(-1)}/>
+        </p> :
         <div className="friends">
+            <BackButton onClick={() => navigate(-1)}/>
             <CSSTransition in={showPopup} timeout={150} classNames="my-node" unmountOnExit>
                 <PopupInfo text={"Invite link is copied"} />
             </CSSTransition>

@@ -10,6 +10,7 @@ import { ReactComponent as Coin } from "../assets/coinw.svg";
 import { ReactComponent as Defence} from "../assets/defense.svg";
 import { ReactComponent as Oil} from "../assets/oil.svg";
 import { ReactComponent as Gasoline} from "../assets/gasoline.svg";
+import {BackButton} from "@vkruglikov/react-telegram-web-app";
 
 interface IBoostProps {
     score: number
@@ -21,15 +22,15 @@ interface IBoostProps {
 const Boost: React.FC<IBoostProps> = ({score, prices, game, setGame, setScore}) => {
     const navigate = useNavigate()
 
-    React.useEffect(() => {
-        window.Telegram.WebApp.BackButton.show();
+    // React.useEffect(() => {
+    //     window.Telegram.WebApp.BackButton.show();
         
-        window.Telegram.WebApp.BackButton.onClick(() => navigate(-1));
+    //     window.Telegram.WebApp.BackButton.onClick(() => navigate(-1));
 
-        return () => {
-            window.Telegram.WebApp.BackButton.hide();
-        }
-    }, [])
+    //     return () => {
+    //         window.Telegram.WebApp.BackButton.hide();
+    //     }
+    // }, [])
 
     const [storageMW, setStorageMW] = React.useState(false)
     const [mintingMW, setMintingMW] = React.useState(false)
@@ -49,6 +50,7 @@ const Boost: React.FC<IBoostProps> = ({score, prices, game, setGame, setScore}) 
 
     return (
         <div className="boost">
+            <BackButton onClick={() => navigate(-1)}/>
             <StorageModalWindow modalIn={storageMW} setModalIn={setStorageMW} prices={prices} game={game} setGame={setGame} setScore={setScore} score={score}/>
             <MiningModalWindow modalIn={mintingMW} setModalIn={setMintingMW} prices={prices} game={game} setGame={setGame} setScore={setScore} score={score}/>
             <ProtectionModalWindow modalIn={protectionMW} setModalIn={setProtectionMW} prices={prices} game={game} setGame={setGame} setScore={setScore} score={score}/>
